@@ -9,7 +9,7 @@
   <div class="input-group mb-3">
     <span class="input-group-text" id="inputGroup-sizing-default">Nombre Empresa:</span>
     <input type="text" class="form-control" aria-label="Sizing example input"
-      aria-describedby="inputGroup-sizing-default" [(ngModel)]="empresa.nombre">
+      aria-describedby="inputGroup-sizing-default" [(ngModel)]="empresa.nombreEmpresa">
   </div>
 
   <div class="input-group mb-3">
@@ -31,7 +31,7 @@
   <div class="input-group mb-3">
     <span class="input-group-text" id="inputGroup-sizing-default">CUIT:</span>
     <input type="number" class="form-control" aria-label="Sizing example input"
-      aria-describedby="inputGroup-sizing-default" [(ngModel)]="empresa.titular.cuit">
+      aria-describedby="inputGroup-sizing-default" [(ngModel)]="empresa.titular.cuitTitular">
   </div>
 
   <div class="input-group mb-3">
@@ -59,7 +59,7 @@
 </div>
 <!--TABLA PARA MOSTRAR LOS DATOS-->
 <div class="container mt-5">
-  <table class="table table-bordered table-striped"*ngIf="empresas.length > 0">
+  <table class="table table-bordered table-striped" *ngIf="empresas.length > 0">
     <thead class="table-dark">
       <tr>
         <th>Cuit Empresa</th>
@@ -73,8 +73,8 @@
     <tbody>
       <tr *ngFor="let em of empresas">
         <td>{{em.cuit}}</td>
-        <td>{{em.nombre}}</td>
-        <td>{{em.titular.cuit}}</td>
+        <td>{{em.nombreEmpresa}}</td>
+        <td>{{em.titular.cuitTitular}}</td>
         <td>{{em.titular.nombre}}</td>
         <td>{{em.email}}</td>
         <td>{{em.telefono}}</td>
