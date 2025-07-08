@@ -6,11 +6,12 @@ import { RegistroProductoEstablecimientoComponent } from './components/registroP
 import { EmpresaComponent } from './components/empresa/empresa/empresa.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
-import { ModalEstablecimientoComponent } from './components/modal-establecimiento/modal-establecimiento.component';
 import { ModalProductoComponent } from './components/modal-producto/modal-producto.component';
 import { MantenimientoComponent } from './components/mantenimiento/mantenimiento.component';
+import { EstablecimientoComponent } from './components/establecimiento/establecimiento.component';
 
 export const routes: Routes = [
+    {path: '', redirectTo:'/login', pathMatch:'full'},
     {path: 'login', component: LoginComponent},
     {path:'login-register',component:LoginRegisterComponent},
     {path: 'inicio', component: InicioComponent},
@@ -20,7 +21,7 @@ export const routes: Routes = [
     {path: 'registro-producto-establecimiento', component:RegistroProductoEstablecimientoComponent},
 
     //path de prueba
-    {path: 'modal-establecimiento',component: ModalEstablecimientoComponent},
+    {path: 'establecimiento',component: EstablecimientoComponent},
     {path: 'modal-producto',component: ModalProductoComponent},
     {path: 'mantenimiento',component: MantenimientoComponent}
 ];
