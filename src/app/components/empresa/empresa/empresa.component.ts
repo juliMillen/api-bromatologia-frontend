@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EmpresaService } from '../../../services/empresa.service';
 import { Empresa } from '../../../models/empresa';
+import { EmpresaModalComponent } from "../../modales/empresa-modal/empresa-modal.component";
 
 @Component({
   selector: 'app-empresa',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, EmpresaModalComponent],
   templateUrl: './empresa.component.html',
   styleUrl: './empresa.component.css'
 })
@@ -29,10 +30,42 @@ export class EmpresaComponent implements OnInit{
 
   empresaEditanto: Empresa | null = null;
 
+  modalAbierto = false;
+
+  cuitBuscado: number = 0;
+
+  rolUsuario: string= '';
+
   constructor(private empresaService: EmpresaService) { }
 
   ngOnInit(): void {
     this.cargarEmpresas();
+  }
+
+  abrirModal() {
+    this.modalAbierto = true;
+  }
+
+  ocultarModal() {
+    this.modalAbierto = false;
+  }
+
+
+  obtenerEmpresaPorCuit(): void{
+    if(!this.cuitBuscado) return;
+    this.empresaService.obtenerEmpresa(this.cuitBuscado).subscribe({
+      next: (empresa:Empresa) => {
+        this.empresas = [empresa];
+      },
+      error: (err) => {
+        console.error('Error al obtener la empresa: ', err);
+        this.empresas = []
+      }
+    })
+  }
+
+  guardarEmpresa(nuevaEmpresa:Empresa){
+    this.empresas.push(nuevaEmpresa)
   }
 
   cargarEmpresas(): void {
@@ -45,33 +78,6 @@ export class EmpresaComponent implements OnInit{
       }
     });
   }
-
-  crearEmpresa(): void {
-    this.empresaService.crearEmpresa(this.empresa).subscribe({
-      next: (response: Empresa) => {
-        console.log('Empresa creada correctamente: ', response);
-        this.empresas.push(response);
-
-        //Reinicia el formulario
-        this.empresa = {
-          cuit: 0,
-          nombreEmpresa: '',
-          email: '',
-          telefono: '',
-          titular: {
-            cuitTitular: 0,
-            nombre: '',
-            email: '',
-            telefono: ''
-          }
-        };
-      },
-      error:(err) => {
-        console.log('Error al crear la empresa: ',err);
-      }
-  })
-  }
-
 
   modificarEmpresa(empresa:Empresa): void{
     this.empresaService.modificarEmpresa(empresa.cuit,empresa).subscribe({

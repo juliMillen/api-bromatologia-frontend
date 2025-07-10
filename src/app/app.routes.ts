@@ -6,7 +6,6 @@ import { RegistroProductoEstablecimientoComponent } from './components/registroP
 import { EmpresaComponent } from './components/empresa/empresa/empresa.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
-import { ModalProductoComponent } from './components/modal-producto/modal-producto.component';
 import { MantenimientoComponent } from './components/mantenimiento/mantenimiento.component';
 import { EstablecimientoComponent } from './components/establecimiento/establecimiento.component';
 
@@ -22,6 +21,5 @@ export const routes: Routes = [
 
     //path de prueba
     {path: 'establecimiento',component: EstablecimientoComponent},
-    {path: 'modal-producto',component: ModalProductoComponent},
     {path: 'mantenimiento',component: MantenimientoComponent}
 ];

@@ -23,7 +23,7 @@ export class EmpresaService {
 
   //obtener empresa por id
 
-  obtenerEmpresa(cuit:number): Observable<any>{
+  obtenerEmpresa(cuit:number): Observable<Empresa>{
     return this.http.get<Empresa>(`${this.apiUrl}/${cuit}`);
   }
 

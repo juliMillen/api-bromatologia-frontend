@@ -1,0 +1,44 @@
+<!-- MODAL -->
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Empresa</h5>
+        <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Nombre Empresa</label>
+            <input type="text" class="form-control" [(ngModel)]="empresa.nombreEmpresa" name="nombreEmpresa">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">CUIT Empresa</label>
+            <input type="number" class="form-control" [(ngModel)]="empresa.cuit" name="cuit">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="empresa.email" name="email">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Teléfono</label>
+            <input type="text" class="form-control" [(ngModel)]="empresa.telefono" name="telefono">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">CUIT Titular</label>
+            <input type="number" class="form-control" [(ngModel)]="empresa.titular.cuitTitular" name="cuitTitular">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nombre Titular</label>
+            <input type="text" class="form-control" [(ngModel)]="empresa.titular.nombre" name="nombreTitular">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+        <button class="btn btn-success" (click)="crearEmpresa()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

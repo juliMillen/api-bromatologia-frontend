@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
   errorMessage: string = ''
   loading: boolean = false;
 
-  constructor(private router:Router){}
+  constructor(private router:Router, private authService:AuthService){}
 
 
   onLogin() {
@@ -31,6 +32,18 @@ export class LoginComponent {
 
     this.loading=true;
     this.errorMessage='';
+
+    this.authService.login(this.loginForm).subscribe({
+      next: (response) => {
+        this.authService.guardarToken(response.token);
+        this.router.navigate(["/inicio"])
+      },
+      error: (err) =>{
+        this.loading = false;
+        this.errorMessage = 'Usuario o contraseña incorrectos';
+        console.error("Error de login: ",err);
+      }
+    });
   }
 
   irAInicio(){

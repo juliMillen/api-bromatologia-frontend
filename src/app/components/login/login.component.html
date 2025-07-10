@@ -1,30 +1,34 @@
 <form class="login-form-content" (ngSubmit)="onLogin()">
 
     <!--Mensaje de error-->
-  <div class="alert alert-danger" *ngIf="errorMessage" role="alert">
-    {{ errorMessage }}
-  </div>
-  <div class="login-container">
+    <div class="alert alert-danger" *ngIf="errorMessage" role="alert">
+        {{ errorMessage }}
+    </div>
+
+    <div class="login-container">
         <div class="login-form">
             <div class="logo-container">
                 <div class="logo-text">ICAB</div>
-                <div class="subtitle">Instituto de Control de Alimentacion y Bromatologia</div>
-            
-            <form>
+                <div class="subtitle">Instituto de Control de Alimentacion y Bromatologia
+                </div>
+
                 <div class="form-group">
                     <label for="usuario">Usuario</label>
                     <input type="text" id="usuario" name="usuario" placeholder="Ingrese su usuario">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="password">Contraseña</label>
                     <input type="password" id="password" name="password" placeholder="Ingrese su contraseña">
                 </div>
-                
-                <button type="submit" class="login-btn" (click)="irAInicio()">Iniciar Sesión</button>
-            </form>
-            <div class="container mb-3 mt-4 align-items-center">
-               <a href="/login-register"><p> ¿Desea registrar un nuevo usuario?</p></a>
+
+                <button type="submit" class="login-btn">Iniciar Sesión</button>
+                <div class="container mb-3 mt-4 align-items-center">
+                    <a href="/login-register">
+                        <p> ¿Desea registrar un nuevo usuario?</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+</form>
