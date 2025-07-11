@@ -71,6 +71,7 @@ export class EmpresaComponent implements OnInit{
   cargarEmpresas(): void {
     this.empresaService.getEmpresas().subscribe({
       next: (data: Empresa[]) => {
+        console.log("Empresas cargadas: ",data);
         this.empresas = data;
       },
       error: (err) => {

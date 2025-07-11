@@ -1,11 +1,6 @@
-<button (click)="toggleSidebar()" class="btn m-2">
-  ☰
-</button>
-
 <div class="d-flex">
-    <!--Sidebar-->
     <div [ngClass]="{ 'sidebar': true, 'collapsed': isCollapsed }">
-        <ul class="nav flex-column">
+        <ul>
             <li class="nav-item mt-4">
                 <a class="nav-link active" routerLink="/inicio">Inicio</a>
             </li>
@@ -29,6 +24,14 @@
              <li class="nav-item">
                 <a class="nav-link active" routerLink="/mantenimiento">Mantenimiento</a>
             </li>
+
+            <li class="logout">
+               <button (click)="logout()">Cerrar Sesion</button>
+            </li>
         </ul>
+    </div>
+
+    <div class="main-content">
+        <button class="btn" (click)="toggleSidebar()">navbar</button>
     </div>
 </div>

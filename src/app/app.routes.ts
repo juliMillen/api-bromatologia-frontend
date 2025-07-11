@@ -18,8 +18,6 @@ export const routes: Routes = [
     {path: 'registro-producto', component: RegistroProductoComponent},
     {path: 'registro-establecimiento',component: RegistroEstablecimientoComponent},
     {path: 'registro-producto-establecimiento', component:RegistroProductoEstablecimientoComponent},
-
-    //path de prueba
     {path: 'establecimiento',component: EstablecimientoComponent},
     {path: 'mantenimiento',component: MantenimientoComponent}
 ];

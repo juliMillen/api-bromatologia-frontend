@@ -1,0 +1,11 @@
+.main-content{
+    margin-left: 250px;
+    padding: 1rem;
+}
+
+.full-screen-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}

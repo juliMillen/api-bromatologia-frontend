@@ -1,17 +1,28 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from "./components/login/login.component";
-import { RegistroProductoComponent } from "./components/registro-producto/registro-producto.component";
-import { RegistroEstablecimientoComponent } from "./components/registro-establecimiento/registro-establecimiento.component";
-import { RegistroProductoEstablecimientoComponent } from "./components/registroProductoEstablecimiento/registro-producto-establecimiento/registro-producto-establecimiento.component";
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from "./components/navbar/navbar.component";
+import { filter } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, LoginComponent, RegistroProductoComponent, RegistroEstablecimientoComponent, RegistroProductoEstablecimientoComponent, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent, CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
+  standalone: true
 })
 export class AppComponent {
   title = 'registros-frontend';
+  shouldShowNavbar: boolean = false; 
+
+  constructor(private router: Router){}
+
+  ngOnInit(){
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      const currentUrl = event.urlAfterRedirects;
+      this.shouldShowNavbar = !(currentUrl.includes('/login') || currentUrl.includes('/login-register'));
+    });
+  }
 }
