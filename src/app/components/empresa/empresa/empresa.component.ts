@@ -14,13 +14,13 @@ import { EmpresaModalComponent } from "../../modales/empresa-modal/empresa-modal
 export class EmpresaComponent implements OnInit{
 
   empresa: Empresa = {
-    cuit: 0,
+    cuitEmpresa: 0,
     nombreEmpresa: '',
     email: '',
     telefono: '',
     titular: {
       cuitTitular: 0,
-      nombre: '',
+      nombreTitular: '',
       telefono: '',
       email: ''
     }
@@ -80,7 +80,7 @@ export class EmpresaComponent implements OnInit{
   }
 
   modificarEmpresa(empresa:Empresa): void{
-    this.empresaService.modificarEmpresa(empresa.cuit,empresa).subscribe({
+    this.empresaService.modificarEmpresa(empresa.cuitEmpresa,empresa).subscribe({
       next: (response) => {
         console.log('Empresa modificada correctamente: ',response);
         this.cargarEmpresas();
@@ -96,7 +96,7 @@ export class EmpresaComponent implements OnInit{
     this.empresaService.eliminarUnaEmpresa(cuit).subscribe({
       next: () => {
         console.log('Empresa eliminada correctamente');
-        this.empresas = this.empresas.filter( e => e.cuit !== cuit);
+        this.empresas = this.empresas.filter( e => e.cuitEmpresa !== cuit);
       },
       error: (err) => {
         console.log('Error al eliminar la empresa: ',err);

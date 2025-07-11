@@ -16,13 +16,13 @@ export class EmpresaModalComponent {
   @Output() empresaCreada = new EventEmitter<Empresa>()
 
     empresa: Empresa = {
-      cuit: 0,
+      cuitEmpresa: 0,
       nombreEmpresa: '',
       email: '',
       telefono: '',
       titular: {
         cuitTitular: 0,
-        nombre: '',
+        nombreTitular: '',
         telefono: '',
         email: ''
       }
@@ -35,6 +35,7 @@ export class EmpresaModalComponent {
     constructor(private empresaService: EmpresaService) {}
 
     cerrarModal(){
+      this.empresaCreada.emit();
       this.cerrar.emit();
     }
 
@@ -46,13 +47,13 @@ export class EmpresaModalComponent {
 
         //Reinicia el formulario
         this.empresa = {
-          cuit: 0,
+          cuitEmpresa: 0,
           nombreEmpresa: '',
           email: '',
           telefono: '',
           titular: {
             cuitTitular: 0,
-            nombre: '',
+            nombreTitular: '',
             email: '',
             telefono: ''
           }

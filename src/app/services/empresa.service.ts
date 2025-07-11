@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Empresa } from '../models/empresa';
 import { Establecimiento } from '../models/establecimiento';
-import { enviroment } from '../../environments/enviroment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpresaService {
 
-  private apiUrl = enviroment.apiUrl + '/empresa';
+  private apiUrl = environment.apiUrl + '/empresa';
 
   constructor(private http:HttpClient) { }
 

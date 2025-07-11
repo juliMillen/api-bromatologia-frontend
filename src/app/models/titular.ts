@@ -1,6 +1,6 @@
 export class Titular{
     cuitTitular!:number
-    nombre!: String
+    nombreTitular!: String
     email!: String
     telefono!: String
 }

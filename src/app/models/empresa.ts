@@ -1,7 +1,7 @@
 import { Titular } from "./titular"
 
 export class Empresa{
-    cuit!: number
+    cuitEmpresa!: number
     nombreEmpresa!: String
     email!: String
     telefono!: String
