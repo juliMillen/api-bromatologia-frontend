@@ -1,1 +1,30 @@
-<p>producto-modal works!</p>
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Producto</h5>
+        <button type="button" class="btn-close" (click)="cerrarProductoModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="mb-3">
+            <label class="form-label">Marca:</label>
+            <input type="number" class="form-control" [(ngModel)]="producto.marca" name="marca">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Denominacion:</label>
+            <input type="text" class="form-control" [(ngModel)]="producto.denominacion" name="denominacion">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nombre Fantansia:</label>
+            <input type="email" class="form-control" [(ngModel)]="producto.nombreFantasia" name="nombreFantasia">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="cerrarProductoModal()">Cancelar</button>
+        <button class="btn btn-success" (click)="crearProductoYAsociar()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,35 @@
-<p>establecimiento-modal works!</p>
+<!-- MODAL -->
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Establecimiento</h5>
+        <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="mb-3">
+            <label class="form-label">Localidad</label>
+            <input type="number" class="form-control" [(ngModel)]="establecimiento.localidad" name="localidadEst">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Departamento</label>
+            <input type="text" class="form-control" [(ngModel)]="establecimiento.departamento" name="departamentoEst">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Direccion</label>
+            <input type="email" class="form-control" [(ngModel)]="establecimiento.direccion" name="direccionEst">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Cuit Empresa</label>
+            <input type="text" class="form-control" [(ngModel)]="establecimiento.cuitEmpresa" name="cuitEmpresa">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+        <button class="btn btn-success" (click)="crearEstablecimiento()">Siguiente</button>
+      </div>
+    </div>
+  </div>
+</div>
