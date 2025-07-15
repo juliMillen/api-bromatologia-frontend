@@ -38,7 +38,7 @@ export class ProductoModalComponent {
       next: (response: Producto) => {
         this.idProductoCreado = response.idProducto;
         if(this.idProductoCreado !== undefined){
-          this.establecimentoService.agregarProducto(this.idEstablecimiento,this.idProductoCreado)
+          this.establecimentoService.agregarProducto(this.idEstablecimiento!,this.idProductoCreado!)
           .subscribe({
             next: () => {
               console.log('Producto asociado correctamente');

@@ -1,0 +1,49 @@
+<!-- MODAL -->
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Mantenimiento</h5>
+                <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Mantenimiento: </label>
+                        <input type="date" class="form-control" [(ngModel)]="mantenimiento.fechaMantenimiento"
+                            name="fechaMantenimiento">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Enlace Recibido</label>
+                        <input type="email" class="form-control" [(ngModel)]="mantenimiento.enlaceRecibido"
+                            name="enlaceRecibido">
+                    </div>
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Agregar Tramite</h5>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nombre Tramite</label>
+                        <input type="text" class="form-control" [(ngModel)]="tramite.nombreTramite"
+                            name="nombreTramite">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Recibo: </label>
+                        <input type="date" class="form-control" [(ngModel)]="tramite.recibo.fechaRecibo"
+                            name="fechaRecibo">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Importe: </label>
+                        <input type="number" class="form-control" [(ngModel)]="tramite.recibo.importe" name="importeRecibo">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+                <button class="btn btn-success" (click)="crearMantenimientoYTramite()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

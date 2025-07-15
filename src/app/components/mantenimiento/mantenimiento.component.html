@@ -1,18 +1,86 @@
 
-<div class="container justify-content-center mb-3">
-    <div class="input-group mb-3">
-    <span class="input-group-text" id="inputGroup-sizing-default">Fecha Mantenimiento:</span>
-    <input type="datetime-local" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+<!--Modal-->
+<app-mantenimiento-modal *ngIf="modalAbierto" (cerrar)="ocultarModal()">
+</app-mantenimiento-modal>
+<!--TABLA PARA MOSTRAR LOS DATOS-->
+<div class="container mt-5">
+
+    <div>
+        <input type="number" id="mantenimiento" [(ngModel)]="idMantenimiento" class="form-control mt-5 mb-2 w-50"
+        placeholder="Ingrese id mantenimiento">
+        <button class="btn btn-success" (click)="obtenerMantenimientoPorId()">
+            Buscar
+        </button>
+
+        <button class="btn btn-success" (click)="cargarMantenimientos()">
+            Mostrar Todos
+        </button>
     </div>
 
-    <div class="input-group mb-3">
-    <span class="input-group-text" id="inputGroup-sizing-default">Enlace recibido: </span>
-    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-    </div>
-</div>
 
-<div class="justify-content-center mb-3">
-    <button class="btn btn-primary me-3">
-    Agregar Tramite
-    </button>
+  <h2>Listado de mantenimientos</h2>
+  <button class="btn btn-success" (click)="abrirModal()">
+    Agregar Mantenimiento
+  </button>
+
+  <table class="table table-bordered table-striped" *ngIf="mantenimientos.length > 0">
+    <thead class="table-dark">
+      <tr>
+        <th>Id Mantenimiento</th>
+        <th>Fecha Mantenimiento</th>
+        <th>Enlace Recibido</th>
+        <th>Nombre Tramite</th>
+        <th>Fecha recibo</th>
+        <th>Importe</th>
+        <th *ngIf="rolUsuario === 'ADMIN'"> Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let em of mantenimientos">
+        <td>{{em.idMantenimiento}}</td>
+        <td>{{em.fechaMantenimiento | date: 'dd/MM/yyyy'}}</td>
+        <td>{{em.enlaceRecibido}}</td>
+
+        <!--Tramites-->
+
+        <ng-container *ngIf="em.tramites?.length; else sinTramites">
+            <td>
+                <ul>
+                    <li *ngFor="let t of em.tramites">
+                        {{t.nombreTramite}}
+                    </li>
+                </ul>
+            </td>
+
+            <td>
+                            <ul>
+                <li *ngFor="let t of em.tramites">
+                    {{t.recibo.fechaRecibo | date: 'dd/MM/yyyy'}}
+                </li>
+            </ul>
+            </td>
+
+            <td>
+                <ul>
+                    <li *ngFor="let t of em.tramites">
+                    {{t.recibo.importe}}
+                    </li>
+                </ul>
+            </td>
+        </ng-container>
+
+            <ng-template #sinTramites>
+             <td colspan="3" class="text-center">No tiene trámites</td>
+            </ng-template>
+
+        <td *ngIf="rolUsuario === 'ADMIN'">
+          <button class="btn btn-sm btn-primary me-2">Editar</button>
+          <button class="btn btn-sm btn-danger" (click)="eliminarMantenimientoConTramites(em)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="mantenimientos.length === 0" class="alert alert-info mt-3">
+    No hay mantenimientos cargados
+  </div>
 </div>

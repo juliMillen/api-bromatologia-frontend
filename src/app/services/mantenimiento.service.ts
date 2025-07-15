@@ -17,14 +17,14 @@ export class MantenimientoService {
 
   //obtener mantenimientos
 
-  obtenerEstablecimientos(): Observable<Mantenimiento[]>{
+  obtenerMantenimientos(): Observable<Mantenimiento[]>{
     return this.http.get<Mantenimiento[]>(`${this.apiUrl}/`);
   }
 
   //obtener mantenimiento por id
 
-  obtenerMantenimientoPorId(): Observable<Mantenimiento>{
-    return this.http.get<Mantenimiento>(`${this.apiUrl}/`);
+  obtenerMantenimientoPorId(idMantenimiento:number): Observable<Mantenimiento>{
+    return this.http.get<Mantenimiento>(`${this.apiUrl}/${idMantenimiento}`);
   }
 
   //obtener tramites por mantenimiento
@@ -37,6 +37,12 @@ export class MantenimientoService {
 
   registrarMantenimiento(mantenimiento:Mantenimiento):Observable<Mantenimiento>{
     return this.http.post<Mantenimiento>(`${this.apiUrl}/`,mantenimiento);
+  }
+
+  //eliminar mantenimiento
+
+  eliminarMantenimiento(idMantenimiento:number):Observable<Mantenimiento>{
+    return this.http.delete<Mantenimiento>(`${this.apiUrl}/{id}`);
   }
 
   //agregar tramite
