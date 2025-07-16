@@ -1,68 +1,70 @@
-<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(255, 255, 255, 0.867)">
+<div class="modal fade show d-block " tabindex="-1">
     <div class="modal-dialog">
-        <div class="modal-header">
-            <h5 class="modal-title">Agregar Registro Establecimiento</h5>
-            <button type="button" class="btn-close" (click)="cerrarModal()"></button>
-        </div>
-        <div class="modal-body">
-            <form>
-                <!-- Empresa -->
-                <label for="empresa">Empresa:</label>
-                <select [(ngModel)]="cuitEmpresaSeleccionada" name="empresa" class="form-control">
-                    <option *ngFor="let empresa of empresas" [value]="empresa.cuitEmpresa">{{empresa.nombreEmpresa}}
-                    </option>
-                </select>
-
-                <!-- Titular -->
-                <label for="titular">Titular:</label>
-                <select [(ngModel)]="cuitTitularSeleccionado" name="titular" class="form-control">
-                    <option *ngFor="let titular of titulares" [value]="titular.cuitTitular">{{titular.nombreTitular}}
-                    </option>
-                </select>
-
-                <!-- Establecimiento -->
-                <label for="establecimiento">Establecimiento:</label>
-                <select [(ngModel)]="idEstablecimientoSeleccionado" name="establecimiento" class="form-control">
-                    <option *ngFor="let est of establecimientos" [value]="est.idEstablecimiento">{{est.direccion}}
-                    </option>
-                </select>
-
-
-                <div class="mb-3">
-                    <label class="form-label">Categoria Anterior</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroEstablecimiento.categoriaAnt"
-                        name="categoriaAnt">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Arancel</label>
-                    <input type="number" class="form-control" [(ngModel)]="registroEstablecimiento.arancel"
-                        name="arancel">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Fecha Emision</label>
-                    <input type="date" class="form-control" [(ngModel)]="registroEstablecimiento.fechaEmision"
-                        name="fechaEmision">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Fecha Vencimiento</label>
-                    <input type="date" class="form-control" [(ngModel)]="registroEstablecimiento.fechaVencimiento"
-                        name="fechaVencimiento">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Estado</label>
-                    <select class="form-control" [(ngModel)]="registroEstablecimiento.estado" name="estado">
-                        <option *ngFor="let est of estados" [value]="est">{{estados}}</option>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Registro Establecimiento</h5>
+                <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- Empresa -->
+                    <label for="empresa">Empresa:</label>
+                    <select [(ngModel)]="cuitEmpresaSeleccionada" name="empresa" class="form-control">
+                        <option *ngFor="let empresa of empresas" [value]="empresa.cuitEmpresa">{{empresa.nombreEmpresa}}
+                        </option>
                     </select>
-                </div>
-            </form>
 
-            <div>
-                <button class="btn btn-danger" (click)="cerrarModal()"> Cancelar</button>
-                <button class="btn btn-success" (click)="guardarRegistro()">Guardar Registro</button>
+                    <!-- Titular -->
+                    <label for="titular">Titular:</label>
+                    <select [(ngModel)]="cuitTitularSeleccionado" name="titular" class="form-control">
+                        <option *ngFor="let titular of titulares" [value]="titular.cuitTitular">
+                            {{titular.nombreTitular}}
+                        </option>
+                    </select>
+
+                    <!-- Establecimiento -->
+                    <label for="establecimiento">Establecimiento:</label>
+                    <select [(ngModel)]="idEstablecimientoSeleccionado" name="establecimiento" class="form-control">
+                        <option *ngFor="let est of establecimientos" [value]="est.idEstablecimiento">{{est.direccion}}
+                        </option>
+                    </select>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">Categoria Anterior</label>
+                        <input type="text" class="form-control" [(ngModel)]="registroEstablecimiento.categoriaAnt"
+                            name="categoriaAnt">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Arancel</label>
+                        <input type="number" class="form-control" [(ngModel)]="registroEstablecimiento.arancel"
+                            name="arancel">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Emision</label>
+                        <input type="date" class="form-control" [(ngModel)]="registroEstablecimiento.fechaEmision"
+                            name="fechaEmision">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Vencimiento</label>
+                        <input type="date" class="form-control" [(ngModel)]="registroEstablecimiento.fechaVencimiento"
+                            name="fechaVencimiento">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Estado</label>
+                        <select class="form-control" [(ngModel)]="registroEstablecimiento.estado" name="estado">
+                            <option *ngFor="let est of estados" [value]="est">{{estados}}</option>
+                        </select>
+                    </div>
+                </form>
+                <div>
+                    <button class="btn btn-danger" (click)="cerrarModal()"> Cancelar</button>
+                    <button class="btn btn-success" (click)="guardarRegistro()">Guardar Registro</button>
+                </div>
             </div>
         </div>
     </div>

@@ -48,6 +48,6 @@ export class EstablecimientoService {
 
   //eliminar establecimiento
   eliminarEstablecimiento(id:number): Observable<Establecimiento>{
-    return this.http.delete<Establecimiento>(`${this.apiUrl}/{id}`);
+    return this.http.delete<Establecimiento>(`${this.apiUrl}/${id}`);
   }
 }

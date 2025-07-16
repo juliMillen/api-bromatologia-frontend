@@ -28,7 +28,7 @@ export class ProductoService {
   //crear producto
 
   agregarProducto(producto:Producto):Observable<Producto>{
-    return this.http.post<Producto>(`${this.apiUrl}/`,producto);
+    return this.http.post<Producto>(`${this.apiUrl}`,producto);
   }
 
   //actualizar producto

@@ -57,7 +57,6 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
   }
 
   cerrarModal(){
-    this.registroEstCreado.emit();
     this.cerrar.emit();
   }
 
@@ -78,13 +77,26 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
     this.registroEstablecimiento.cuitEmpresa = this.cuitEmpresaSeleccionada;
     this.registroEstablecimiento.idEstablecimiento = this.idEstablecimientoSeleccionado;
 
+    if(!this.cuitTitularSeleccionado || !this.cuitEmpresaSeleccionada || !this.idEstablecimientoSeleccionado || !this.registroEstablecimiento.estado){
+      console.error('Campos incompletos, se puede guardar');
+      return;
+    }
+
 
     this.registroEstablecimientoService.guardarRegistro(this.registroEstablecimiento).subscribe({
       next:(registroEstCreado:RegistroEstablecimiento) => {
         console.log('Registro establecimiento creado correctamente', registroEstCreado);
 
-        this.registroEstCreado.emit(registroEstCreado);
+        const id = registroEstCreado.idRegistroEstablecimiento!;
+        //asignar titular
+        this.registroEstablecimientoService.asignarTitular(id,this.cuitTitularSeleccionado);
 
+        //asignar empresa
+        this.registroEstablecimientoService.asignarEmpresa(id, this.cuitEmpresaSeleccionada);
+
+        //asignar establecimiento
+        this.registroEstablecimientoService.asignarEstablecimiento(id,this.idEstablecimientoSeleccionado);
+        this.registroEstCreado.emit(registroEstCreado);
         this.cerrar.emit();
       },
       error: (error) => {

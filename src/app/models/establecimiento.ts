@@ -5,6 +5,6 @@ export class Establecimiento{
     localidad!: String
     departamento!: String
     direccion!: String
-    cuitEmpresa!: number
+    cuitEmpresa?: number
     productos?: Producto[] = [];
 }
