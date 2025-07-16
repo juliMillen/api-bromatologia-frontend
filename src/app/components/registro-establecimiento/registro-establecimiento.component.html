@@ -1,1 +1,54 @@
-<p>registro-establecimiento works!</p>
+<!--Modal-->
+<app-registro-establecimiento-modal *ngIf="modalAbierto" (cerrar)="ocultarModal()" (registroEstCreado)="registroCreado($event)">
+</app-registro-establecimiento-modal>
+
+<div>
+    <div>
+        <input type="number" id="registroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento" class="form-control mt-5 mb-2 w-50"
+        placeholder="Ingrese id de registro establecimiento...">
+
+        <button class="btn btn-success" (click)="obtenerRegistroEstablecimientoPorId()">
+            Buscar
+        </button>
+
+        <button class="btn btn-success" (click)="cargarRegistros()">
+            Mostrar Todos
+        </button>
+    </div>
+
+    <h2>Listado de Registros Establecimiento</h2>
+    <button class="btn btn-success" (click)="abrirModal()">
+        Agregar Registro
+    </button>
+
+    <table class="table table-bordered table-striped" *ngIf="registrosEstablecimientos.length > 0">
+        <thead class="table-dark">
+            <tr>
+                <th>Cuit Titular</th>
+                <th>Cuit Empresa</th>
+                <th>Establecimiento</th>
+                <th>Categoria Anterior</th>
+                <th>Arancel</th>
+                <th>Fecha de emision</th>
+                <th>Fecha de vencimiento</th>
+                <th>estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reg of registrosEstablecimientos">
+                <td>{{reg.cuitTitular}}</td>
+                <td>{{reg.cuitEmpresa}}</td>
+                <td>{{reg.idEstablecimiento}}</td>
+                <td>{{reg.categoriaAnt}}</td>
+                <td>{{reg.arancel}}</td>
+                <td>{{reg.fechaEmision}}</td>
+                <td>{{reg.fechaVencimiento}}</td>
+                <td>{{reg.estado}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="registrosEstablecimientos.length === 0" class="alert alert-info mt-3">
+        No hay registros cargados
+    </div>
+</div>

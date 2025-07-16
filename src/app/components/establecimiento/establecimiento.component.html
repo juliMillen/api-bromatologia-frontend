@@ -1,20 +1,89 @@
+<!--Filtrar-->
+<div>
+    <input type="number" id="establecimiento" [(ngModel)]="establecimientoBuscado" class="form-control mt-5 mb-2 w-50"
+    placeholder="Ingrese numero de establecimiento...">
 
+    <button class="btn btn-success" (click)="cargarEstablecimientos()">
+        Mostrar Todos
+    </button>
+
+    <button class="btn btn-success" (click)="obtenerEstablecimientoPorId()">
+        Buscar
+    </button>
+</div>
+
+
+
+
+<h2>Listado de establecimientos</h2>
 <button class="btn btn-success" (click)="abrirEstablecimientoModal()">
     Agregar Establecimiento
 </button>
 
-<app-establecimiento-modal
-*ngIf="mostrarModalEstablecimiento"
-(cerrar)="cerrarEstablecimientoModal()"
-(establecimientoCreado)="abrirProductoModal($event)"
->
+<app-establecimiento-modal *ngIf="mostrarModalEstablecimiento" (cerrar)="cerrarEstablecimientoModal()"
+    (establecimientoCreado)="abrirProductoModal($event)">
 
 </app-establecimiento-modal>
 
 
-<app-producto-modal
-*ngIf="mostrarModalProducto"
-[idEstablecimiento]="idEstablecimientoCreado"
-(cerrar)="cerrarProductoModal()">
+<app-producto-modal *ngIf="mostrarModalProducto" [idEstablecimiento]="idEstablecimientoCreado"
+    (cerrar)="cerrarProductoModal()">
 
 </app-producto-modal>
+
+
+
+
+<table class="table table-bordered table-striped" *ngIf="establecimientos.length">
+    <thead class="table-dark">
+        <tr>
+            <th>Localidad</th>
+            <th>Departamento</th>
+            <th>Direccion</th>
+            <th>Cuit Empresa</th>
+            <th>Marca Producto</th>
+            <th>Denominacion</th>
+            <th>Nombre fantasia</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let es of establecimientos">
+            <td>{{es.localidad}}</td>
+            <td>{{es.departamento}}</td>
+            <td>{{es.direccion}}</td>
+            <td>{{es.cuitEmpresa}}</td>
+            <td *ngIf="es.productos?.length">
+                <ul>
+                    <li *ngFor="let prod of es.productos">
+                        {{prod.marca}},
+                    </li>
+                </ul>
+            </td>
+            <td *ngIf="es.productos?.length">
+                <ul>
+                    <li *ngFor="let prod of es.productos">
+                        {{prod.denominacion}}
+                    </li>
+                </ul>
+            </td>
+
+            <td *ngIf="es.productos?.length">
+                <ul>
+                    <li *ngFor="let prod of es.productos">
+                        {{prod.nombreFantasia}}
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-primary me-2">Editar</button>
+                <button class="btn btn-sm btn-danger"
+                    (click)="eliminarEstablecimiento(es.idEstablecimiento!)">Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div *ngIf="establecimientos.length === 0" class="alert alert-info mt-3">
+    No hay establecimientos cargados
+</div>

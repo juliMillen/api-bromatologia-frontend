@@ -1,13 +1,78 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RegistroEstablecimientoModalComponent } from '../modales/registro-establecimiento-modal/registro-establecimiento-modal.component';
+import { RegistroEstablecimientoService } from '../../services/registro-establecimiento.service';
+import { RegistroEstablecimiento } from '../../models/registroEstablecimiento';
 
 @Component({
   selector: 'app-registro-establecimiento',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule, RegistroEstablecimientoModalComponent],
   templateUrl: './registro-establecimiento.component.html',
   styleUrl: './registro-establecimiento.component.css'
 })
-export class RegistroEstablecimientoComponent {
+export class RegistroEstablecimientoComponent implements OnInit {
+
+    registroEstablecimiento: RegistroEstablecimiento = {
+    cuitTitular: 0,
+    cuitEmpresa: 0,
+    idEstablecimiento: 0,
+    categoriaAnt: '',
+    arancel: 0,
+    fechaEmision: new Date(),
+    fechaVencimiento: new Date(),
+    estado: ''
+  };
+
+  registrosEstablecimientos: RegistroEstablecimiento[] = [];
+
+  modalAbierto = false;
+
+  idRegistroEstablecimiento: number = 0;
+
+
+  constructor(private registroEstablecimientoService:RegistroEstablecimientoService) {}
+
+  ngOnInit(): void {
+    this.cargarRegistros()
+  }
+
+  abrirModal(){
+    this.modalAbierto = true;
+  }
+
+  ocultarModal(){
+    this.modalAbierto = false;
+  }
+
+  cargarRegistros():void{
+    this.registroEstablecimientoService.obtenerRegistrosEstablecimientos().subscribe({
+      next: (data: RegistroEstablecimiento[]) => {
+        console.log('Registros cargados: ',data);
+        this.registrosEstablecimientos = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar registros de establecimientos',err);
+      }
+    })
+  }
+
+  obtenerRegistroEstablecimientoPorId():void{
+    if(!this.idRegistroEstablecimiento) return;
+    this.registroEstablecimientoService.obtenerRegistroEstablecimientoPorId(this.idRegistroEstablecimiento).subscribe({
+      next: (registroEst: RegistroEstablecimiento) => {
+        this.registrosEstablecimientos = [registroEst];
+      },
+      error: (err) => {
+        console.error('Error al obtener el registro establecimiento: ',err);
+        this.registrosEstablecimientos = [];
+      }
+    })
+  }
+
+  registroCreado(registro: RegistroEstablecimiento){
+    this.registrosEstablecimientos.push(registro);
+  }
+
 
 }

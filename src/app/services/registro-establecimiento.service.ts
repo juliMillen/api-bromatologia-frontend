@@ -13,14 +13,14 @@ import { Mantenimiento } from '../models/mantenimiento';
 })
 export class RegistroEstablecimientoService {
 
-  private apiUrl = environment.apiUrl + '/registro-producto';
+  private apiUrl = environment.apiUrl + '/registroEstablecimiento';
 
   constructor(private http:HttpClient) { }
 
   //obtener registros establecimientos
 
   obtenerRegistrosEstablecimientos():Observable<RegistroEstablecimiento[]>{
-    return this.http.get<RegistroEstablecimiento[]>(`${this.apiUrl}/`);
+    return this.http.get<RegistroEstablecimiento[]>(`${this.apiUrl}`);
   }
 
   //obtener registro por id
