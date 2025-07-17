@@ -1,1 +1,32 @@
-<p>registro-producto-modal works!</p>
+<div class="modal fade show d-block " tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Registro Producto</h5>
+                <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <div class="mb-3">
+                        <label class="form-label">Tipo</label>
+                        <select class="form-control" [(ngModel)]="registroProducto.tipo" name="tipo">
+                            <option *ngFor="let t of tipos" [value]="t">{{t}}</option>
+                        </select>
+                    </div>
+
+                    <!-- Producto -->
+                    <label for="empresa">Producto:</label>
+                    <select [(ngModel)]="productoSeleccionado" name="producto" class="form-control">
+                        <option *ngFor="let producto of productos" [value]="producto.idProducto">{{producto.denominacion}}
+                        </option>
+                    </select>
+                </form>
+                <div>
+                    <button class="btn btn-danger" (click)="cerrarModal()"> Cancelar</button>
+                    <button class="btn btn-success" (click)="guardarRegistro()">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

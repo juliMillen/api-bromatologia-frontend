@@ -9,10 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RegistroEstablecimiento } from '../../../models/registroEstablecimiento';
 import { RegistroEstablecimientoService } from '../../../services/registro-establecimiento.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-registro-establecimiento-modal',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './registro-establecimiento-modal.component.html',
   styleUrl: './registro-establecimiento-modal.component.css'
 })
@@ -25,9 +26,9 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
   titulares: Titular[] = [];
   establecimientos: Establecimiento[] = [];
 
-  cuitTitularSeleccionado!:number;
-  cuitEmpresaSeleccionada!:number;
-  idEstablecimientoSeleccionado!:number;
+  cuitTitularSeleccionado!: number;
+  cuitEmpresaSeleccionada!: number;
+  idEstablecimientoSeleccionado!: number;
 
   registroEstablecimiento: RegistroEstablecimiento = {
     cuitTitular: 0,
@@ -48,59 +49,69 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
   ]
 
 
-  constructor(private empresaService:EmpresaService, private establecimientoService:EstablecimientoService, private titularService:TitularService, private registroEstablecimientoService:RegistroEstablecimientoService) {}
-  
+  constructor(private empresaService: EmpresaService, private establecimientoService: EstablecimientoService, private titularService: TitularService, private registroEstablecimientoService: RegistroEstablecimientoService) { }
+
   ngOnInit(): void {
-      this.cargarEmpresas();
-      this.cargarTitulares();
-      this.cargarEstablecimientos();
+    this.cargarEmpresas();
+    this.cargarTitulares();
+    this.cargarEstablecimientos();
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.cerrar.emit();
   }
 
-  cargarEmpresas(){
+  cargarEmpresas() {
     this.empresaService.getEmpresas().subscribe(data => this.empresas = data);
   }
 
-  cargarEstablecimientos(){
+  cargarEstablecimientos() {
     this.establecimientoService.obtenerEstablecimientos().subscribe(data => this.establecimientos = data);
   }
 
-  cargarTitulares(){
+  cargarTitulares() {
     this.titularService.obtenerTitulares().subscribe(data => this.titulares = data);
   }
 
-  guardarRegistro(): void{
+  guardarRegistro(): void {
     this.registroEstablecimiento.cuitTitular = this.cuitTitularSeleccionado;
     this.registroEstablecimiento.cuitEmpresa = this.cuitEmpresaSeleccionada;
     this.registroEstablecimiento.idEstablecimiento = this.idEstablecimientoSeleccionado;
 
-    if(!this.cuitTitularSeleccionado || !this.cuitEmpresaSeleccionada || !this.idEstablecimientoSeleccionado || !this.registroEstablecimiento.estado){
-      console.error('Campos incompletos, se puede guardar');
+    if (!this.cuitTitularSeleccionado || !this.cuitEmpresaSeleccionada || !this.idEstablecimientoSeleccionado || !this.registroEstablecimiento.estado) {
+      console.error('Campos incompletos, no se puede guardar');
       return;
     }
 
 
     this.registroEstablecimientoService.guardarRegistro(this.registroEstablecimiento).subscribe({
-      next:(registroEstCreado:RegistroEstablecimiento) => {
+      next: (registroEstCreado: RegistroEstablecimiento) => {
         console.log('Registro establecimiento creado correctamente', registroEstCreado);
 
         const id = registroEstCreado.idRegistroEstablecimiento!;
-        //asignar titular
-        this.registroEstablecimientoService.asignarTitular(id,this.cuitTitularSeleccionado);
 
-        //asignar empresa
-        this.registroEstablecimientoService.asignarEmpresa(id, this.cuitEmpresaSeleccionada);
+        forkJoin([
+          //asignar titular
+          this.registroEstablecimientoService.asignarTitular(id, this.cuitTitularSeleccionado),
 
-        //asignar establecimiento
-        this.registroEstablecimientoService.asignarEstablecimiento(id,this.idEstablecimientoSeleccionado);
-        this.registroEstCreado.emit(registroEstCreado);
-        this.cerrar.emit();
+          //asignar empresa
+          this.registroEstablecimientoService.asignarEmpresa(id, this.cuitEmpresaSeleccionada),
+
+          //asignar establecimiento
+          this.registroEstablecimientoService.asignarEstablecimiento(id, this.idEstablecimientoSeleccionado)
+        ]).subscribe({
+          next: () => {
+            this.registroEstablecimientoService.obtenerRegistroEstablecimientoPorId(id).subscribe({
+              next: (registroFinal) => {
+                this.registroEstCreado.emit(registroFinal);
+                this.cerrar.emit();
+              }
+            })
+          }
+        })
       },
       error: (error) => {
-        console.error('Error al guardar registro establecimiento: ',error);
+        console.error('Error al guardar registro establecimiento: ', error);
       }
     });
   }
