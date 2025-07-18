@@ -1,1 +1,16 @@
-<p>registro-producto works!</p>
+<!--Modal de Registro Producto-->
+<app-registro-producto-modal
+*ngIf="mostrarModalRegistroProducto"
+(cerrar)="mostrarModalRegistroProducto=false"
+(registroProdCreado)="onRegistroProductoCreado($event)"
+>
+</app-registro-producto-modal>
+
+<!--Modal de Registro Producto Establecimiento-->
+<app-registro-producto-establecimiento-modal
+*ngIf="mostrarModalRegistroProductoEstablecimiento"
+[registroProducto] = "registroProductoCreado"
+[registroEstablecimiento] = "registroEstablecimientoSeleccionado"
+(cerrar) = "mostrarModalRegistroProductoEstablecimiento = false"
+>
+</app-registro-producto-establecimiento-modal>

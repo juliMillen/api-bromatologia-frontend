@@ -1,4 +1,4 @@
 export class Usuario {
-    username!: String
-    password!: String
+    username!: string
+    password!: string
 }

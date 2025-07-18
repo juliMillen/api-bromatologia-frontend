@@ -2,12 +2,12 @@ export class RegistroProductoEstablecimiento{
     idRegistroProductoEstablecimiento?:number
     idRegistroProducto!:number
     idRegistroEstableciminento!: number
-    rnpaActual!: String
+    rnpaActual!: string
     fechaEmision!:Date
-    rnpaAnterior!: String
-    tipo!: String
-    nroRne!: String
-    certificado!: String
+    rnpaAnterior!: string
+    tipo!: string
+    nroRne!: string
+    certificado!: string
     expediente!: number
 
 }

@@ -1,0 +1,78 @@
+<div class="modal fade show d-block " tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Registro Establecimiento</h5>
+                <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- Registro Establecimiento -->
+                    <label for="registroEstablecimiento">Registro Establecimiento</label>
+                    <select [(ngModel)]="registroEstablecimientoSeleccionado" name="registroEstablecimiento" class="form-control">
+                        <option *ngFor="let regEst of registroEstablecimientos" [value]="regEst">{{registroEstablecimiento.idRegistroEstablecimiento}}
+                        </option>
+                    </select>
+
+                    <!-- Registro Producto -->
+                    <label for="titular">Registro Producto</label>
+                    <select [(ngModel)]="registroProductoSeleccionado" name="registroProducto" class="form-control">
+                        <option *ngFor="let regProducto of registroProductos" [value]="regProducto">
+                            {{registroProducto.idProducto}}
+                        </option>
+                    </select>
+
+                    <div class="mb-3">
+                        <label class="form-label">rnpa Actual</label>
+                        <input type="text" class="form-control" [(ngModel)]="registroProductoEstablecimiento.rnpaActual"
+                            name="rnpaActual">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Emision</label>
+                        <input type="date" class="form-control" [(ngModel)]="registroProductoEstablecimiento.fechaEmision"
+                            name="fechaEmision">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">rnpa Anterior</label>
+                        <input type="text" class="form-control" [(ngModel)]="registroProductoEstablecimiento.rnpaAnterior"
+                            name="rnpaAnterior">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">tipo</label>
+                        <input type="string" class="form-control" [(ngModel)]="registroProductoEstablecimiento.tipo"
+                            name="tipo">
+                    </div>
+
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Numero RNE</label>
+                        <input type="string" class="form-control" [(ngModel)]="registroProductoEstablecimiento.nroRne"
+                            name="nroRne">
+                    </div>
+
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Certificado</label>
+                        <input type="string" class="form-control" [(ngModel)]="registroProductoEstablecimiento.certificado"
+                            name="certificado">
+                    </div>
+
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Numero Expediente</label>
+                        <input type="number" class="form-control" [(ngModel)]="registroProductoEstablecimiento.expediente"
+                            name="expediente">
+                    </div>
+
+                </form>
+                <div>
+                    <button class="btn btn-danger" (click)="cerrarModal()"> Cancelar</button>
+                    <button class="btn btn-success" (click)="guardarRegistro()">Guardar Registro</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

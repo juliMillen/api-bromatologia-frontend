@@ -1,6 +1,6 @@
 export class Producto{
     idProducto?:number
-    marca!: String
-    denominacion!: String
-    nombreFantasia!: String
+    marca!: string
+    denominacion!: string
+    nombreFantasia!: string
 }

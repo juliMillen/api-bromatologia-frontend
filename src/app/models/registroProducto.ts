@@ -1,5 +1,5 @@
 export class RegistroProducto{
     idRegistroProducto?:number
-    tipo!: String
+    tipo!: string
     idProducto!:number
 }

@@ -57,8 +57,14 @@ export class RegistroProductoModalComponent implements OnInit {
     }
 
     this.registroProductoService.guardarRegistroProducto(this.registroProducto).subscribe({
+
       next:(registroProdCreado:RegistroProducto) => {
         console.log('Registro Producto creado correctamente');
+
+        this.registroProdCreado.emit(registroProdCreado);
+
+        //cierro el modal
+        this.cerrar.emit();
       },
       error: (err) =>{
         console.log('No se ha podido crear el registro');

@@ -3,9 +3,9 @@ export class RegistroEstablecimiento{
     cuitTitular!: number
     cuitEmpresa!: number
     idEstablecimiento!: number
-    categoriaAnt!: String
+    categoriaAnt!: string
     arancel!:number
     fechaEmision!:Date
     fechaVencimiento!:Date
-    estado!: String
+    estado!: string
 }
