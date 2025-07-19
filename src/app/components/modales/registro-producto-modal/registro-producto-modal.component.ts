@@ -22,7 +22,7 @@ export class RegistroProductoModalComponent implements OnInit {
 
   productos: Producto[] = [];
 
-  productoSeleccionado!:number;
+  productoSeleccionado:number = 0;
 
   registroProducto: RegistroProducto = {
     tipo: '',
@@ -38,6 +38,7 @@ export class RegistroProductoModalComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.cargarProductos();
   }
 
   cerrarModal(){
@@ -51,7 +52,7 @@ export class RegistroProductoModalComponent implements OnInit {
   guardarRegistro(){
     this.registroProducto.idProducto = this.productoSeleccionado;
 
-    if(!this.productoSeleccionado || !this.registroProducto.tipo){
+    if(!this.registroProducto.tipo || this.registroProducto.idProducto <= 0){
       console.error('Campos incompletos');
       return;
     }
@@ -67,7 +68,7 @@ export class RegistroProductoModalComponent implements OnInit {
         this.cerrar.emit();
       },
       error: (err) =>{
-        console.log('No se ha podido crear el registro');
+        console.log('No se ha podido crear el registro',err);
       }
     })
   }

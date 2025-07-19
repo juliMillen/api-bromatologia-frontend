@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { RegistroProductoComponent } from './components/registro-producto/registro-producto.component';
 import { RegistroEstablecimientoComponent } from './components/registro-establecimiento/registro-establecimiento.component';
-import { RegistroProductoEstablecimientoComponent } from './components/registroProductoEstablecimiento/registro-producto-establecimiento/registro-producto-establecimiento.component';
 import { EmpresaComponent } from './components/empresa/empresa/empresa.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
@@ -17,7 +16,7 @@ export const routes: Routes = [
     {path: 'empresa', component:EmpresaComponent},
     {path: 'registro-producto', component: RegistroProductoComponent},
     {path: 'registro-establecimiento',component: RegistroEstablecimientoComponent},
-    {path: 'registro-producto-establecimiento', component:RegistroProductoEstablecimientoComponent},
+    {path: 'registroEstablecimiento/:id',component: RegistroEstablecimientoComponent},
     {path: 'establecimiento',component: EstablecimientoComponent},
     {path: 'mantenimiento',component: MantenimientoComponent}
 ];

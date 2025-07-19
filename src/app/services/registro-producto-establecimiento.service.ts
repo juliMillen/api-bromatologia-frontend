@@ -11,7 +11,7 @@ import { RegistroProductoEstablecimiento } from '../models/registroProductoEstab
 })
 export class RegistroProductoEstablecimientoService {
 
-  private apiUrl = environment.apiUrl + '/registro-producto-establecimiento';
+  private apiUrl = environment.apiUrl + '/registroProductoEstablecimiento';
 
   constructor(private http:HttpClient) { }
 
@@ -28,8 +28,8 @@ export class RegistroProductoEstablecimientoService {
 
   //guardar registro producto
 
-  guardarRegistroProductoEstablecimiento(registroProductoEstablecimiento:RegistroProductoEstablecimiento):Observable<RegistroProductoEstablecimiento>{
-    return this.http.post<RegistroProductoEstablecimiento>(`${this.apiUrl}`,registroProductoEstablecimiento);
+  guardarRegistroProductoEstablecimiento(idRegistroProducto:number, idRegistroEstablecimiento:number,registroProductoEstablecimiento:RegistroProductoEstablecimiento):Observable<RegistroProductoEstablecimiento>{
+    return this.http.post<RegistroProductoEstablecimiento>(`${this.apiUrl}/${idRegistroProducto}/${idRegistroEstablecimiento}`,registroProductoEstablecimiento);
   }
 
 

@@ -1,7 +1,7 @@
 export class RegistroProductoEstablecimiento{
     idRegistroProductoEstablecimiento?:number
     idRegistroProducto!:number
-    idRegistroEstableciminento!: number
+    idRegistroEstablecimiento!: number
     rnpaActual!: string
     fechaEmision!:Date
     rnpaAnterior!: string

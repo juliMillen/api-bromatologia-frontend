@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RegistroEstablecimientoModalComponent } from '../modales/registro-establecimiento-modal/registro-establecimiento-modal.component';
 import { RegistroEstablecimientoService } from '../../services/registro-establecimiento.service';
 import { RegistroEstablecimiento } from '../../models/registroEstablecimiento';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-registro-establecimiento',
@@ -31,10 +32,25 @@ export class RegistroEstablecimientoComponent implements OnInit {
   idRegistroEstablecimiento: number = 0;
 
 
-  constructor(private registroEstablecimientoService:RegistroEstablecimientoService) {}
+  constructor(private registroEstablecimientoService:RegistroEstablecimientoService, private route:ActivatedRoute) {}
 
   ngOnInit(): void {
     this.cargarRegistros()
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if(id){
+      this.registroEstablecimientoService.obtenerRegistroEstablecimientoPorId(id).subscribe({
+        next: (regEst) => {
+          this.registrosEstablecimientos = [regEst];
+        },
+        error: (err) =>{
+          console.error('error al cargar registro por ID: ',err);
+          this.registrosEstablecimientos = [];
+        }
+      });
+    }else{
+      //cargo todos los registros
+      this.cargarRegistros();
+    }
   }
 
   abrirModal(){

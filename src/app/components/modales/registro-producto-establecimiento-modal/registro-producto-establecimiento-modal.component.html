@@ -9,16 +9,18 @@
                 <form>
                     <!-- Registro Establecimiento -->
                     <label for="registroEstablecimiento">Registro Establecimiento</label>
+                    <option [ngValue]="null" disabled selected>Seleccione un registro</option>
                     <select [(ngModel)]="registroEstablecimientoSeleccionado" name="registroEstablecimiento" class="form-control">
-                        <option *ngFor="let regEst of registroEstablecimientos" [value]="regEst">{{registroEstablecimiento.idRegistroEstablecimiento}}
+                        <option *ngFor="let regEst of registrosEstablecimientos" [ngValue]="regEst">{{regEst.idRegistroEstablecimiento}}
                         </option>
                     </select>
 
                     <!-- Registro Producto -->
                     <label for="titular">Registro Producto</label>
                     <select [(ngModel)]="registroProductoSeleccionado" name="registroProducto" class="form-control">
-                        <option *ngFor="let regProducto of registroProductos" [value]="regProducto">
-                            {{registroProducto.idProducto}}
+                        <option [ngValue]="null" disabled selected>Seleccione un registro</option>
+                        <option *ngFor="let regProducto of registrosProductos" [ngValue]="regProducto">
+                            {{regProducto.idRegistroProducto}}
                         </option>
                     </select>
 
@@ -70,7 +72,7 @@
                 </form>
                 <div>
                     <button class="btn btn-danger" (click)="cerrarModal()"> Cancelar</button>
-                    <button class="btn btn-success" (click)="guardarRegistro()">Guardar Registro</button>
+                    <button class="btn btn-success" (click)="guardarRegistroProductoEstablecimiento()">Guardar Registro</button>
                 </div>
             </div>
         </div>

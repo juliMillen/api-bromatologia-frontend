@@ -14,3 +14,41 @@
 (cerrar) = "mostrarModalRegistroProductoEstablecimiento = false"
 >
 </app-registro-producto-establecimiento-modal>
+
+<h2>Listado de Registros Productos</h2>
+<button class="btn btn-success" (click)="abrirRegistroProductoModal()">
+    Agregar Registro
+</button>
+
+<table class=" table table table-bordered table-striped" *ngIf="registrosProd.length">
+    <thead class="table dark">
+        <tr>
+            <th>N° RNPA Actual</th>
+            <th>Expediente</th>
+            <th>Fecha Emision</th>
+            <th>Tipo</th>
+            <th>N° Anterior RNPA</th>
+            <th>RNE</th>
+            <th>ID Registro Establecimiento</th>
+            <th>Certificado</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let reg of registrosProd">
+            <td>{{reg.rnpaActual}}</td>
+            <td>{{reg.expediente}}</td>
+            <td>{{reg.fechaEmision | date: 'dd/MM/yyyy'}}</td>
+            <td>{{reg.tipo}}</td>
+            <td>{{reg.rnpaAnterior}}</td>
+            <td>{{reg.nroRne}}</td>
+            <td>
+                <a [routerLink]="['/registroEstablecimiento', reg.idRegistroEstablecimiento]" class="btn btn-sm btn-info"> Ver detalles</a>
+            </td>
+            <td>{{reg.certificado}}</td>
+        </tr>
+    </tbody>
+</table>
+<div *ngIf="registrosProd.length ===0" class="alert alert-info">
+    No hay Registros Productos cargados
+</div>

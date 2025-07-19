@@ -10,7 +10,7 @@ import { Mantenimiento } from '../models/mantenimiento';
   providedIn: 'root'
 })
 export class RegistroProductoService {
-  private apiUrl = environment.apiUrl + '/registro-producto';
+  private apiUrl = environment.apiUrl + '/registroProducto';
   
     constructor(private http:HttpClient) { }
   
