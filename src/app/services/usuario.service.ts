@@ -9,7 +9,8 @@ import { environment } from '../../environments/environment';
 })
 export class UsuarioService {
 
-  private apiUrl = environment.apiUrl + '/usuario'
+  private apiUrl = environment.apiUrl + '/usuarios'
+  private urlCreate = environment.apiUrl + '/register'
 
   constructor(private http:HttpClient) { }
 
@@ -27,7 +28,7 @@ export class UsuarioService {
 
   //crear usuario
   crearUsuario(usuario:Usuario): Observable<Usuario>{
-    return this.http.post<Usuario>(`${this.apiUrl}/`,usuario);
+    return this.http.post<Usuario>(`${this.urlCreate}`,usuario);
   }
 
   //eliminar usuario

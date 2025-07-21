@@ -26,6 +26,8 @@ export class RegistroProductoComponent implements OnInit {
 
   registrosProd: RegistroProductoEstablecimiento[] = [];
 
+  idRegistroProducto: number = 0;
+  idRegistroEstablecimiento: number = 0;
 
   constructor( private registroProductoEstablecimientoService: RegistroProductoEstablecimientoService) {}
 
@@ -45,5 +47,16 @@ export class RegistroProductoComponent implements OnInit {
     this.registroProductoCreado = registro;
     this.mostrarModalRegistroProducto = false;
     this.mostrarModalRegistroProductoEstablecimiento = true;
+  }
+
+  obtenerRegistroProductoEstablecimientoPorId(){
+    this.registroProductoEstablecimientoService.obtenerRegistroPorId(this.idRegistroProducto,this.idRegistroEstablecimiento).subscribe({
+      next: (registroProdEst:RegistroProductoEstablecimiento) => {
+        this.registrosProd = [registroProdEst];
+      },
+      error: (err) => {
+        console.error('No se ha encontrado ningun registro');
+      }
+    })
   }
 }

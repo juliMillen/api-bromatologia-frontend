@@ -7,20 +7,22 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <!-- Registro Establecimiento -->
-                    <label for="registroEstablecimiento">Registro Establecimiento</label>
-                    <option [ngValue]="null" disabled selected>Seleccione un registro</option>
-                    <select [(ngModel)]="registroEstablecimientoSeleccionado" name="registroEstablecimiento" class="form-control">
-                        <option *ngFor="let regEst of registrosEstablecimientos" [ngValue]="regEst">{{regEst.idRegistroEstablecimiento}}
-                        </option>
-                    </select>
 
                     <!-- Registro Producto -->
                     <label for="titular">Registro Producto</label>
                     <select [(ngModel)]="registroProductoSeleccionado" name="registroProducto" class="form-control">
                         <option [ngValue]="null" disabled selected>Seleccione un registro</option>
-                        <option *ngFor="let regProducto of registrosProductos" [ngValue]="regProducto">
+                        <option *ngFor="let regProducto of registrosProductos" [ngValue]="regProducto.idRegistroProducto">
                             {{regProducto.idRegistroProducto}}
+                        </option>
+                    </select>
+
+
+                    <!-- Registro Establecimiento -->
+                    <label for="registroEstablecimiento">Registro Establecimiento</label>
+                    <option [ngValue]="null" disabled selected>Seleccione un registro</option>
+                    <select [(ngModel)]="registroEstablecimientoSeleccionado" name="registroEstablecimiento" class="form-control">
+                        <option *ngFor="let regEst of registrosEstablecimientos" [ngValue]="regEst.idRegistroEstablecimiento">{{regEst.idRegistroEstablecimiento}}
                         </option>
                     </select>
 

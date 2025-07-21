@@ -32,7 +32,7 @@
         <th>Nombre Titular</th>
         <th>Email</th>
         <th>Telefono</th>
-        <th *ngIf="rolUsuario === 'ADMIN'"> Acciones</th>
+        <th> Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -44,7 +44,7 @@
         <td>{{em.email}}</td>
         <td>{{em.telefono}}</td>
 
-        <td *ngIf="rolUsuario === 'ADMIN'">
+        <td>
           <button class="btn btn-sm btn-primary me-2">Editar</button>
           <button class="btn btn-sm btn-danger">Eliminar</button>
         </td>

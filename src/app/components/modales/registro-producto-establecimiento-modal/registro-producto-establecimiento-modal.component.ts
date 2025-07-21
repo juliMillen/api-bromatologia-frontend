@@ -28,16 +28,15 @@ export class RegistroProductoEstablecimientoModalComponent implements OnInit {
   registroEstablecimientoSeleccionado: number = 0;
 
   registroProductoEstablecimiento: RegistroProductoEstablecimiento = {
+    idRegistroProducto: 0,
+    idRegistroEstablecimiento:0,
     rnpaActual: '',
     rnpaAnterior: '',
-    fechaEmision: new Date(),
+    fechaEmision: new Date().toISOString().split('T')[0],
     tipo: '',
     nroRne: '',
     certificado: '',
-    expediente: 0,
-
-    idRegistroProducto: 0,
-    idRegistroEstablecimiento:0
+    expediente: 0
   }
 
 
@@ -69,6 +68,13 @@ export class RegistroProductoEstablecimientoModalComponent implements OnInit {
 
 
   guardarRegistroProductoEstablecimiento(){
+
+    if(!this.registroProductoEstablecimiento.fechaEmision){
+      console.log('La fecha de emision es obligatoria');
+      return;
+    }
+
+
     this.registroProductoEstablecimiento.idRegistroProducto = this.registroProductoSeleccionado;
     this.registroProductoEstablecimiento.idRegistroEstablecimiento = this.registroEstablecimientoSeleccionado;
 

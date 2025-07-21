@@ -15,6 +15,24 @@
 >
 </app-registro-producto-establecimiento-modal>
 
+    <div>
+        <label for="registroProducto">Ingrese ID registro producto</label>
+        <input type="number" id="RegistroProducto" [(ngModel)]="idRegistroProducto" class="form-control mt-5 mb-2 w-50"
+        placeholder="Ingrese id de registro producto...">
+
+        <label for="registroEstablecimiento">Ingrese ID registro establecimiento:</label>
+        <input type="number" id="RegistroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento" class="form-control mt-5 mb-2 w-50"
+        placeholder="Ingrese id de registro establecimiento...">
+
+        <button class="btn btn-success" (click)="obtenerRegistroProductoEstablecimientoPorId()">
+            Buscar
+        </button>
+
+        <button class="btn btn-success" (click)="cargarRegistros()">
+            Mostrar Todos
+        </button>
+    </div>
+
 <h2>Listado de Registros Productos</h2>
 <button class="btn btn-success" (click)="abrirRegistroProductoModal()">
     Agregar Registro
@@ -38,12 +56,12 @@
         <tr *ngFor="let reg of registrosProd">
             <td>{{reg.rnpaActual}}</td>
             <td>{{reg.expediente}}</td>
-            <td>{{reg.fechaEmision | date: 'dd/MM/yyyy'}}</td>
+            <td>{{reg.fechaEmision}}</td>
             <td>{{reg.tipo}}</td>
             <td>{{reg.rnpaAnterior}}</td>
             <td>{{reg.nroRne}}</td>
             <td>
-                <a [routerLink]="['/registroEstablecimiento', reg.idRegistroEstablecimiento]" class="btn btn-sm btn-info"> Ver detalles</a>
+                <a [routerLink]="['/registroEstablecimiento', reg.idRegistroEstablecimiento]" class="btn btn-sm btn-info"> Ver detalles - {{reg.idRegistroEstablecimiento}}</a>
             </td>
             <td>{{reg.certificado}}</td>
         </tr>

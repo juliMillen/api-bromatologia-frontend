@@ -22,8 +22,8 @@ export class RegistroProductoEstablecimientoService {
   }
 
   //obtener registro por id
-  obtenerRegistroPorId(idRegistroProducto:number, idRegistroEstablecimiento:number):Observable<RegistroProducto>{
-    return this.http.get<RegistroProducto>(`${this.apiUrl}/${idRegistroProducto}/${idRegistroEstablecimiento}`);
+  obtenerRegistroPorId(idRegistroProducto:number, idRegistroEstablecimiento:number):Observable<RegistroProductoEstablecimiento>{
+    return this.http.get<RegistroProductoEstablecimiento>(`${this.apiUrl}/${idRegistroProducto}/${idRegistroEstablecimiento}`);
   }
 
   //guardar registro producto
