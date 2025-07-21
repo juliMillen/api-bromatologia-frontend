@@ -3,7 +3,9 @@
             <div class="logo-container">
                 <div class="logo-text">ICAB</div>
                 <div class="subtitle">Instituto de Control de Alimentacion y Bromatologia</div>
-                <div *ngIf="mensajeExito" class="alert alert-info"></div>
+                <div *ngIf="mensajeExito" class="alert alert-info">
+                    {{mensajeExito}}
+                </div>
             <form (ngSubmit)="crearUsuario()">
                 <div class="form-group">
                     <label for="usuario">Nuevo Usuario:</label>
