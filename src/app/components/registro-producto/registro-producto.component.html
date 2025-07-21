@@ -41,6 +41,7 @@
 <table class=" table table table-bordered table-striped" *ngIf="registrosProd.length">
     <thead class="table dark">
         <tr>
+            <th>ID Registro Producto</th>
             <th>N° RNPA Actual</th>
             <th>Expediente</th>
             <th>Fecha Emision</th>
@@ -54,6 +55,7 @@
 
     <tbody>
         <tr *ngFor="let reg of registrosProd">
+            <td>{{reg.idRegistroProducto}}</td>
             <td>{{reg.rnpaActual}}</td>
             <td>{{reg.expediente}}</td>
             <td>{{reg.fechaEmision}}</td>
