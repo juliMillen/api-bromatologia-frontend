@@ -5,6 +5,7 @@ import { Mantenimiento } from '../../models/mantenimiento';
 import { MantenimientoService } from '../../services/mantenimiento.service';
 import { TramiteService } from '../../services/tramite.service';
 import { MantenimientoModalComponent } from '../modales/mantenimiento-modal/mantenimiento-modal.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-mantenimiento',
@@ -27,12 +28,13 @@ export class MantenimientoComponent implements OnInit {
 
   idMantenimiento: number = 0;
 
-  rolUsuario: string = '';
+  esAdmin: boolean= false;
 
-  constructor(private mantenimientoService:MantenimientoService, private tramiteService:TramiteService){}
+  constructor(private mantenimientoService:MantenimientoService, private tramiteService:TramiteService, private authService:AuthService){}
 
   ngOnInit(): void {
-      this.cargarMantenimientos();
+    this.esAdmin = this.authService.obtenerRolDesdeToken() === 'ROLE_ADMIN';
+    this.cargarMantenimientos();
   }
 
   abrirModal(){
@@ -41,6 +43,10 @@ export class MantenimientoComponent implements OnInit {
 
   ocultarModal(){
     this.modalAbierto = false;
+  }
+
+  isAdmin(): boolean {
+    return this.authService.obtenerRolDesdeToken() === 'ROLE_ADMIN'
   }
 
   cargarMantenimientos():void {

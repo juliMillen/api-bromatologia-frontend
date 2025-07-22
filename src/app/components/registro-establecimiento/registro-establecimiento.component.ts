@@ -5,6 +5,8 @@ import { RegistroEstablecimientoModalComponent } from '../modales/registro-estab
 import { RegistroEstablecimientoService } from '../../services/registro-establecimiento.service';
 import { RegistroEstablecimiento } from '../../models/registroEstablecimiento';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MantenimientoService } from '../../services/mantenimiento.service';
+import { Mantenimiento } from '../../models/mantenimiento';
 
 @Component({
   selector: 'app-registro-establecimiento',
@@ -27,12 +29,14 @@ export class RegistroEstablecimientoComponent implements OnInit {
 
   registrosEstablecimientos: RegistroEstablecimiento[] = [];
 
+  mantenimientos: Mantenimiento[] = [];
+
   modalAbierto = false;
 
   idRegistroEstablecimiento: number = 0;
 
 
-  constructor(private registroEstablecimientoService:RegistroEstablecimientoService, private route:ActivatedRoute) {}
+  constructor(private registroEstablecimientoService:RegistroEstablecimientoService, private route:ActivatedRoute, private mantenimientoService:MantenimientoService) {}
 
   ngOnInit(): void {
     this.cargarRegistros()
@@ -50,6 +54,9 @@ export class RegistroEstablecimientoComponent implements OnInit {
     }else{
       //cargo todos los registros
       this.cargarRegistros();
+
+      //cargo mantenimientos
+      this.cargarMantenimientos();
     }
   }
 
@@ -69,6 +76,18 @@ export class RegistroEstablecimientoComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al cargar registros de establecimientos',err);
+      }
+    })
+  }
+
+  cargarMantenimientos():void{
+    this.mantenimientoService.obtenerMantenimientos().subscribe({
+      next: (data: Mantenimiento[]) => {
+        console.log('Mantenimientos cargados: ',data);
+        this.mantenimientos = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar mantenimientos: ',err);
       }
     })
   }

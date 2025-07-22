@@ -1,11 +1,12 @@
 <!--Modal-->
-<app-registro-establecimiento-modal *ngIf="modalAbierto" (cerrar)="ocultarModal()" (registroEstCreado)="registroCreado($event)">
+<app-registro-establecimiento-modal *ngIf="modalAbierto" (cerrar)="ocultarModal()"
+    (registroEstCreado)="registroCreado($event)">
 </app-registro-establecimiento-modal>
 
 <div>
     <div>
-        <input type="number" id="registroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento" class="form-control mt-5 mb-2 w-50"
-        placeholder="Ingrese id de registro establecimiento...">
+        <input type="number" id="registroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento"
+            class="form-control mt-5 mb-2 w-50" placeholder="Ingrese id de registro establecimiento...">
 
         <button class="btn btn-success" (click)="obtenerRegistroEstablecimientoPorId()">
             Buscar
@@ -35,20 +36,30 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let reg of registrosEstablecimientos">
-                <td>{{reg.cuitTitular}}</td>
-                <td>{{reg.cuitEmpresa}}</td>
-                <td>{{reg.idEstablecimiento}}</td>
-                <td>{{reg.categoriaAnt}}</td>
-                <td>{{reg.arancel}}</td>
-                <td>{{reg.fechaEmision}}</td>
-                <td>{{reg.fechaVencimiento}}</td>
-                <td>{{reg.estado}}</td>
-            </tr>
+            <ng-container *ngFor="let reg of registrosEstablecimientos">
+                <tr>
+                    <td>{{reg.cuitTitular}}</td>
+                    <td>{{reg.cuitEmpresa}}</td>
+                    <td>{{reg.idEstablecimiento}}</td>
+                    <td>{{reg.categoriaAnt}}</td>
+                    <td>{{reg.arancel}}</td>
+                    <td>{{reg.fechaEmision}}</td>
+                    <td>{{reg.fechaVencimiento}}</td>
+                    <td>{{reg.estado}}</td>
+                </tr>
+
+                <tr *ngFor="let man of reg.mantenimientos">
+                    <td colspan="2">
+                        <strong>Mantenimientos</strong>
+                    </td>
+                    <td colspan="2">{{man.fechaMantenimiento}}</td>
+                    <td colspan="4">{{man.enlaceRecibido}}</td>
+                </tr>
+            </ng-container>
         </tbody>
     </table>
 
-    <div *ngIf="registrosEstablecimientos.length === 0" class="alert alert-info mt-3">
-        No hay registros cargados
-    </div>
+<div *ngIf="registrosEstablecimientos.length === 0" class="alert alert-info mt-3">
+    No hay registros cargados
+</div>
 </div>

@@ -1,3 +1,5 @@
+import { Mantenimiento } from "./mantenimiento"
+
 export class RegistroEstablecimiento{
     idRegistroEstablecimiento?: number
     cuitTitular!: number
@@ -8,4 +10,5 @@ export class RegistroEstablecimiento{
     fechaEmision!:Date
     fechaVencimiento!:Date
     estado!: string
+    mantenimientos?: Mantenimiento[]
 }

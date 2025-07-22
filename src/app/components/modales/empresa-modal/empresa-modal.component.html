@@ -3,43 +3,43 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Agregar Empresa</h5>
+        <h5 class="modal-title">{{modo === 'crear' ? 'Agregar Empresa': 'Editar Empresa'}}</h5>
         <button type="button" class="btn-close" (click)="cerrarModal()"></button>
       </div>
       <div class="modal-body">
         <form>
-            <div class="mb-3">
+            <div class="mb-3" *ngIf="modo === 'crear'">
             <label class="form-label">CUIT Empresa</label>
             <input type="number" class="form-control" [(ngModel)]="empresa.cuitEmpresa" name="cuitEmpresa">
           </div>
-          <div class="mb-3">
+          <div class="mb-3" *ngIf="modo === 'crear'">
             <label class="form-label">Nombre Empresa</label>
             <input type="text" class="form-control" [(ngModel)]="empresa.nombreEmpresa" name="nombreEmpresa">
           </div>
           <div class="mb-3">
-            <label class="form-label">Email Empresa</label>
+            <label class="form-label" *ngIf="modo === 'editar'">Email Empresa</label>
             <input type="email" class="form-control" [(ngModel)]="empresa.email" name="emailEmpresa">
           </div>
           <div class="mb-3">
-            <label class="form-label">Teléfono Empresa</label>
+            <label class="form-label" *ngIf="modo === 'editar'">Teléfono Empresa</label>
             <input type="text" class="form-control" [(ngModel)]="empresa.telefono" name="telefonoEmpresa">
           </div>
 
-          <div class="mb-3">
+          <div class="mb-3" *ngIf="modo === 'crear'">
             <label class="form-label">CUIT Titular</label>
             <input type="number" class="form-control" [(ngModel)]="empresa.titular.cuitTitular" name="cuitTitular">
           </div>
-          <div class="mb-3">
+          <div class="mb-3" *ngIf="modo === 'crear'">
             <label class="form-label">Nombre Titular</label>
             <input type="text" class="form-control" [(ngModel)]="empresa.titular.nombreTitular" name="nombreTitular">
           </div>
 
             <div class="mb-3">
-            <label class="form-label">Email Titular</label>
+            <label class="form-label" *ngIf="modo === 'editar'">Email Titular</label>
             <input type="text" class="form-control" [(ngModel)]="empresa.titular.email" name="emailTitular">
           </div>
 
-            <div class="mb-3">
+            <div class="mb-3" *ngIf="modo === 'editar'">
             <label class="form-label">Telefono Titular</label>
             <input type="number" class="form-control" [(ngModel)]="empresa.titular.telefono" name="telefonoTitular">
           </div>

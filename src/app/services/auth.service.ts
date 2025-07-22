@@ -33,4 +33,21 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
+  obtenerRolDesdeToken(): string | null {
+    const token = this.obtenerToken();
+    if(!token) return null;
+
+    try{
+      const payload= JSON.parse(atob(token.split('.')[1]));
+      const authorities = payload.authorities;
+
+      if(Array.isArray(authorities) && authorities.length > 0){
+        return authorities[0];
+      }
+      return null;
+    } catch(e){
+      return null;
+    }
+  }
+
 }

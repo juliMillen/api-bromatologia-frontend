@@ -5,6 +5,7 @@ import { EstablecimientoModalComponent } from "../modales/establecimiento-modal/
 import { ProductoModalComponent } from "../modales/producto-modal/producto-modal.component";
 import { Establecimiento } from '../../models/establecimiento';
 import { EstablecimientoService } from '../../services/establecimiento.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-establecimiento',
@@ -30,11 +31,18 @@ export class EstablecimientoComponent implements OnInit {
 
   establecimientoBuscado: number = 0;
 
-  constructor(private establecimientoService:EstablecimientoService){}
+  esAdmin: boolean = false;
+
+  constructor(private establecimientoService:EstablecimientoService, private authService:AuthService){}
 
 
   ngOnInit(): void {
-      this.cargarEstablecimientos();
+    this.esAdmin = this.authService.obtenerRolDesdeToken() === 'ROLE_ADMIN';
+    this.cargarEstablecimientos();
+  }
+
+  isAdmin():boolean{
+    return this.authService.obtenerRolDesdeToken() === 'ROLE_ADMIN';
   }
 
   cargarEstablecimientos():void{

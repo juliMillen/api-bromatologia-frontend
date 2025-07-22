@@ -1,21 +1,20 @@
-
 <!--Modal-->
 <app-mantenimiento-modal *ngIf="modalAbierto" (cerrar)="ocultarModal()">
 </app-mantenimiento-modal>
 <!--TABLA PARA MOSTRAR LOS DATOS-->
 <div class="container mt-5">
 
-    <div>
-        <input type="number" id="mantenimiento" [(ngModel)]="idMantenimiento" class="form-control mt-5 mb-2 w-50"
-        placeholder="Ingrese id mantenimiento">
-        <button class="btn btn-success" (click)="obtenerMantenimientoPorId()">
-            Buscar
-        </button>
+  <div>
+    <input type="number" id="mantenimiento" [(ngModel)]="idMantenimiento" class="form-control mt-5 mb-2 w-50"
+      placeholder="Ingrese id mantenimiento">
+    <button class="btn btn-success" (click)="obtenerMantenimientoPorId()">
+      Buscar
+    </button>
 
-        <button class="btn btn-success" (click)="cargarMantenimientos()">
-            Mostrar Todos
-        </button>
-    </div>
+    <button class="btn btn-success" (click)="cargarMantenimientos()">
+      Mostrar Todos
+    </button>
+  </div>
 
 
   <h2>Listado de mantenimientos</h2>
@@ -32,7 +31,7 @@
         <th>Nombre Tramite</th>
         <th>Fecha recibo</th>
         <th>Importe</th>
-        <th> Acciones</th>
+        <th *ngIf="esAdmin"> Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -44,38 +43,40 @@
         <!--Tramites-->
 
         <ng-container *ngIf="em.tramites?.length; else sinTramites">
-            <td>
-                <ul>
-                    <li *ngFor="let t of em.tramites">
-                        {{t.nombreTramite}}
-                    </li>
-                </ul>
-            </td>
-
-            <td>
-                            <ul>
-                <li *ngFor="let t of em.tramites">
-                    {{t.recibo.fechaRecibo | date: 'dd/MM/yyyy'}}
-                </li>
+          <td>
+            <ul>
+              <li *ngFor="let t of em.tramites">
+                {{t.nombreTramite}}
+              </li>
             </ul>
-            </td>
+          </td>
 
-            <td>
-                <ul>
-                    <li *ngFor="let t of em.tramites">
-                    {{t.recibo.importe}}
-                    </li>
-                </ul>
-            </td>
+          <td>
+            <ul>
+              <li *ngFor="let t of em.tramites">
+                {{t.recibo.fechaRecibo | date: 'dd/MM/yyyy'}}
+              </li>
+            </ul>
+          </td>
+
+          <td>
+            <ul>
+              <li *ngFor="let t of em.tramites">
+                {{t.recibo.importe}}
+              </li>
+            </ul>
+          </td>
         </ng-container>
 
-            <ng-template #sinTramites>
-             <td colspan="3" class="text-center">No tiene trámites</td>
-            </ng-template>
-        <td>
-          <button class="btn btn-sm btn-primary me-2">Editar</button>
-          <button class="btn btn-sm btn-danger" (click)="eliminarMantenimientoConTramites(em)">Eliminar</button>
-        </td>
+        <ng-template #sinTramites>
+          <td colspan="3" class="text-center">No tiene trámites</td>
+        </ng-template>
+        <ng-container *ngIf="isAdmin()">
+          <td>
+            <button class="btn btn-sm btn-primary me-2">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="eliminarMantenimientoConTramites(em)">Eliminar</button>
+          </td>
+        </ng-container>
       </tr>
     </tbody>
   </table>

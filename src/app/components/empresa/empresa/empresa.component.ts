@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { EmpresaService } from '../../../services/empresa.service';
 import { Empresa } from '../../../models/empresa';
 import { EmpresaModalComponent } from "../../modales/empresa-modal/empresa-modal.component";
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-empresa',
@@ -28,7 +29,7 @@ export class EmpresaComponent implements OnInit{
 
   empresas: Empresa[] = [];
 
-  empresaEditanto: Empresa | null = null;
+  empresaEditando: Empresa | null = null;
 
   modalAbierto = false;
 
@@ -36,18 +37,32 @@ export class EmpresaComponent implements OnInit{
 
   rolUsuario: string= '';
 
-  constructor(private empresaService: EmpresaService) { }
+  modo: 'crear' | 'editar' = 'crear';
+
+  constructor(private empresaService: EmpresaService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.cargarEmpresas();
   }
 
   abrirModal() {
+    this.empresaEditando = null;
+    this.modo = 'crear';
     this.modalAbierto = true;
   }
 
   ocultarModal() {
     this.modalAbierto = false;
+  }
+
+  abrirModalParaEditar(empresa:Empresa):void {
+    this.empresaEditando = empresa;
+    this.modo = 'editar'
+    this.modalAbierto = true;
+  }
+
+  isAdmin(): boolean {
+    return this.authService.obtenerRolDesdeToken() === 'ROLE_ADMIN'
   }
 
 
@@ -64,8 +79,21 @@ export class EmpresaComponent implements OnInit{
     })
   }
 
-  guardarEmpresa(nuevaEmpresa:Empresa){
-    this.empresas.push(nuevaEmpresa)
+  guardarEmpresa(nuevaEmpresa:Empresa):void{
+    if(this.empresaEditando){
+      this.modificarEmpresa(nuevaEmpresa);
+      this.empresaEditando= null;
+    }else{
+      this.empresaService.crearEmpresa(nuevaEmpresa).subscribe({
+        next:(nueva) =>{
+          this.empresas.push(nueva);
+        },
+        error: (err) => {
+          console.error('Error al crear empresa: ',err);
+        }
+      })
+    }
+    this.ocultarModal();
   }
 
   cargarEmpresas(): void {

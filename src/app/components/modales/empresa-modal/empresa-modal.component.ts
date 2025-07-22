@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Empresa } from '../../../models/empresa';
 import { EmpresaService } from '../../../services/empresa.service';
 import { CommonModule } from '@angular/common';
@@ -10,8 +10,10 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './empresa-modal.component.html',
   styleUrl: './empresa-modal.component.css'
 })
-export class EmpresaModalComponent {
+export class EmpresaModalComponent implements OnInit {
 
+  @Input() empresaParaEditar: Empresa | null = null;
+  @Input() modo: 'crear' | 'editar' = 'crear';
   @Output() cerrar = new EventEmitter<void>()
   @Output() empresaCreada = new EventEmitter<Empresa>()
 
@@ -30,12 +32,22 @@ export class EmpresaModalComponent {
   
     empresas: Empresa[] = [];
   
+    modoEdicion: boolean = false;
 
 
     constructor(private empresaService: EmpresaService) {}
 
+    ngOnInit(): void {
+        if(this.empresaParaEditar){
+          this.empresa = JSON.parse(JSON.stringify(this.empresaParaEditar))
+        }
+    }
+
+    guardarEmpresa():void {
+      this.empresaCreada.emit(this.empresa);
+    }
+
     cerrarModal(){
-      this.empresaCreada.emit();
       this.cerrar.emit();
     }
 

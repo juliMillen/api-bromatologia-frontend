@@ -1,3 +1,5 @@
+import { RegistroProducto } from "./registroProducto"
+
 export class RegistroProductoEstablecimiento{
     idRegistroProductoEstablecimiento?:number
     idRegistroProducto!:number
@@ -9,5 +11,6 @@ export class RegistroProductoEstablecimiento{
     nroRne!: string
     certificado!: string
     expediente!: number
+    registroProducto?: RegistroProducto | undefined
 
 }

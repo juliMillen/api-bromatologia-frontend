@@ -1,7 +1,7 @@
 <!--Filtrar-->
 <div>
     <input type="number" id="establecimiento" [(ngModel)]="establecimientoBuscado" class="form-control mt-5 mb-2 w-50"
-    placeholder="Ingrese numero de establecimiento...">
+        placeholder="Ingrese numero de establecimiento...">
 
     <button class="btn btn-success" (click)="cargarEstablecimientos()">
         Mostrar Todos
@@ -44,6 +44,7 @@
             <th>Marca Producto</th>
             <th>Denominacion</th>
             <th>Nombre fantasia</th>
+            <th *ngIf="isAdmin()">Acciones</th>
         </tr>
     </thead>
 
@@ -75,11 +76,13 @@
                     </li>
                 </ul>
             </td>
-            <td>
-                <button class="btn btn-sm btn-primary me-2">Editar</button>
-                <button class="btn btn-sm btn-danger"
-                    (click)="eliminarEstablecimiento(es.idEstablecimiento!)">Eliminar</button>
-            </td>
+            <ng-container *ngIf="isAdmin()">
+                <td>
+                    <button class="btn btn-sm btn-primary me-2">Editar</button>
+                    <button class="btn btn-sm btn-danger"
+                        (click)="eliminarEstablecimiento(es.idEstablecimiento!)">Eliminar</button>
+                </td>
+            </ng-container>
         </tr>
     </tbody>
 </table>

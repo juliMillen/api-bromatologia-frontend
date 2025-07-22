@@ -50,6 +50,7 @@
             <th>RNE</th>
             <th>ID Registro Establecimiento</th>
             <th>Certificado</th>
+            <th>mantenimiento</th>
         </tr>
     </thead>
 
@@ -66,6 +67,19 @@
                 <a [routerLink]="['/registroEstablecimiento', reg.idRegistroEstablecimiento]" class="btn btn-sm btn-info"> Ver detalles - {{reg.idRegistroEstablecimiento}}</a>
             </td>
             <td>{{reg.certificado}}</td>
+
+            <td>
+                <div *ngIf="(reg.registroProducto?.mantenimientos ?? []).length > 0; else sinMantenimientos">
+                    <ul class="mb-0">
+                        <li *ngFor="let man of reg.registroProducto?.mantenimientos">
+                            {{man.fechaMantenimiento}} - {{man.enlaceRecibido}}
+                        </li>
+                    </ul>
+                </div>
+                <ng-template #sinMantenimientos>
+                    <span class="text-muted">Sin mantenimientos</span>
+                </ng-template>
+            </td>
         </tr>
     </tbody>
 </table>
