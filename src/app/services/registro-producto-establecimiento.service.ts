@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { RegistroProducto } from '../models/registroProducto';
 import { RegistroProductoEstablecimiento } from '../models/registroProductoEstablecimiento';
 
 
@@ -24,6 +23,12 @@ export class RegistroProductoEstablecimientoService {
   //obtener registro por id
   obtenerRegistroPorId(idRegistroProducto:number, idRegistroEstablecimiento:number):Observable<RegistroProductoEstablecimiento>{
     return this.http.get<RegistroProductoEstablecimiento>(`${this.apiUrl}/${idRegistroProducto}/${idRegistroEstablecimiento}`);
+  }
+
+  //obtener registro con mantenimiento
+
+  obtenerRegistroConMantenimientos():Observable<RegistroProductoEstablecimiento[]> {
+    return this.http.get<RegistroProductoEstablecimiento[]>(`${this.apiUrl}/registroProductoConMantenimientos`);
   }
 
   //guardar registro producto

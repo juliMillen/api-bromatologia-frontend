@@ -1,37 +1,40 @@
 <!--Modal de Registro Producto-->
-<app-registro-producto-modal
-*ngIf="mostrarModalRegistroProducto"
-(cerrar)="mostrarModalRegistroProducto=false"
-(registroProdCreado)="onRegistroProductoCreado($event)"
->
+<app-registro-producto-modal *ngIf="mostrarModalRegistroProducto" (cerrar)="mostrarModalRegistroProducto=false"
+    (registroProdCreado)="onRegistroProductoCreado($event)">
 </app-registro-producto-modal>
 
 <!--Modal de Registro Producto Establecimiento-->
-<app-registro-producto-establecimiento-modal
-*ngIf="mostrarModalRegistroProductoEstablecimiento"
-[registroProducto] = "registroProductoCreado"
-[registroEstablecimiento] = "registroEstablecimientoSeleccionado"
-(cerrar) = "mostrarModalRegistroProductoEstablecimiento = false"
->
+<app-registro-producto-establecimiento-modal *ngIf="mostrarModalRegistroProductoEstablecimiento"
+    [registroProducto]="registroProductoCreado" [registroEstablecimiento]="registroEstablecimientoSeleccionado"
+    (cerrar)="mostrarModalRegistroProductoEstablecimiento = false">
 </app-registro-producto-establecimiento-modal>
 
-    <div>
-        <label for="registroProducto">Ingrese ID registro producto</label>
-        <input type="number" id="RegistroProducto" [(ngModel)]="idRegistroProducto" class="form-control mt-5 mb-2 w-50"
+<app-mantenimiento-asociado-modal *ngIf="mostrarModalAsociacion" [tipo]="tipoModalAsociacion"
+    (cerrar)="cerrarModalAsociacion()">
+</app-mantenimiento-asociado-modal>
+
+
+<div>
+    <label for="registroProducto">Ingrese ID registro producto</label>
+    <input type="number" id="RegistroProducto" [(ngModel)]="idRegistroProducto" class="form-control mt-5 mb-2 w-50"
         placeholder="Ingrese id de registro producto...">
 
-        <label for="registroEstablecimiento">Ingrese ID registro establecimiento:</label>
-        <input type="number" id="RegistroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento" class="form-control mt-5 mb-2 w-50"
-        placeholder="Ingrese id de registro establecimiento...">
+    <label for="registroEstablecimiento">Ingrese ID registro establecimiento:</label>
+    <input type="number" id="RegistroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento"
+        class="form-control mt-5 mb-2 w-50" placeholder="Ingrese id de registro establecimiento...">
 
-        <button class="btn btn-success" (click)="obtenerRegistroProductoEstablecimientoPorId()">
-            Buscar
-        </button>
+    <button class="btn btn-success" (click)="obtenerRegistroProductoEstablecimientoPorId()">
+        Buscar
+    </button>
 
-        <button class="btn btn-success" (click)="cargarRegistros()">
-            Mostrar Todos
-        </button>
-    </div>
+    <button class="btn btn-success" (click)="cargarRegistros()">
+        Mostrar Todos
+    </button>
+
+    <button class="btn btn-success" (click)="abrirModalAsociacion('registroProducto')">
+        Agregar Mantenimiento
+    </button>
+</div>
 
 <h2>Listado de Registros Productos</h2>
 <button class="btn btn-success" (click)="abrirRegistroProductoModal()">
@@ -50,10 +53,40 @@
             <th>RNE</th>
             <th>ID Registro Establecimiento</th>
             <th>Certificado</th>
-            <th>mantenimiento</th>
         </tr>
     </thead>
 
+    <tbody>
+        <ng-container *ngFor="let reg of registrosProd">
+            <tr>
+                <td>{{reg.idRegistroProducto}}</td>
+                <td>{{reg.rnpaActual}}</td>
+                <td>{{reg.expediente}}</td>
+                <td>{{reg.fechaEmision}}</td>
+                <td>{{reg.tipo}}</td>
+                <td>{{reg.rnpaAnterior}}</td>
+                <td>{{reg.nroRne}}</td>
+                <td>
+                    <a routerLink="['/registroEstablecimiento',reg.idRegistroEstablecimiento]"
+                        class="btn btn-sm btn-info"> Ver detalles - {{reg.idRegistroEstablecimiento}}</a>
+                </td>
+                <td>{{reg.certificado}}</td>
+            </tr>
+
+            <tr *ngFor="let man of reg.registroProducto?.mantenimientos">
+                <td colspan="2"><strong>Mantenimientos</strong></td>
+                <td colspan="2">{{man.fechaMantenimiento}}</td>
+                <td colspan="4">{{man.enlaceRecibido}}</td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
+<div *ngIf="registrosProd.length ===0" class="alert alert-info">
+    No hay Registros Productos cargados
+</div>
+
+
+<!--
     <tbody>
         <tr *ngFor="let reg of registrosProd">
             <td>{{reg.idRegistroProducto}}</td>
@@ -64,25 +97,33 @@
             <td>{{reg.rnpaAnterior}}</td>
             <td>{{reg.nroRne}}</td>
             <td>
-                <a [routerLink]="['/registroEstablecimiento', reg.idRegistroEstablecimiento]" class="btn btn-sm btn-info"> Ver detalles - {{reg.idRegistroEstablecimiento}}</a>
+                <a [routerLink]="['/registroEstablecimiento', reg.idRegistroEstablecimiento]"
+                    class="btn btn-sm btn-info"> Ver detalles - {{reg.idRegistroEstablecimiento}}</a>
             </td>
             <td>{{reg.certificado}}</td>
-
-            <td>
-                <div *ngIf="(reg.registroProducto?.mantenimientos ?? []).length > 0; else sinMantenimientos">
-                    <ul class="mb-0">
-                        <li *ngFor="let man of reg.registroProducto?.mantenimientos">
-                            {{man.fechaMantenimiento}} - {{man.enlaceRecibido}}
-                        </li>
-                    </ul>
-                </div>
-                <ng-template #sinMantenimientos>
-                    <span class="text-muted">Sin mantenimientos</span>
-                </ng-template>
-            </td>
         </tr>
     </tbody>
-</table>
-<div *ngIf="registrosProd.length ===0" class="alert alert-info">
-    No hay Registros Productos cargados
-</div>
+<tbody>
+            <ng-container *ngFor="let reg of registrosEstablecimientos">
+                <tr>
+                    <td>{{reg.cuitTitular}}</td>
+                    <td>{{reg.cuitEmpresa}}</td>
+                    <td>{{reg.idEstablecimiento}}</td>
+                    <td>{{reg.categoriaAnt}}</td>
+                    <td>{{reg.arancel}}</td>
+                    <td>{{reg.fechaEmision}}</td>
+                    <td>{{reg.fechaVencimiento}}</td>
+                    <td>{{reg.estado}}</td>
+                </tr>
+
+                <tr *ngFor="let man of reg.mantenimientos">
+                    <td colspan="2">
+                        <strong>Mantenimientos</strong>
+                    </td>
+                    <td colspan="2">{{man.fechaMantenimiento}}</td>
+                    <td colspan="4">{{man.enlaceRecibido}}</td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>   
+-->

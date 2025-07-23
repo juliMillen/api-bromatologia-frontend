@@ -7,10 +7,11 @@ import { RegistroEstablecimiento } from '../../models/registroEstablecimiento';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MantenimientoService } from '../../services/mantenimiento.service';
 import { Mantenimiento } from '../../models/mantenimiento';
+import { MantenimientoAsociadoModalComponent } from "../modales/mantenimiento-asociado-modal/mantenimiento-asociado-modal.component";
 
 @Component({
   selector: 'app-registro-establecimiento',
-  imports: [CommonModule,FormsModule, RegistroEstablecimientoModalComponent],
+  imports: [CommonModule, FormsModule, RegistroEstablecimientoModalComponent, MantenimientoAsociadoModalComponent],
   templateUrl: './registro-establecimiento.component.html',
   styleUrl: './registro-establecimiento.component.css'
 })
@@ -34,6 +35,9 @@ export class RegistroEstablecimientoComponent implements OnInit {
   modalAbierto = false;
 
   idRegistroEstablecimiento: number = 0;
+
+  mostrarModalAsociacion = false;
+  tipoModalAsociacion: 'registroEstablecimiento' | 'registroProducto' = 'registroEstablecimiento';
 
 
   constructor(private registroEstablecimientoService:RegistroEstablecimientoService, private route:ActivatedRoute, private mantenimientoService:MantenimientoService) {}
@@ -66,6 +70,15 @@ export class RegistroEstablecimientoComponent implements OnInit {
 
   ocultarModal(){
     this.modalAbierto = false;
+  }
+
+  abrirModalAsociacion(tipo: 'registroEstablecimiento' | 'registroProducto'){
+    this.tipoModalAsociacion = tipo;
+    this.mostrarModalAsociacion = true;
+  }
+
+  cerrarModalAsociacion(){
+    this.mostrarModalAsociacion = false;
   }
 
   cargarRegistros():void{

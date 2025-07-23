@@ -1,0 +1,43 @@
+<!-- MODAL -->
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Mantenimiento</h5>
+                <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <div *ngIf="tipo === 'registroProducto'" class="mb-3">
+                        <label class="form-label">Registro Producto</label>
+                        <select name="registroProducto" id="registroProducto" [(ngModel)]="registroProductoSeleccionado">
+                            <option value="undefined">Seleccione un registro...</option>
+                            <option *ngFor="let rp of registrosProductos" [value]="rp.idRegistroProducto">{{rp.idRegistroProducto}} - {{rp.tipo}}</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="tipo === 'registroEstablecimiento'" class="mb-3">
+                        <label class="form-label">Registro Establecimiento</label>
+                        <select name="registroEstablecimiento" id="registroEstablecimiento" [(ngModel)]="registroEstablecimientoSeleccionado">
+                            <option value="undefined">Seleccione un registro...</option>
+                            <option *ngFor="let re of registrosEstablecimientos" [value]="re.idRegistroEstablecimiento">{{re.idRegistroEstablecimiento}} - {{re.cuitEmpresa}}</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Mantenimiento: </label>
+                        <select name="mantenimiento" id="mantenimiento" [(ngModel)]="mantenimientoSeleccionado">
+                            <option value="undefinied">Seleccione un mantenimiento...</option>
+                            <option *ngFor="let man of mantenimientos" [value]="man.idMantenimiento">{{man.idMantenimiento}} - {{man.fechaMantenimiento}}</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+                <button class="btn btn-success" (click)="asociarMantenimientoARegistro()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,6 +3,13 @@
     (registroEstCreado)="registroCreado($event)">
 </app-registro-establecimiento-modal>
 
+<app-mantenimiento-asociado-modal
+*ngIf="mostrarModalAsociacion"
+[tipo]="tipoModalAsociacion"
+(cerrar)="cerrarModalAsociacion()"
+>
+</app-mantenimiento-asociado-modal>
+
 <div>
     <div>
         <input type="number" id="registroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento"
@@ -14,6 +21,10 @@
 
         <button class="btn btn-success" (click)="cargarRegistros()">
             Mostrar Todos
+        </button>
+
+        <button class="btn btn-success" (click)="abrirModalAsociacion('registroEstablecimiento')">
+            Agregar Mantenimiento
         </button>
     </div>
 

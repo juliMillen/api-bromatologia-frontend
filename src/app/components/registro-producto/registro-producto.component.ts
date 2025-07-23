@@ -8,11 +8,12 @@ import { RegistroEstablecimiento } from '../../models/registroEstablecimiento';
 import { RegistroProductoEstablecimiento } from '../../models/registroProductoEstablecimiento';
 import { RegistroProductoEstablecimientoService } from '../../services/registro-producto-establecimiento.service';
 import { RouterLink } from '@angular/router';
+import { MantenimientoAsociadoModalComponent } from "../modales/mantenimiento-asociado-modal/mantenimiento-asociado-modal.component";
 
 
 @Component({
   selector: 'app-registro-producto',
-  imports: [CommonModule, FormsModule, RegistroProductoModalComponent, RegistroProductoEstablecimientoModalComponent,RouterLink],
+  imports: [CommonModule, FormsModule, RegistroProductoModalComponent, RegistroProductoEstablecimientoModalComponent, RouterLink, MantenimientoAsociadoModalComponent],
   templateUrl: './registro-producto.component.html',
   styleUrl: './registro-producto.component.css'
 })
@@ -20,6 +21,8 @@ export class RegistroProductoComponent implements OnInit {
   
   mostrarModalRegistroProducto = false;
   mostrarModalRegistroProductoEstablecimiento = false;
+  mostrarModalAsociacion = false;
+  tipoModalAsociacion: 'registroProducto' | 'registroEstablecimiento' = 'registroProducto'
 
   registroProductoCreado!: RegistroProducto;
   registroEstablecimientoSeleccionado!: RegistroEstablecimiento;
@@ -32,7 +35,8 @@ export class RegistroProductoComponent implements OnInit {
   constructor( private registroProductoEstablecimientoService: RegistroProductoEstablecimientoService) {}
 
   ngOnInit(): void {
-    this.cargarRegistros();
+    //this.cargarRegistros();
+    this.obtenerRegistrosConMantenimiento();
   }
 
   cargarRegistros(){
@@ -42,6 +46,15 @@ export class RegistroProductoComponent implements OnInit {
 
   abrirRegistroProductoModal(){
     this.mostrarModalRegistroProducto = true;
+  }
+
+  abrirModalAsociacion(tipo: 'registroProducto' | 'registroEstablecimiento'){
+    this.tipoModalAsociacion = tipo
+    this.mostrarModalAsociacion = true;
+  }
+
+  cerrarModalAsociacion(){
+    this.mostrarModalAsociacion = false;
   }
 
   onRegistroProductoCreado(registro:RegistroProducto){
@@ -58,6 +71,13 @@ export class RegistroProductoComponent implements OnInit {
       error: (err) => {
         console.error('No se ha encontrado ningun registro');
       }
+    })
+  }
+
+  obtenerRegistrosConMantenimiento(){
+    this.registroProductoEstablecimientoService.obtenerRegistroConMantenimientos().subscribe(data => {
+      this.registrosProd = data;
+      console.log('Registros con mantenimientos: ',this.registrosProd);
     })
   }
 }
