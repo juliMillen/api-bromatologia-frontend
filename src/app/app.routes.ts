@@ -11,12 +11,14 @@ import { EstablecimientoComponent } from './components/establecimiento/estableci
 export const routes: Routes = [
     {path: '', redirectTo:'/login', pathMatch:'full'},
     {path: 'login', component: LoginComponent},
-    {path:'login-register',component:LoginRegisterComponent},
+    {path:'loginRegister',component:LoginRegisterComponent},
     {path: 'inicio', component: InicioComponent},
     {path: 'empresa', component:EmpresaComponent},
-    {path: 'registro-producto', component: RegistroProductoComponent},
-    {path: 'registro-establecimiento',component: RegistroEstablecimientoComponent},
+    {path: 'registroProducto', component: RegistroProductoComponent},
+    {path: 'registroEstablecimiento',component: RegistroEstablecimientoComponent},
     {path: 'registroEstablecimiento/:id',component: RegistroEstablecimientoComponent},
     {path: 'establecimiento',component: EstablecimientoComponent},
-    {path: 'mantenimiento',component: MantenimientoComponent}
+    {path: 'establecimiento/:id',component:EstablecimientoComponent},
+    {path: 'mantenimiento',component: MantenimientoComponent},
+    {path: 'mantenimiento/:id',component:MantenimientoComponent}
 ];

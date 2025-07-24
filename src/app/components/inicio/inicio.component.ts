@@ -30,14 +30,14 @@ export class InicioComponent {
       titulo: 'Registro Establecimiento',
       descripcion: 'Gestione, cree o edite registros de establecimientos',
       icon: 'bi bi-r-square',
-      link: '/registro-establecimiento',
+      link: '/registroEstablecimiento',
       color: '#17a2b8'
     },
     {
       titulo: 'Registro Producto',
       descripcion: 'Gestione, cree o edite registros de productos',
       icon: 'bi bi-r-square',
-      link: '/registro-producto',
+      link: '/registroProducto',
       color: '#ffc107'
     },
     {

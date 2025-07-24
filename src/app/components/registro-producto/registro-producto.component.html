@@ -67,15 +67,30 @@
                 <td>{{reg.rnpaAnterior}}</td>
                 <td>{{reg.nroRne}}</td>
                 <td>
-                    {{reg.idRegistroEstablecimiento}}
+                    <button class="btn btn-primary p-0" [routerLink]="['/registroEstablecimiento',reg.idRegistroEstablecimiento]">
+                        {{reg.idRegistroEstablecimiento}} - Ver Registro
+                    </button>
                 </td>
-                <td>{{reg.certificado}}</td>
+                <td>
+                    <a *ngIf="reg.certificado" [href]="reg.certificado" target="_blank" rel="noopener noreferrer">
+                        Ver certificado
+                    </a>
+                </td>
             </tr>
 
             <tr *ngFor="let man of reg.registroProducto?.mantenimientos">
                 <td colspan="2"><strong>Mantenimientos</strong></td>
                 <td colspan="2">{{man.fechaMantenimiento}}</td>
-                <td colspan="4">{{man.enlaceRecibido}}</td>
+                <td colspan="4">
+                    <a *ngIf="man.enlaceRecibido" [href]="man.enlaceRecibido" target="_blank" rel="noopener noreferrer">
+                        Ver enlace recibido
+                    </a>
+                </td>
+                <td colspan="2">
+                    <a class="btn btn-primary btn-info" [routerLink]="['/mantenimiento',man.idMantenimiento]">
+                        Ver detalles
+                    </a>
+                </td>
             </tr>
         </ng-container>
     </tbody>
@@ -83,46 +98,3 @@
 <div *ngIf="registrosProd.length ===0" class="alert alert-info">
     No hay Registros Productos cargados
 </div>
-
-
-<!--
-    <tbody>
-        <tr *ngFor="let reg of registrosProd">
-            <td>{{reg.idRegistroProducto}}</td>
-            <td>{{reg.rnpaActual}}</td>
-            <td>{{reg.expediente}}</td>
-            <td>{{reg.fechaEmision}}</td>
-            <td>{{reg.tipo}}</td>
-            <td>{{reg.rnpaAnterior}}</td>
-            <td>{{reg.nroRne}}</td>
-            <td>
-                <a [routerLink]="['/registroEstablecimiento', reg.idRegistroEstablecimiento]"
-                    class="btn btn-sm btn-info"> Ver detalles - {{reg.idRegistroEstablecimiento}}</a>
-            </td>
-            <td>{{reg.certificado}}</td>
-        </tr>
-    </tbody>
-<tbody>
-            <ng-container *ngFor="let reg of registrosEstablecimientos">
-                <tr>
-                    <td>{{reg.cuitTitular}}</td>
-                    <td>{{reg.cuitEmpresa}}</td>
-                    <td>{{reg.idEstablecimiento}}</td>
-                    <td>{{reg.categoriaAnt}}</td>
-                    <td>{{reg.arancel}}</td>
-                    <td>{{reg.fechaEmision}}</td>
-                    <td>{{reg.fechaVencimiento}}</td>
-                    <td>{{reg.estado}}</td>
-                </tr>
-
-                <tr *ngFor="let man of reg.mantenimientos">
-                    <td colspan="2">
-                        <strong>Mantenimientos</strong>
-                    </td>
-                    <td colspan="2">{{man.fechaMantenimiento}}</td>
-                    <td colspan="4">{{man.enlaceRecibido}}</td>
-                </tr>
-            </ng-container>
-        </tbody>
-    </table>   
--->

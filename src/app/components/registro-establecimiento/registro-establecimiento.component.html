@@ -51,7 +51,11 @@
                 <tr>
                     <td>{{reg.cuitTitular}}</td>
                     <td>{{reg.cuitEmpresa}}</td>
-                    <td>{{reg.idEstablecimiento}}</td>
+                    <td>
+                        <button class="btn btn-primary p-0" [routerLink]="['/establecimiento',reg.idEstablecimiento]">
+                            {{reg.idEstablecimiento}}-Ver Establecimiento
+                        </button>
+                    </td>
                     <td>{{reg.categoriaAnt}}</td>
                     <td>{{reg.arancel}}</td>
                     <td>{{reg.fechaEmision}}</td>
@@ -65,6 +69,11 @@
                     </td>
                     <td colspan="2">{{man.fechaMantenimiento}}</td>
                     <td colspan="4">{{man.enlaceRecibido}}</td>
+                    <td colspan="2">
+                        <a class="btn btn-primary btn-info" [routerLink]="['/mantenimiento',man.idMantenimiento]">
+                            Ver detalles
+                        </a>
+                    </td>
                 </tr>
             </ng-container>
         </tbody>

@@ -11,7 +11,7 @@ import { MantenimientoAsociadoModalComponent } from "../modales/mantenimiento-as
 
 @Component({
   selector: 'app-registro-establecimiento',
-  imports: [CommonModule, FormsModule, RegistroEstablecimientoModalComponent, MantenimientoAsociadoModalComponent],
+  imports: [CommonModule, FormsModule, RegistroEstablecimientoModalComponent, MantenimientoAsociadoModalComponent,RouterLink],
   templateUrl: './registro-establecimiento.component.html',
   styleUrl: './registro-establecimiento.component.css'
 })

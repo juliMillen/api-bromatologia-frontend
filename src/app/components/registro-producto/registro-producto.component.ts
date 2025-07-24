@@ -41,7 +41,6 @@ export class RegistroProductoComponent implements OnInit {
 
   cargarRegistros(){
     this.registroProductoEstablecimientoService.obtenerRegistros().subscribe(data => this.registrosProd = data);
-     console.log('*** Datos de `registrosProd` con estructura ANIDADA (DESDE registro-producto.component.ts):', this.registrosProd);
   }
 
   abrirRegistroProductoModal(){

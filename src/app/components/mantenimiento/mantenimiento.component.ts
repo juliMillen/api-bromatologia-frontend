@@ -6,6 +6,7 @@ import { MantenimientoService } from '../../services/mantenimiento.service';
 import { TramiteService } from '../../services/tramite.service';
 import { MantenimientoModalComponent } from '../modales/mantenimiento-modal/mantenimiento-modal.component';
 import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mantenimiento',
@@ -30,11 +31,27 @@ export class MantenimientoComponent implements OnInit {
 
   esAdmin: boolean= false;
 
-  constructor(private mantenimientoService:MantenimientoService, private tramiteService:TramiteService, private authService:AuthService){}
+  constructor(private mantenimientoService:MantenimientoService, private tramiteService:TramiteService, private authService:AuthService, private route:ActivatedRoute){}
 
   ngOnInit(): void {
     this.esAdmin = this.authService.obtenerRolDesdeToken() === 'ROLE_ADMIN';
-    this.cargarMantenimientos();
+
+        const id = Number(this.route.snapshot.paramMap.get('id'));
+    if(id){
+      this.mantenimientoService.obtenerMantenimientoPorId(id).subscribe({
+        next: (man) => {
+          this.mantenimientos = [man];
+        },
+        error: (err) =>{
+          console.error('error al cargar mantenimiento por ID: ',err);
+          this.mantenimientos = [];
+        }
+      });
+    }else{
+
+      //cargo mantenimientos
+      this.cargarMantenimientos();
+    }
   }
 
   abrirModal(){

@@ -6,6 +6,7 @@ import { ProductoModalComponent } from "../modales/producto-modal/producto-modal
 import { Establecimiento } from '../../models/establecimiento';
 import { EstablecimientoService } from '../../services/establecimiento.service';
 import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-establecimiento',
@@ -33,12 +34,28 @@ export class EstablecimientoComponent implements OnInit {
 
   esAdmin: boolean = false;
 
-  constructor(private establecimientoService:EstablecimientoService, private authService:AuthService){}
+  constructor(private establecimientoService:EstablecimientoService, private authService:AuthService,private route:ActivatedRoute){}
 
 
   ngOnInit(): void {
     this.esAdmin = this.authService.obtenerRolDesdeToken() === 'ROLE_ADMIN';
-    this.cargarEstablecimientos();
+
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if(id){
+      this.establecimientoService.obtenerEstablecimientoPorId(id).subscribe({
+        next: (est) => {
+          this.establecimientos = [est];
+        },
+        error: (err) =>{
+          console.error('error al cargar establecimiento por ID: ',err);
+          this.establecimientos = [];
+        }
+      });
+    }else{
+      //cargo todos los registros
+      this.cargarEstablecimientos();
+
+    }
   }
 
   isAdmin():boolean{
