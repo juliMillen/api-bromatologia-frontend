@@ -6,11 +6,11 @@
                 <button type="button" class="btn-close" (click)="cerrarModal()"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form [formGroup]="registroForm" (ngSubmit)="guardarRegistroProductoEstablecimiento()">
 
                     <!-- Registro Producto -->
                     <label for="titular">Registro Producto</label>
-                    <select [(ngModel)]="registroProductoSeleccionado" name="registroProducto" class="form-control">
+                    <select formControlName="idRegistroProducto" name="registroProducto" class="form-control">
                         <option [ngValue]="null" disabled selected>Seleccione un registro</option>
                         <option *ngFor="let regProducto of registrosProductos" [ngValue]="regProducto.idRegistroProducto">
                             {{regProducto.idRegistroProducto}}
@@ -21,60 +21,106 @@
                     <!-- Registro Establecimiento -->
                     <label for="registroEstablecimiento">Registro Establecimiento</label>
                     <option [ngValue]="null" disabled selected>Seleccione un registro</option>
-                    <select [(ngModel)]="registroEstablecimientoSeleccionado" name="registroEstablecimiento" class="form-control">
+                    <select formControlName="idRegistroEstablecimiento" name="registroEstablecimiento" class="form-control">
                         <option *ngFor="let regEst of registrosEstablecimientos" [ngValue]="regEst.idRegistroEstablecimiento">{{regEst.idRegistroEstablecimiento}}
                         </option>
                     </select>
 
                     <div class="mb-3">
                         <label class="form-label">rnpa Actual</label>
-                        <input type="text" class="form-control" [(ngModel)]="registroProductoEstablecimiento.rnpaActual"
-                            name="rnpaActual">
+                        <input type="text" class="form-control" formControlName="rnpaActual"
+                            name="rnpaActual" [ngClass]="{
+                                'is-invalid': registroForm.get('rnpaActual')?.invalid && registroForm.get('rnpaActual')?.touched,
+                                'is-valid': registroForm.get('rnpaActual')?.valid && registroForm.get('rnpaActual')?.touched
+                            }">
+
+                            <div class="invalid-feedback" *ngIf="registroForm.get('rnpaActual')?.errors?.['required']">
+                               El RNPA Actual es obligatorio
+                            </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Fecha Emision</label>
-                        <input type="date" class="form-control" [(ngModel)]="registroProductoEstablecimiento.fechaEmision"
-                            name="fechaEmision">
+                        <input type="date" class="form-control" formControlName="fechaEmision"
+                            name="fechaEmision" [ngClass]="{
+                                'is-invalid': registroForm.get('fechaEmision')?.invalid && registroForm.get('fechaEmision')?.touched,
+                                'is-valid': registroForm.get('fechaEmision')?.valid && registroForm.get('fechaEmision')?.touched
+                            }">
+
+                             <div class="invalid-feedback" *ngIf="registroForm.get('fechaEmision')?.errors?.['required']">
+                                La fecha es obligatoria
+                            </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">rnpa Anterior</label>
-                        <input type="text" class="form-control" [(ngModel)]="registroProductoEstablecimiento.rnpaAnterior"
-                            name="rnpaAnterior">
+                        <input type="text" class="form-control" formControlName="rnpaAnterior"
+                            name="rnpaAnterior" [ngClass]="{
+                                'is-invalid': registroForm.get('rnpaAnterior')?.invalid && registroForm.get('rnpaAnterior')?.touched,
+                                'is-valid': registroForm.get('rnpaAnterior')?.valid && registroForm.get('rnpaAnterior')?.touched
+                            }">
+
+                             <div class="invalid-feedback" *ngIf="registroForm.get('rnpaAnterior')?.errors?.['required']">
+                                El RNPA Anterior es obligatorio
+                            </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">tipo</label>
-                        <input type="string" class="form-control" [(ngModel)]="registroProductoEstablecimiento.tipo"
-                            name="tipo">
+                        <input type="string" class="form-control" formControlName="tipo"
+                            name="tipo" [ngClass]="{
+                                'is-invalid': registroForm.get('tipo')?.invalid && registroForm.get('tipo')?.touched,
+                                'is-valid': registroForm.get('tipo')?.valid && registroForm.get('tipo')?.touched
+                            }">
+
+                            
+                             <div class="invalid-feedback" *ngIf="registroForm.get('tipo')?.errors?.['required']">
+                                El tipo es obligatorio
+                            </div>
                     </div>
 
                     
                     <div class="mb-3">
                         <label class="form-label">Numero RNE</label>
-                        <input type="string" class="form-control" [(ngModel)]="registroProductoEstablecimiento.nroRne"
-                            name="nroRne">
+                        <input type="string" class="form-control" formControlName="nroRne"
+                            name="nroRne" [ngClass]="{
+                                'is-invalid': registroForm.get('nroRne')?.invalid && registroForm.get('nroRne')?.touched,
+                                'is-valid': registroForm.get('nroRne')?.valid && registroForm.get('nroRne')?.touched
+                            }">
+
+                            <div class="invalid-feedback" *ngIf="registroForm.get('nroRne')?.errors?.['required']">
+                                El numero de RNE es obligatorio
+                            </div>
                     </div>
 
                     
                     <div class="mb-3">
                         <label class="form-label">Certificado</label>
-                        <input type="string" class="form-control" [(ngModel)]="registroProductoEstablecimiento.certificado"
-                            name="certificado">
+                        <input type="string" class="form-control" formControlName="certificado"
+                            name="certificado" [ngClass]="{
+                                'is-invalid': registroForm.get('certificado')?.invalid && registroForm.get('certificado')?.touched,
+                                'is-valid': registroForm.get('certificado')?.valid && registroForm.get('certificado')?.touched
+                            }">
                     </div>
 
                     
                     <div class="mb-3">
                         <label class="form-label">Numero Expediente</label>
-                        <input type="number" class="form-control" [(ngModel)]="registroProductoEstablecimiento.expediente"
-                            name="expediente">
+                        <input type="number" class="form-control" formControlName="expediente"
+                            name="expediente" [ngClass]="{
+                                'is-invalid': registroForm.get('expediente')?.invalid && registroForm.get('expediente')?.touched,
+                                'is-valid': registroForm.get('expediente')?.valid && registroForm.get('expediente')?.touched
+                            }">
+
+                            <div class="invalid-feedback" *ngIf="registroForm.get('expediente')?.errors?.['required']">
+                                El numero de expediente es obligatorio
+                            </div>
                     </div>
 
                 </form>
                 <div>
                     <button class="btn btn-danger" (click)="cerrarModal()"> Cancelar</button>
-                    <button class="btn btn-success" (click)="guardarRegistroProductoEstablecimiento()">Guardar Registro</button>
+                    <button type="submit" class="btn btn-success" (click)="guardarRegistroProductoEstablecimiento()">Guardar Registro</button>
                 </div>
             </div>
         </div>

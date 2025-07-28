@@ -7,7 +7,7 @@
         <button type="button" class="btn-close" (click)="cerrarModal()"></button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="empresaForm">
+        <form [formGroup]="empresaForm" novalidate>
           <div class="mb-3" *ngIf="modo === 'crear'">
             <label class="form-label">CUIT Empresa</label>
             <input type="number" class="form-control" formControlName="cuitEmpresa" name="cuitEmpresa" [ngClass]="{

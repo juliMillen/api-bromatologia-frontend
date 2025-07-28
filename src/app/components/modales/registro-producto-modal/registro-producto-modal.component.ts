@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Producto } from '../../../models/producto';
 import { RegistroProducto } from '../../../models/registroProducto';
 import { RegistroProductoEstablecimiento } from '../../../models/registroProductoEstablecimiento';
@@ -9,7 +9,7 @@ import { ProductoService } from '../../../services/producto.service';
 
 @Component({
   selector: 'app-registro-producto-modal',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule, ReactiveFormsModule],
   templateUrl: './registro-producto-modal.component.html',
   styleUrl: './registro-producto-modal.component.css'
 })
@@ -22,23 +22,35 @@ export class RegistroProductoModalComponent implements OnInit {
 
   productos: Producto[] = [];
 
-  productoSeleccionado:number = 0;
-
   registroProducto: RegistroProducto = {
     tipo: '',
     idProducto:0
   }
 
-  tipos: String[] = [
+  tipos: string[] = [
     "Inscripcion",
     "Reinscripcion"
   ]
+
+
+  registroForm!: FormGroup;
+
+  private fb = inject(FormBuilder);
 
   constructor(private registroProductoService:RegistroProductoService, private productoService:ProductoService) {}
 
 
   ngOnInit(): void {
     this.cargarProductos();
+    this.formularioRegistro();
+  }
+
+
+  formularioRegistro(){
+    this.registroForm = this.fb.group({
+      tipo: ['',Validators.required],
+      idProducto: [null,Validators.required]
+    })
   }
 
   cerrarModal(){
@@ -50,14 +62,16 @@ export class RegistroProductoModalComponent implements OnInit {
   }
 
   guardarRegistro(){
-    this.registroProducto.idProducto = this.productoSeleccionado;
 
-    if(!this.registroProducto.tipo || this.registroProducto.idProducto <= 0){
-      console.error('Campos incompletos');
+    if(this.registroForm.invalid){
+      this.registroForm.markAllAsTouched();
       return;
     }
 
-    this.registroProductoService.guardarRegistroProducto(this.registroProducto).subscribe({
+    const nuevoRegistro: RegistroProducto = this.registroForm.value;
+
+
+    this.registroProductoService.guardarRegistroProducto(nuevoRegistro).subscribe({
 
       next:(registroProdCreado:RegistroProducto) => {
         console.log('Registro Producto creado correctamente');

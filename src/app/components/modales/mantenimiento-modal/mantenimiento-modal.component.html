@@ -7,16 +7,31 @@
                 <button type="button" class="btn-close" (click)="cerrarModal()"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form [formGroup]="mantenimientoForm" novalidate>
                     <div class="mb-3">
                         <label class="form-label">Fecha Mantenimiento: </label>
-                        <input type="date" class="form-control" [(ngModel)]="mantenimiento.fechaMantenimiento"
-                            name="fechaMantenimiento">
+                        <input type="date" class="form-control" formControlName="fechaMantenimiento"
+                            name="fechaMantenimiento" [ngClass]="{
+                            'is-invalid': mantenimientoForm.get('fechaMantenimiento')?.invalid && mantenimientoForm.get('fechaMantenimiento')?.touched,
+                            'is-valid': mantenimientoForm.get('fechaMantenimiento')?.valid && mantenimientoForm.get('fechaMantenimiento')?.touched
+                            }" >
+
+                        <div class="invalid-feedback" *ngIf="mantenimientoForm.get('fechaMantenimiento')?.errors?.['required']">
+                            La fecha del mantenimiento es obligatoria
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Enlace Recibido</label>
-                        <input type="email" class="form-control" [(ngModel)]="mantenimiento.enlaceRecibido"
-                            name="enlaceRecibido">
+                        <input type="url" class="form-control" formControlName="enlaceRecibido"
+                            name="enlaceRecibido"
+                            [ngClass]="{
+                            'is-invalid': mantenimientoForm.get('enlaceRecibido')?.invalid && mantenimientoForm.get('enlaceRecibido')?.touched,
+                            'is-valid': mantenimientoForm.get('enlaceRecibido')?.valid && mantenimientoForm.get('enlaceRecibido')?.touched
+                            }"
+                            >
+                         <div class="invalid-feedback" *ngIf="mantenimientoForm.get('enlaceRecibido')?.errors?.['required']">
+                            Debe ingresar el enlace recibido
+                        </div>
                     </div>
 
                     <div class="modal-header">
@@ -25,24 +40,48 @@
 
                     <div class="mb-3">
                         <label class="form-label">Nombre Tramite</label>
-                        <input type="text" class="form-control" [(ngModel)]="tramite.nombreTramite"
-                            name="nombreTramite">
+                        <input type="text" class="form-control" formControlName="nombreTramite"
+                            name="nombreTramite" [ngClass]="{
+                            'is-invalid': mantenimientoForm.get('nombreTramite')?.invalid && mantenimientoForm.get('nombreTramite')?.touched,
+                            'is-valid': mantenimientoForm.get('nombreTramite')?.valid && mantenimientoForm.get('nombreTramite')?.touched
+                            }">
+                         <div class="invalid-feedback" *ngIf="mantenimientoForm.get('nombreTramite')?.errors?.['required']">
+                            El nombre de tramite es obligatorio
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Fecha Recibo: </label>
-                        <input type="date" class="form-control" [(ngModel)]="tramite.recibo.fechaRecibo"
-                            name="fechaRecibo">
+                        <input type="date" class="form-control" formControlName="fechaRecibo"
+                            name="fechaRecibo" [ngClass]="{
+                            'is-invalid': mantenimientoForm.get('fechaRecibo')?.invalid && mantenimientoForm.get('fechaRecibo')?.touched,
+                            'is-valid': mantenimientoForm.get('fechaRecibo')?.valid && mantenimientoForm.get('fechaRecibo')?.touched
+                            }">
+
+                         <div class="invalid-feedback" *ngIf="mantenimientoForm.get('fechaRecibo')?.errors?.['required']">
+                            La fecha es obligatoria
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Importe: </label>
-                        <input type="number" class="form-control" [(ngModel)]="tramite.recibo.importe" name="importeRecibo">
+                        <input type="number" class="form-control" formControlName="importe" name="importe" [ngClass]="{
+                             'is-invalid': mantenimientoForm.get('importe')?.invalid && mantenimientoForm.get('importe')?.touched,
+                            'is-valid': mantenimientoForm.get('importe')?.valid && mantenimientoForm.get('importe')?.touched
+                        }">
+
+                        <div class="invalid-feedback" *ngIf="mantenimientoForm.get('importe')?.errors?.['required']">
+                            El importe es obligatorio
+                        </div>
+
+                         <div class="invalid-feedback" *ngIf="mantenimientoForm.get('importe')?.errors?.['pattern']">
+                            El importe debe ser un numero valido (sin letras ni simbolos)
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
-                <button class="btn btn-success" (click)="crearMantenimientoYTramite()">Guardar</button>
+                <button  type="submit" class="btn btn-success" (click)="crearMantenimientoYTramite()">Guardar</button>
             </div>
         </div>
     </div>

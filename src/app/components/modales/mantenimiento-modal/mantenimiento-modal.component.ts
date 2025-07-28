@@ -1,17 +1,18 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { Mantenimiento } from '../../../models/mantenimiento';
 import { Tramite } from '../../../models/tramite';
 import { MantenimientoService } from '../../../services/mantenimiento.service';
 import { TramiteService } from '../../../services/tramite.service';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-mantenimiento-modal',
-  imports: [FormsModule],
+  imports: [FormsModule,ReactiveFormsModule,CommonModule],
   templateUrl: './mantenimiento-modal.component.html',
   styleUrl: './mantenimiento-modal.component.css'
 })
-export class MantenimientoModalComponent {
+export class MantenimientoModalComponent implements OnInit {
 
   @Output() cerrar = new EventEmitter<void>()
   @Output() mantenimientoCreado = new EventEmitter<Mantenimiento>()
@@ -31,6 +32,11 @@ export class MantenimientoModalComponent {
     }
   }
 
+
+  mantenimientoForm!:FormGroup;
+
+  private fb = inject(FormBuilder);
+
   mantenimientos: Mantenimiento[] = [];
 
   tramites: Tramite[] = [];
@@ -42,13 +48,43 @@ export class MantenimientoModalComponent {
     this.cerrar.emit();
   }
 
+  ngOnInit(): void {
+      this.formularioMantenimiento();
+  }
+
+  formularioMantenimiento(){
+    this.mantenimientoForm = this.fb.group({
+    fechaMantenimiento: ['',Validators.required],
+    enlaceRecibido: ['',Validators.required,Validators.pattern(/https?:\/\/.+/)],
+    nombreTramite: ['',Validators.required],
+    fechaRecibo: ['',Validators.required],
+    importe: ['',Validators.required,Validators.pattern(/^\d+(\.\d{1,2})?$/)]
+    })
+  };
+
 
   crearMantenimientoYTramite(): void{
-    this.mantenimientoService.registrarMantenimiento(this.mantenimiento).subscribe({
+    if(this.mantenimientoForm.invalid){
+      this.mantenimientoForm.markAllAsTouched();
+      return;
+    }
+    const formValues = this.mantenimientoForm.value;
+    const nuevoMantenimiento: Mantenimiento ={
+      fechaMantenimiento: formValues.fechaMantenimiento,
+      enlaceRecibido: formValues.enlaceRecibido
+    };
+    const nuevoTramite: Tramite = {
+      nombreTramite: formValues.nombreTramite,
+      recibo: {
+        fechaRecibo: formValues.fechaRecibo,
+        importe: formValues.importe
+      }
+    };
+    this.mantenimientoService.registrarMantenimiento(nuevoMantenimiento).subscribe({
       next: (mantenimientoCreado:Mantenimiento) => {
         console.log('Mantenimiento creado correctamente', mantenimientoCreado);
 
-        this.tramiteService.crearTramite(this.tramite).subscribe({
+        this.tramiteService.crearTramite(nuevoTramite).subscribe({
           next:(tramiteCreado: Tramite) => {
             console.log('Tramite creado', tramiteCreado);
 
@@ -57,7 +93,9 @@ export class MantenimientoModalComponent {
               next: () => {
                 console.log('Tramite asociado al mantenimiento correctamente');
                 this.mantenimientoCreado.emit(mantenimientoCreado);
-                this.cerrarModal();
+                this.tramiteCreado.emit(tramiteCreado);
+                this.cerrar.emit();
+                this.mantenimientoForm.reset();
               },
               error:(err) => {
                 console.error('Error al asociar el tramite: ',err);

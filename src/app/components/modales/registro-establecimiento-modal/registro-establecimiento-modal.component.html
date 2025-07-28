@@ -6,17 +6,17 @@
                 <button type="button" class="btn-close" (click)="cerrarModal()"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form [formGroup]="registroForm" novalidate>
                     <!-- Empresa -->
                     <label for="empresa">Empresa:</label>
-                    <select [(ngModel)]="cuitEmpresaSeleccionada" name="empresa" class="form-control">
+                    <select formControlName="cuitEmpresa" name="empresa" class="form-control">
                         <option *ngFor="let empresa of empresas" [value]="empresa.cuitEmpresa">{{empresa.nombreEmpresa}}
                         </option>
                     </select>
 
                     <!-- Titular -->
                     <label for="titular">Titular:</label>
-                    <select [(ngModel)]="cuitTitularSeleccionado" name="titular" class="form-control">
+                    <select formControlName="cuitTitular" name="titular" class="form-control">
                         <option *ngFor="let titular of titulares" [value]="titular.cuitTitular">
                             {{titular.nombreTitular}}
                         </option>
@@ -24,7 +24,7 @@
 
                     <!-- Establecimiento -->
                     <label for="establecimiento">Establecimiento:</label>
-                    <select [(ngModel)]="idEstablecimientoSeleccionado" name="establecimiento" class="form-control">
+                    <select formControlName="idEstablecimiento" name="establecimiento" class="form-control">
                         <option *ngFor="let est of establecimientos" [value]="est.idEstablecimiento">{{est.direccion}}
                         </option>
                     </select>
@@ -32,31 +32,59 @@
 
                     <div class="mb-3">
                         <label class="form-label">Categoria Anterior</label>
-                        <input type="text" class="form-control" [(ngModel)]="registroEstablecimiento.categoriaAnt"
-                            name="categoriaAnt">
+                        <input type="text" class="form-control" formControlName="categoriaAnt"
+                            name="categoriaAnt" [ngClass]="{
+                                'is-invalid': registroForm.get('categoriaAnt')?.invalid && registroForm.get('categoriaAnt')?.touched,
+                                'is-valid': registroForm.get('categoriaAnt')?.valid && registroForm.get('categoriaAnt')?.touched
+                            }">
+
+                            <div class="invalid-feedback" *ngIf="registroForm.get('categoriaAnt')?.errors?.['required']">
+                               La categoria anterior es obligatoria
+                            </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Arancel</label>
-                        <input type="number" class="form-control" [(ngModel)]="registroEstablecimiento.arancel"
-                            name="arancel">
+                        <input type="number" class="form-control" formControlName="arancel"
+                            name="arancel" [ngClass]="{
+                                'is-invalid': registroForm.get('arancel')?.invalid && registroForm.get('arancel')?.touched,
+                                'is-valid': registroForm.get('arancel')?.valid && registroForm.get('arancel')?.touched
+                            }">
+                        
+                            <div class="invalid-feedback" *ngIf="registroForm.get('arancel')?.errors?.['required']">
+                              El arancel es obligatorio
+                            </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Fecha Emision</label>
-                        <input type="date" class="form-control" [(ngModel)]="registroEstablecimiento.fechaEmision"
-                            name="fechaEmision">
+                        <input type="date" class="form-control" formControlName="fechaEmision"
+                            name="fechaEmision" [ngClass]="{
+                                'is-invalid': registroForm.get('fechaEmision')?.invalid && registroForm.get('fechaEmision')?.touched,
+                                'is-valid': registroForm.get('fechaEmision')?.valid && registroForm.get('fechaEmision')?.touched
+                            }">
+
+                            <div class="invalid-feedback" *ngIf="registroForm.get('fechaEmision')?.errors?.['required']">
+                              La fecha es obligatoria
+                            </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Fecha Vencimiento</label>
-                        <input type="date" class="form-control" [(ngModel)]="registroEstablecimiento.fechaVencimiento"
-                            name="fechaVencimiento">
+                        <input type="date" class="form-control" formControlName="fechaVencimiento"
+                            name="fechaVencimiento" [ngClass]="{
+                                'is-invalid': registroForm.get('fechaVencimiento')?.invalid && registroForm.get('fechaVencimiento')?.touched,
+                                'is-valid': registroForm.get('fechaVencimiento')?.valid && registroForm.get('fechaVencimiento')?.touched
+                            }">
+
+                            <div class="invalid-feedback" *ngIf="registroForm.get('fechaVencimiento')?.errors?.['required']">
+                              La fecha es obligatoria
+                            </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Estado</label>
-                        <select class="form-control" [(ngModel)]="registroEstablecimiento.estado" name="estado">
+                        <select class="form-control" formControlName="estado" name="estado">
                             <option *ngFor="let est of estados" [value]="est">{{est}}</option>
                         </select>
                     </div>

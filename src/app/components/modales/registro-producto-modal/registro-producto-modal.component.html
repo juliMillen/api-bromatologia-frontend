@@ -6,27 +6,40 @@
                 <button type="button" class="btn-close" (click)="cerrarModal()"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form [formGroup]="registroForm" (ngSubmit)="guardarRegistro()">
 
                     <div class="mb-3">
                         <label class="form-label">Tipo</label>
-                        <select class="form-control" [(ngModel)]="registroProducto.tipo" name="tipo">
+                        <select class="form-control" formControlName="tipo" name="tipo" [ngClass]="{
+                            'is-invalid': registroForm.get('tipo')?.invalid && registroForm.get('tipo')?.touched,
+                            'is-valid': registroForm.get('tipo')?.valid && registroForm.get('tipo')?.touched
+                        }">
                             <option value="" disabled selected>Seleccione un tipo</option>
                             <option *ngFor="let t of tipos" [value]="t">{{t}}</option>
                         </select>
+
+                            <div class="invalid-feedback" *ngIf="registroForm.get('tipo')?.errors?.['required']">
+                             El tipo es obligatorio
+                            </div>
                     </div>
 
                     <!-- Producto -->
                     <label for="empresa">Producto:</label>
-                    <select [(ngModel)]="productoSeleccionado" name="producto" class="form-control">
+                    <select formControlName="idProducto" name="producto" class="form-control" [ngClass]="{
+                            'is-invalid': registroForm.get('idProducto')?.invalid && registroForm.get('idProducto')?.touched,
+                            'is-valid': registroForm.get('idProducto')?.valid && registroForm.get('idProducto')?.touched
+                    }">
                         <option value="" disabled selected>Seleccione un producto</option>
                         <option *ngFor="let producto of productos" [value]="producto.idProducto">{{producto.denominacion}}
                         </option>
                     </select>
+                             <div class="invalid-feedback" *ngIf="registroForm.get('idProducto')?.errors?.['required']">
+                             El producto es obligatorio
+                            </div>
                 </form>
                 <div>
                     <button class="btn btn-danger" (click)="cerrarModal()"> Cancelar</button>
-                    <button class="btn btn-success" (click)="guardarRegistro()">Siguiente</button>
+                    <button  type="submit" class="btn btn-success" (click)="guardarRegistro()">Siguiente</button>
                 </div>
             </div>
         </div>

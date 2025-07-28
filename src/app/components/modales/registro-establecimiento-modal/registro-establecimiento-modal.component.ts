@@ -1,11 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { Empresa } from '../../../models/empresa';
 import { Titular } from '../../../models/titular';
 import { Establecimiento } from '../../../models/establecimiento';
 import { EmpresaService } from '../../../services/empresa.service';
 import { EstablecimientoService } from '../../../services/establecimiento.service';
 import { TitularService } from '../../../services/titular.service';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RegistroEstablecimiento } from '../../../models/registroEstablecimiento';
 import { RegistroEstablecimientoService } from '../../../services/registro-establecimiento.service';
@@ -13,7 +13,7 @@ import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-registro-establecimiento-modal',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,ReactiveFormsModule],
   templateUrl: './registro-establecimiento-modal.component.html',
   styleUrl: './registro-establecimiento-modal.component.css'
 })
@@ -26,9 +26,6 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
   titulares: Titular[] = [];
   establecimientos: Establecimiento[] = [];
 
-  cuitTitularSeleccionado!: number;
-  cuitEmpresaSeleccionada!: number;
-  idEstablecimientoSeleccionado!: number;
 
   registroEstablecimiento: RegistroEstablecimiento = {
     cuitTitular: 0,
@@ -41,12 +38,17 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
     estado: ''
   }
 
-  estados: String[] = [
+  estados: string[] = [
     "Cancelado",
     "Habilitado",
     "Observado",
     "Suspendido"
   ]
+
+
+  registroForm!: FormGroup;
+
+  private fb = inject(FormBuilder);
 
 
   constructor(private empresaService: EmpresaService, private establecimientoService: EstablecimientoService, private titularService: TitularService, private registroEstablecimientoService: RegistroEstablecimientoService) { }
@@ -55,6 +57,20 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
     this.cargarEmpresas();
     this.cargarTitulares();
     this.cargarEstablecimientos();
+    this.formularioRegistroEstablecimiento();
+  }
+
+  formularioRegistroEstablecimiento(){
+    this.registroForm = this.fb.group({
+      cuitTitular: [null, [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      cuitEmpresa: [null, [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      idEstablecimiento: [null,[Validators.required]],
+      categoriaAnt: ['',Validators.required],
+      arancel: ['',[Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+      fechaEmision: ['',Validators.required],
+      fechaVencimiento: ['',Validators.required],
+      estado: ['', Validators.required]
+    })
   }
 
   cerrarModal() {
@@ -74,17 +90,21 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
   }
 
   guardarRegistro(): void {
-    this.registroEstablecimiento.cuitTitular = this.cuitTitularSeleccionado;
-    this.registroEstablecimiento.cuitEmpresa = this.cuitEmpresaSeleccionada;
-    this.registroEstablecimiento.idEstablecimiento = this.idEstablecimientoSeleccionado;
 
-    if (!this.cuitTitularSeleccionado || !this.cuitEmpresaSeleccionada || !this.idEstablecimientoSeleccionado || !this.registroEstablecimiento.estado) {
-      console.error('Campos incompletos, no se puede guardar');
+    if(this.registroForm.invalid){
+      this.registroForm.markAllAsTouched();
       return;
     }
 
 
-    this.registroEstablecimientoService.guardarRegistro(this.registroEstablecimiento).subscribe({
+    const nuevoRegistro: RegistroEstablecimiento = {
+      ...this.registroForm.value,
+      fechaEmision: new Date(this.registroForm.value.fechaEmision),
+      fechaVencimiento: new Date(this.registroForm.value.fechaVencimiento);
+    }
+
+
+    this.registroEstablecimientoService.guardarRegistro(nuevoRegistro).subscribe({
       next: (registroEstCreado: RegistroEstablecimiento) => {
         console.log('Registro establecimiento creado correctamente', registroEstCreado);
 
@@ -92,13 +112,13 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
 
         forkJoin([
           //asignar titular
-          this.registroEstablecimientoService.asignarTitular(id, this.cuitTitularSeleccionado),
+          this.registroEstablecimientoService.asignarTitular(id, nuevoRegistro.cuitTitular),
 
           //asignar empresa
-          this.registroEstablecimientoService.asignarEmpresa(id, this.cuitEmpresaSeleccionada),
+          this.registroEstablecimientoService.asignarEmpresa(id, nuevoRegistro.cuitEmpresa),
 
           //asignar establecimiento
-          this.registroEstablecimientoService.asignarEstablecimiento(id, this.idEstablecimientoSeleccionado)
+          this.registroEstablecimientoService.asignarEstablecimiento(id, nuevoRegistro.idEstablecimiento)
         ]).subscribe({
           next: () => {
             this.registroEstablecimientoService.obtenerRegistroEstablecimientoPorId(id).subscribe({

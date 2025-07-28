@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { Mantenimiento } from '../../../models/mantenimiento';
 import { RegistroEstablecimiento } from '../../../models/registroEstablecimiento';
 import { RegistroProducto } from '../../../models/registroProducto';
 import { RegistroProductoService } from '../../../services/registro-producto.service';
 import { RegistroEstablecimientoService } from '../../../services/registro-establecimiento.service';
 import { MantenimientoService } from '../../../services/mantenimiento.service';
-import { FormsModule } from '@angular/forms';
+import {  FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -28,6 +28,7 @@ export class MantenimientoAsociadoModalComponent implements OnInit {
   mantenimientoSeleccionado!: number;
   registroProductoSeleccionado!: number;
   registroEstablecimientoSeleccionado!: number;
+
 
   constructor(private mantenimientoService: MantenimientoService, private registroProductoService: RegistroProductoService, private registroEstablecimientoService: RegistroEstablecimientoService) { }
 

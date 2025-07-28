@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { Producto } from '../../../models/producto';
 import { ProductoService } from '../../../services/producto.service';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EstablecimientoService } from '../../../services/establecimiento.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-producto-modal',
-  imports: [FormsModule],
+  imports: [FormsModule,ReactiveFormsModule,CommonModule],
   templateUrl: './producto-modal.component.html',
   styleUrl: './producto-modal.component.css'
 })
-export class ProductoModalComponent {
+export class ProductoModalComponent implements OnInit{
 
   @Input() idEstablecimiento!:number | undefined;
   @Output() cerrar = new EventEmitter<void>()
@@ -26,15 +27,40 @@ export class ProductoModalComponent {
 
   idProductoCreado: number | undefined;
 
+  productoForm!: FormGroup;
+
+  private fb = inject(FormBuilder);
+
   constructor(private productoService: ProductoService, private establecimentoService:EstablecimientoService){}
+
+
+  ngOnInit(): void {
+    this.formularioProducto();
+  }
+
 
   cerrarProductoModal(){
     this.productoCreado.emit();
     this.cerrar.emit();
   }
 
+  formularioProducto(){
+    this.productoForm = this.fb.group({
+      marca: ['', Validators.required],
+      denominacion: ['',Validators.required],
+      nombreFantasia: ['',Validators.required]
+    })
+  }
+
   crearProductoYAsociar():void {
-    this.productoService.agregarProducto(this.producto).subscribe({
+
+    if(this.productoForm.invalid){
+      this.productoForm.markAllAsTouched();
+      return;
+    }
+
+    const nuevoProducto: Producto = this.productoForm.value;
+    this.productoService.agregarProducto(nuevoProducto).subscribe({
       next: (response: Producto) => {
         this.idProductoCreado = response.idProducto;
         if(this.idProductoCreado !== undefined){
@@ -52,11 +78,7 @@ export class ProductoModalComponent {
         console.log('Producto creado correctamente: ',response);
         
         //Reinicio formulario
-        this.producto = {
-          marca: '',
-          denominacion: '',
-          nombreFantasia: ''
-        }
+        this.productoForm.reset();
       },
       error:(err) =>{
         console.log('Error al crear el producto',err);

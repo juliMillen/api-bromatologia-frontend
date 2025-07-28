@@ -6,18 +6,39 @@
         <button type="button" class="btn-close" (click)="cerrarProductoModal()"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form [formGroup]="productoForm" novalidate>
             <div class="mb-3">
             <label class="form-label">Marca:</label>
-            <input type="text" class="form-control" [(ngModel)]="producto.marca" name="marca">
+            <input type="text" class="form-control" formControlName="marca" name="marca" [ngClass]="{
+              'is-invalid': productoForm.get('marca')?.invalid && productoForm.get('marca')?.touched,
+              'is-valid': productoForm.get('marca')?.valid && productoForm.get('marca')?.touched
+            }"
+            >
+              <div class="invalid-feedback" *ngIf="productoForm.get('marca')?.errors?.['required']">
+              La marca del producto es obligatoria
+            </div>
           </div>
           <div class="mb-3">
             <label class="form-label">Denominacion:</label>
-            <input type="text" class="form-control" [(ngModel)]="producto.denominacion" name="denominacion">
+            <input type="text" class="form-control" formControlName="denominacion" name="denominacion" [ngClass]="{
+              'is-invalid': productoForm.get('denominacion')?.invalid && productoForm.get('denominacion')?.touched,
+              'is-valid': productoForm.get('denominacion')?.valid && productoForm.get('denominacion')?.touched
+            }">
+
+            <div class="invalid-feedback" *ngIf="productoForm.get('denominacion')?.errors?.['required']">
+              La denominacion del producto es obligatoria
+            </div>
           </div>
           <div class="mb-3">
             <label class="form-label">Nombre Fantansia:</label>
-            <input type="text" class="form-control" [(ngModel)]="producto.nombreFantasia" name="nombreFantasia">
+            <input type="text" class="form-control" formControlName="nombreFantasia" name="nombreFantasia" [ngClass]="{
+               'is-invalid': productoForm.get('nombreFantasia')?.invalid && productoForm.get('nombreFantasia')?.touched,
+              'is-valid': productoForm.get('nombreFantasia')?.valid && productoForm.get('nombreFantasia')?.touched
+            }">
+
+             <div class="invalid-feedback" *ngIf="productoForm.get('nombreFantasia')?.errors?.['required']">
+              El nombre de fantasia del producto es obligatorio
+            </div>
           </div>
         </form>
       </div>
