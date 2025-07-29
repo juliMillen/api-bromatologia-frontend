@@ -42,7 +42,7 @@ export class MantenimientoService {
   //eliminar mantenimiento
 
   eliminarMantenimiento(idMantenimiento:number):Observable<Mantenimiento>{
-    return this.http.delete<Mantenimiento>(`${this.apiUrl}/{id}`);
+    return this.http.delete<Mantenimiento>(`${this.apiUrl}/${idMantenimiento}`);
   }
 
   //agregar tramite

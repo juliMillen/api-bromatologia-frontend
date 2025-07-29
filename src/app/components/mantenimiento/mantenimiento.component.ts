@@ -70,10 +70,11 @@ export class MantenimientoComponent implements OnInit {
     this.mantenimientoService.obtenerMantenimientos().subscribe({
       next: (data:Mantenimiento[]) => {
         console.log('Mantenimientos cargados: ',data);
-        this.mantenimientos = data;
+        this.mantenimientos = data || [];
       },
       error: (err) => {
         console.error('Error al cargar mantenimientos', err)
+        this.mantenimientos = [];
       }
     })
   }
@@ -104,7 +105,7 @@ export class MantenimientoComponent implements OnInit {
   }
 
   eliminarTramite(idTramite:number):void {
-    this.mantenimientoService.eliminarTramite(idTramite).subscribe({
+    this.tramiteService.eliminarTramite(idTramite).subscribe({
       next:() => {
         console.log("Tramite eliminado correctamente");
       },
@@ -123,6 +124,39 @@ export class MantenimientoComponent implements OnInit {
       });
       this.eliminarMantenimiento(mantenimiento.idMantenimiento!);
     }
+  }
+
+
+  eliminarMantenimientoConTramite(mantenimiento:Mantenimiento):void {
+    if(!mantenimiento.tramites || mantenimiento.tramites.length === 0){
+      this.eliminarMantenimiento(mantenimiento.idMantenimiento!);
+      return;
+    }
+
+    const tramitesParaEliminar = mantenimiento.tramites.filter(t => t.idTramite);
+    let tramitesEliminados = 0;
+
+    tramitesParaEliminar.forEach(tramite => {
+      if(tramite.idTramite){
+        this.tramiteService.eliminarTramite(tramite.idTramite).subscribe({
+          next: () => {
+            console.log("Tramite eliminado correctamente");
+            tramitesEliminados++;
+
+            if(tramitesEliminados === tramitesParaEliminar.length){
+              this.eliminarMantenimiento(mantenimiento.idMantenimiento!);
+            }
+          },
+          error: (err) =>{
+            console.error("Error al eliminar el tramite: ",err);
+            tramitesEliminados++;
+            if(tramitesEliminados === tramitesParaEliminar.length){
+              this.eliminarMantenimiento(mantenimiento.idMantenimiento!);
+            }
+          }
+        })
+      }
+    });
   }
 
 }

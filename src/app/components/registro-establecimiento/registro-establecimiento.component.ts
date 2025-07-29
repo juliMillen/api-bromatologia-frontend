@@ -120,6 +120,7 @@ export class RegistroEstablecimientoComponent implements OnInit {
 
   registroCreado(registro: RegistroEstablecimiento){
     this.registrosEstablecimientos.push(registro);
+    this.registroEstablecimiento = registro;
   }
 
 

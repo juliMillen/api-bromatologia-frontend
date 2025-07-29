@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" (click)="cerrarModal()"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="mantenimientoForm" novalidate (ngSubmit)="crearMantenimientoYTramite()">
+                <form  [formGroup]="mantenimientoForm" (ngSubmit)="crearMantenimientoYTramite()" novalidate>
                     <div class="mb-3">
                         <label class="form-label">Fecha Mantenimiento: </label>
                         <input type="date" class="form-control" formControlName="fechaMantenimiento"

@@ -27,7 +27,7 @@ export class TramiteService {
   //crear tramite
 
   crearTramite(tramite:Tramite):Observable<Tramite>{
-    return this.http.post<Tramite>(`${this.apiUrl}/`,tramite);
+    return this.http.post<Tramite>(`${this.apiUrl}`,tramite);
   }
 
   //eliminar tramite

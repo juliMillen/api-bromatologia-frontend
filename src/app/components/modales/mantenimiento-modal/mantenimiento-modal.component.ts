@@ -43,13 +43,13 @@ export class MantenimientoModalComponent implements OnInit {
 
   constructor(private mantenimientoService:MantenimientoService, private tramiteService:TramiteService){}
 
+    ngOnInit(): void {
+    this.formularioMantenimiento();
+    }
+
   cerrarModal(){
     this.mantenimientoCreado.emit();
     this.cerrar.emit();
-  }
-
-  ngOnInit(): void {
-      this.formularioMantenimiento();
   }
 
   formularioMantenimiento(){
@@ -92,10 +92,10 @@ export class MantenimientoModalComponent implements OnInit {
             this.mantenimientoService.agregarTramite(mantenimientoCreado.idMantenimiento!,tramiteCreado.idTramite!).subscribe({
               next: () => {
                 console.log('Tramite asociado al mantenimiento correctamente');
+                this.mantenimientoForm.reset();
                 this.mantenimientoCreado.emit(mantenimientoCreado);
                 this.tramiteCreado.emit(tramiteCreado);
                 this.cerrar.emit();
-                this.mantenimientoForm.reset();
               },
               error:(err) => {
                 console.error('Error al asociar el tramite: ',err);

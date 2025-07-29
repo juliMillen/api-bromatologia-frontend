@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" (click)="cerrarModal()"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="registroForm" novalidate>
+                <form [formGroup]="registroForm" (ngSubmit)="guardarRegistro()" novalidate>
                     <!-- Empresa -->
                     <label for="empresa">Empresa:</label>
                     <select formControlName="cuitEmpresa" name="empresa" class="form-control">
@@ -88,11 +88,12 @@
                             <option *ngFor="let est of estados" [value]="est">{{est}}</option>
                         </select>
                     </div>
-                </form>
-                <div>
+
+                    <div class="modal-footer">
                     <button class="btn btn-danger" (click)="cerrarModal()"> Cancelar</button>
-                    <button class="btn btn-success" (click)="guardarRegistro()">Guardar Registro</button>
+                    <button type="submit" class="btn btn-success">Guardar Registro</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
