@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormGroup, FormsModule } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule,CommonModule, RouterModule],
+  imports: [FormsModule,CommonModule, RouterModule,ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  loginForm = {
+  login = {
     username: '',
     password: ''
   };
@@ -21,11 +21,28 @@ export class LoginComponent {
   errorMessage: string = ''
   loading: boolean = false;
 
+
+  loginForm!:FormGroup;
+
+  private fb= inject(FormBuilder);
+
   constructor(private router:Router, private authService:AuthService){}
 
 
+ngOnInit(): void {
+    this.formLoginReac();
+}
+
+formLoginReac(){
+  this.loginForm = this.fb.group({
+    username: ['',Validators.required],
+    password: ['', [Validators.required,Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z]).{8,}$/)]]
+  })
+}
+
   onLogin() {
-     if(!this.loginForm.username || !this.loginForm.password){
+     if(this.loginForm.invalid){
+      this.loginForm.markAllAsTouched();
       this.errorMessage = 'Por favor complete todos los campos';
       return;
     }
@@ -33,7 +50,7 @@ export class LoginComponent {
     this.loading=true;
     this.errorMessage='';
 
-    this.authService.login(this.loginForm).subscribe({
+    this.authService.login(this.loginForm.value).subscribe({
       next: (response) => {
         this.authService.guardarToken(response.token);
         this.router.navigate(["/inicio"])

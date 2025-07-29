@@ -6,15 +6,38 @@
                 <div *ngIf="mensajeExito" class="alert alert-info">
                     {{mensajeExito}}
                 </div>
-            <form (ngSubmit)="crearUsuario()">
+            <form [formGroup]="loginRegisterForm" novalidate (ngSubmit)="crearUsuario()">
                 <div class="form-group">
                     <label for="usuario">Nuevo Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" placeholder="Ingrese su usuario" [(ngModel)]="usuario.username">
+                    <input type="text" id="usuario" name="usuario" placeholder="Ingrese su usuario" formControlName="username" [ngClass]="{
+                         'is-invalid': loginRegisterForm.get('username')?.invalid && loginRegisterForm.get('username')?.touched,
+                         'is-valid': loginRegisterForm.get('username')?.valid && loginRegisterForm.get('username')?.touched
+                    }">
+
+                     <div class="invalid-feedback" *ngIf="loginRegisterForm.get('username')?.errors?.['required']">
+                       El nombre de usuario es obligatorio
+                    </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" [(ngModel)]="usuario.password">
+                    <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" formControlName="password" [ngClass]="{
+                        'is-invalid': loginRegisterForm.get('password')?.invalid && loginRegisterForm.get('password')?.touched,
+                        'is-valid': loginRegisterForm.get('password')?.valid && loginRegisterForm.get('password')?.touched
+                    }">
+
+                    <div class="alert alert-info mt-2 p2" *ngIf="loginRegisterForm.get('password')?.invalid && loginRegisterForm.get('password')?.touched">
+                        La contraseña debe tener al menos 8 caracteres, una mayuscula, una minuscula, un numero y un simbolo.
+                    </div>
+
+                    <div class="invalid-feedback" *ngIf="loginRegisterForm.get('password')?.errors?.['required']">
+                         La contraseña es obligatoria
+                    </div>
+
+                    <div class="invalid-feedback" *ngIf="loginRegisterForm.get('password')?.errors?.['pattern']">
+                         Debe ingresar una contraseña valida
+                    </div>
+
                 </div>
                 <button type="submit" class="login-btn">Crear nuevo Usuario</button>
                 <button type="submit" class="login-btn mt-4" (click)="volverALogin()">Volver</button>

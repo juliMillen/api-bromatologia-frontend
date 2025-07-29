@@ -55,10 +55,10 @@ export class MantenimientoModalComponent implements OnInit {
   formularioMantenimiento(){
     this.mantenimientoForm = this.fb.group({
     fechaMantenimiento: ['',Validators.required],
-    enlaceRecibido: ['',Validators.required,Validators.pattern(/https?:\/\/.+/)],
+    enlaceRecibido: ['', [Validators.required,Validators.pattern(/https?:\/\/.+/)]],
     nombreTramite: ['',Validators.required],
     fechaRecibo: ['',Validators.required],
-    importe: ['',Validators.required,Validators.pattern(/^\d+(\.\d{1,2})?$/)]
+    importe: ['',[Validators.required,Validators.pattern(/^\d+(\.\d{1,2})?$/)]]
     })
   };
 

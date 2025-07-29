@@ -36,7 +36,7 @@ export class MantenimientoService {
   //registrar mantenimiento
 
   registrarMantenimiento(mantenimiento:Mantenimiento):Observable<Mantenimiento>{
-    return this.http.post<Mantenimiento>(`${this.apiUrl}/`,mantenimiento);
+    return this.http.post<Mantenimiento>(`${this.apiUrl}`,mantenimiento);
   }
 
   //eliminar mantenimiento

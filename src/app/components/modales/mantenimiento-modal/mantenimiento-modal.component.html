@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" (click)="cerrarModal()"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="mantenimientoForm" novalidate>
+                <form [formGroup]="mantenimientoForm" novalidate (ngSubmit)="crearMantenimientoYTramite()">
                     <div class="mb-3">
                         <label class="form-label">Fecha Mantenimiento: </label>
                         <input type="date" class="form-control" formControlName="fechaMantenimiento"
@@ -77,11 +77,11 @@
                             El importe debe ser un numero valido (sin letras ni simbolos)
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+                        <button  type="submit" class="btn btn-success">Guardar</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
-                <button  type="submit" class="btn btn-success" (click)="crearMantenimientoYTramite()">Guardar</button>
             </div>
         </div>
     </div>

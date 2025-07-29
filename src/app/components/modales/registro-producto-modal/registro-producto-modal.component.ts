@@ -24,7 +24,8 @@ export class RegistroProductoModalComponent implements OnInit {
 
   registroProducto: RegistroProducto = {
     tipo: '',
-    idProducto:0
+    idProducto:0,
+    elaborador: ''
   }
 
   tipos: string[] = [
@@ -49,7 +50,8 @@ export class RegistroProductoModalComponent implements OnInit {
   formularioRegistro(){
     this.registroForm = this.fb.group({
       tipo: ['',Validators.required],
-      idProducto: [null,Validators.required]
+      idProducto: [null,Validators.required],
+      elaborador: ['',Validators.required]
     })
   }
 

@@ -100,7 +100,7 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
     const nuevoRegistro: RegistroEstablecimiento = {
       ...this.registroForm.value,
       fechaEmision: new Date(this.registroForm.value.fechaEmision),
-      fechaVencimiento: new Date(this.registroForm.value.fechaVencimiento);
+      fechaVencimiento: new Date(this.registroForm.value.fechaVencimiento)
     }
 
 
