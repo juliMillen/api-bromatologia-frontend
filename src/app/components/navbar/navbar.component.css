@@ -3,21 +3,17 @@
     position:fixed;
     top:0;
     left:0;
-    background-color: #333;
+    background-color: rgba(210,180,140,0.85);
     height: 100vh;
-    color: white;
+    color: black;
     padding-top: 1rem;
     z-index: 1000;
-    transition: width 0.3s ease, padding 0.3s ease, transform 0.3s ease;
-    overflow: hidden;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
 }
 
 .collapsed {
-    width: 0;
-    padding: 0;
-    border:none;
     transform: translateX(-100%);
-    padding-top: 0;
 }
 
 .collapsed ul {
@@ -31,22 +27,32 @@
     margin:0;
     list-style: none;
     transition: visibility 0.3s ease, opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: 60px;
 }
 
 .sidebar .nav-link {
     padding: 10px;
     display: block;
-    color: white;
+    color: black;
     text-decoration: none;
 }
 
 .sidebar .nav-link:hover {
-    background-color: #444;
+    background-color: #f1f1ca;
 }
 
+
 .main-content {
-    margin-left: 250px;
+    /*margin-left: 250px;*/ /* solo si tenés una sidebar fija a la izquierda */
     padding: 1rem;
+    transition: margin-left 0.3s ease;
+}
+
+.main-content.collapsed{
+    margin-left: 0;
 }
 
 .btn {
@@ -77,4 +83,25 @@
 
 .collapsed .logout button {
     opacity:0;
+}
+
+.toggle-btn {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1100;
+    background-color: antiquewhite;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.toggle-btn:hover {
+    background-color: #ccc;
 }

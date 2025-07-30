@@ -14,89 +14,96 @@
 </app-mantenimiento-asociado-modal>
 
 
-<div>
-    <label for="registroProducto">Ingrese ID registro producto</label>
-    <input type="number" id="RegistroProducto" [(ngModel)]="idRegistroProducto" class="form-control mt-5 mb-2 w-50"
+<div class="seccionFilter">
+    <label for="registroProducto">Ingrese ID registro producto:</label>
+    <input type="number" id="RegistroProducto" [(ngModel)]="idRegistroProducto" class="form-control mt-3 mb-2 w-50"
         placeholder="Ingrese id de registro producto...">
 
     <label for="registroEstablecimiento">Ingrese ID registro establecimiento:</label>
     <input type="number" id="RegistroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento"
-        class="form-control mt-5 mb-2 w-50" placeholder="Ingrese id de registro establecimiento...">
+        class="form-control mt-3 mb-2 w-50" placeholder="Ingrese id de registro establecimiento...">
 
     <button class="btn btn-success" (click)="obtenerRegistroProductoEstablecimientoPorId()">
+        <i class="bi bi-search"></i>
         Buscar
     </button>
 
-    <button class="btn btn-success" (click)="cargarRegistros()">
+    <button class="btn btn-success ms-2" (click)="cargarRegistros()">
         Mostrar Todos
     </button>
 
-    <button class="btn btn-success" (click)="abrirModalAsociacion('registroProducto')">
+    <button class="btn btn-success ms-2" (click)="abrirModalAsociacion('registroProducto')">
+        <i class="bi bi-plus-circle-fill"></i>
         Agregar Mantenimiento
     </button>
 </div>
 
 <h2>Listado de Registros Productos</h2>
-<button class="btn btn-success" (click)="abrirRegistroProductoModal()">
+<button class="btn btn-success btn-AgregarRegistro" (click)="abrirRegistroProductoModal()">
+    <i class="bi bi-plus-circle-fill"></i>
     Agregar Registro
 </button>
 
-<table class=" table table table-bordered table-striped" *ngIf="registrosProd.length">
-    <thead class="table dark">
-        <tr>
-            <th>ID Registro Producto</th>
-            <th>N° RNPA Actual</th>
-            <th>Expediente</th>
-            <th>Fecha Emision</th>
-            <th>Tipo</th>
-            <th>Elaborador</th>
-            <th>N° Anterior RNPA</th>
-            <th>RNE</th>
-            <th>ID Registro Establecimiento</th>
-            <th>Certificado</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        <ng-container *ngFor="let reg of registrosProd">
+<div class="table-responsive mt-3 container">
+    <table class=" table table table-bordered table-striped" *ngIf="registrosProd.length">
+        <thead class="table dark">
             <tr>
-                <td>{{reg.idRegistroProducto}}</td>
-                <td>{{reg.rnpaActual}}</td>
-                <td>{{reg.expediente}}</td>
-                <td>{{reg.fechaEmision}}</td>
-                <td>{{reg.tipo}}</td>
-                <td>{{reg.registroProducto?.elaborador}}</td>
-                <td>{{reg.rnpaAnterior}}</td>
-                <td>{{reg.nroRne}}</td>
-                <td>
-                    <button class="btn btn-primary p-0" [routerLink]="['/registroEstablecimiento',reg.idRegistroEstablecimiento]">
-                        {{reg.idRegistroEstablecimiento}} - Ver Registro
-                    </button>
-                </td>
-                <td>
-                    <a *ngIf="reg.certificado" [href]="reg.certificado" target="_blank" rel="noopener noreferrer">
-                        Ver certificado
-                    </a>
-                </td>
+                <th>ID Registro Producto</th>
+                <th>N° RNPA Actual</th>
+                <th>Expediente</th>
+                <th>Fecha Emision</th>
+                <th>Tipo</th>
+                <th>Elaborador</th>
+                <th>N° Anterior RNPA</th>
+                <th>RNE</th>
+                <th>ID Registro Establecimiento</th>
+                <th>Certificado</th>
             </tr>
+        </thead>
 
-            <tr *ngFor="let man of reg.registroProducto?.mantenimientos">
-                <td colspan="2"><strong>Mantenimientos</strong></td>
-                <td colspan="2">{{man.fechaMantenimiento}}</td>
-                <td colspan="4">
-                    <a *ngIf="man.enlaceRecibido" [href]="man.enlaceRecibido" target="_blank" rel="noopener noreferrer">
-                        Ver enlace recibido
-                    </a>
-                </td>
-                <td colspan="2">
-                    <a class="btn btn-primary btn-info" [routerLink]="['/mantenimiento',man.idMantenimiento]">
-                        Ver detalles
-                    </a>
-                </td>
-            </tr>
-        </ng-container>
-    </tbody>
-</table>
+        <tbody>
+            <ng-container *ngFor="let reg of registrosProd">
+                <tr>
+                    <td>{{reg.idRegistroProducto}}</td>
+                    <td>{{reg.rnpaActual}}</td>
+                    <td>{{reg.expediente}}</td>
+                    <td>{{reg.fechaEmision}}</td>
+                    <td>{{reg.tipo}}</td>
+                    <td>{{reg.registroProducto?.elaborador}}</td>
+                    <td>{{reg.rnpaAnterior}}</td>
+                    <td>{{reg.nroRne}}</td>
+                    <td>
+                        <button class="btn btn-primary p-0"
+                            [routerLink]="['/registroEstablecimiento',reg.idRegistroEstablecimiento]">
+                            {{reg.idRegistroEstablecimiento}} - Ver Registro
+                        </button>
+                    </td>
+                    <td>
+                        <a *ngIf="reg.certificado" [href]="reg.certificado" target="_blank" rel="noopener noreferrer">
+                            Ver certificado
+                        </a>
+                    </td>
+                </tr>
+
+                <tr *ngFor="let man of reg.registroProducto?.mantenimientos">
+                    <td colspan="2"><strong>Mantenimientos</strong></td>
+                    <td colspan="2">{{man.fechaMantenimiento}}</td>
+                    <td colspan="4">
+                        <a *ngIf="man.enlaceRecibido" [href]="man.enlaceRecibido" target="_blank"
+                            rel="noopener noreferrer">
+                            Ver enlace recibido
+                        </a>
+                    </td>
+                    <td colspan="2">
+                        <a class="btn btn-primary btn-info" [routerLink]="['/mantenimiento',man.idMantenimiento]">
+                            Ver detalles
+                        </a>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
 <div *ngIf="registrosProd.length ===0" class="alert alert-info">
     No hay Registros Productos cargados
 </div>

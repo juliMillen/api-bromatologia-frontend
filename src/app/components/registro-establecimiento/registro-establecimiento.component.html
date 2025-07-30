@@ -3,83 +3,93 @@
     (registroEstCreado)="registroCreado($event)">
 </app-registro-establecimiento-modal>
 
-<app-mantenimiento-asociado-modal
-*ngIf="mostrarModalAsociacion"
-[tipo]="tipoModalAsociacion"
-(cerrar)="cerrarModalAsociacion()"
->
+<app-mantenimiento-asociado-modal *ngIf="mostrarModalAsociacion" [tipo]="tipoModalAsociacion"
+    (cerrar)="cerrarModalAsociacion()">
 </app-mantenimiento-asociado-modal>
 
 <div>
-    <div>
+    <label for="regEstablecimiento">Ingrese id registro establecimiento:</label>
+    <div class="seccionFilter">
         <input type="number" id="registroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento"
-            class="form-control mt-5 mb-2 w-50" placeholder="Ingrese id de registro establecimiento...">
+            class="form-control mt-3 mb-2 w-50" placeholder="Ingrese id de registro establecimiento...">
 
         <button class="btn btn-success" (click)="obtenerRegistroEstablecimientoPorId()">
+            <i class="bi bi-search"></i>
             Buscar
         </button>
 
-        <button class="btn btn-success" (click)="cargarRegistros()">
+        <button class="btn btn-success ms-2" (click)="cargarRegistros()">
             Mostrar Todos
         </button>
 
-        <button class="btn btn-success" (click)="abrirModalAsociacion('registroEstablecimiento')">
+        <button class="btn btn-success ms-2" (click)="abrirModalAsociacion('registroEstablecimiento')">
+            <i class="bi bi-plus-circle-fill"></i>
             Agregar Mantenimiento
         </button>
     </div>
 
     <h2>Listado de Registros Establecimiento</h2>
-    <button class="btn btn-success" (click)="abrirModal()">
+    <button class="btn btn-success btn-AgregarRegistro" (click)="abrirModal()">
+        <i class="bi bi-plus-circle-fill"></i>
         Agregar Registro
     </button>
 
-    <table class="table table-bordered table-striped" *ngIf="registrosEstablecimientos.length > 0">
-        <thead class="table-dark">
-            <tr>
-                <th>Cuit Titular</th>
-                <th>Cuit Empresa</th>
-                <th>Establecimiento</th>
-                <th>Categoria Anterior</th>
-                <th>Arancel</th>
-                <th>Fecha de emision</th>
-                <th>Fecha de vencimiento</th>
-                <th>estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            <ng-container *ngFor="let reg of registrosEstablecimientos">
+    <div class="table-responsive mt-3 container">
+        <table class="table table-bordered table-striped" *ngIf="registrosEstablecimientos.length > 0">
+            <thead>
                 <tr>
-                    <td>{{reg.cuitTitular}}</td>
-                    <td>{{reg.cuitEmpresa}}</td>
-                    <td>
-                        <button class="btn btn-primary p-0" [routerLink]="['/establecimiento',reg.idEstablecimiento]">
-                            {{reg.idEstablecimiento}}-Ver Establecimiento
-                        </button>
-                    </td>
-                    <td>{{reg.categoriaAnt}}</td>
-                    <td>{{reg.arancel}}</td>
-                    <td>{{reg.fechaEmision}}</td>
-                    <td>{{reg.fechaVencimiento}}</td>
-                    <td>{{reg.estado}}</td>
+                    <th>Cuit Titular</th>
+                    <th>Cuit Empresa</th>
+                    <th>Establecimiento</th>
+                    <th>Categoria Anterior</th>
+                    <th>Arancel</th>
+                    <th>Fecha de emision</th>
+                    <th>Fecha de vencimiento</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let reg of registrosEstablecimientos">
+                    <tr [ngClass]="{
+                        'estadoHabilitado': reg.estado.trim().toLowerCase() === 'habilitado',
+                        'estadoCancelado': reg.estado.trim().toLowerCase() === 'cancelado',
+                        'estadoObservado': reg.estado.trim().toLowerCase() === 'observado',
+                        'estadoSuspendido': reg.estado.trim().toLowerCase() === 'suspendido'
+                    }">
+                        <td>{{reg.cuitTitular}}</td>
+                        <td>{{reg.cuitEmpresa}}</td>
+                        <td>
+                            <button class="btn btn-primary p-0"
+                                [routerLink]="['/establecimiento',reg.idEstablecimiento]">
+                                {{reg.idEstablecimiento}}-Ver Establecimiento
+                            </button>
+                        </td>
+                        <td>{{reg.categoriaAnt}}</td>
+                        <td>{{reg.arancel}}</td>
+                        <td>{{reg.fechaEmision}}</td>
+                        <td>{{reg.fechaVencimiento}}</td>
+                        <td>{{reg.estado}}</td>
+                    </tr>
 
-                <tr *ngFor="let man of reg.mantenimientos">
-                    <td colspan="2">
-                        <strong>Mantenimientos</strong>
-                    </td>
-                    <td colspan="2">{{man.fechaMantenimiento}}</td>
-                    <td colspan="4">{{man.enlaceRecibido}}</td>
-                    <td colspan="2">
-                        <a class="btn btn-primary btn-info" [routerLink]="['/mantenimiento',man.idMantenimiento]">
-                            Ver detalles
-                        </a>
-                    </td>
-                </tr>
-            </ng-container>
-        </tbody>
-    </table>
+                    <tr *ngFor="let man of reg.mantenimientos">
+                        <td colspan="2">
+                            <strong>Mantenimientos</strong>
+                        </td>
+                        <td colspan="2">{{man.fechaMantenimiento}}</td>
+                        <td colspan="4">{{man.enlaceRecibido}}</td>
+                        <td colspan="2">
+                            <a class="btn btn-primary btn-info" [routerLink]="['/mantenimiento',man.idMantenimiento]">
+                                Ver detalles
+                            </a>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
 
-<div *ngIf="registrosEstablecimientos.length === 0" class="alert alert-info mt-3">
-    No hay registros cargados
-</div>
+    <div *ngIf="registrosEstablecimientos.length === 0" class="alert alert-info mt-3">
+        No hay registros cargados
+    </div>
 </div>

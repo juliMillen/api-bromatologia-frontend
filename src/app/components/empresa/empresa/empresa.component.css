@@ -1,0 +1,53 @@
+.body{
+    overflow-x: hidden;
+}
+
+
+.seccionFilter button{
+    background-color: #6B8E23;
+    color: white;
+}
+
+.seccionFilter button:hover{
+    background-color: #6B8E23;
+}
+
+.btn-AgregarEmpresa {
+    background-color: #6B8E23;
+}
+
+thead {
+    background-color: #6B8E23 !important;
+    color: white;
+}
+
+.table-striped tbody tr:nth-of-type(odd){
+    background-color: #F0F0e6;
+}
+
+.table-striped tbody tr:hover {
+    background-color: #e0e0d0;
+}
+
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+
+@media (max-width:768px){
+    .container {
+        padding: 1rem
+    }
+
+    .btn-AgregarEmpresa{
+        width: 100%;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+}
