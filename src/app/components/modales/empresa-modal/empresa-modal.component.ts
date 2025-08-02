@@ -19,15 +19,15 @@ export class EmpresaModalComponent implements OnInit {
 
     empresa: Empresa = {
       cuitEmpresa: 0,
-      nombreEmpresa: '',
+      razonSocial: '',
+      fechaAlta: new Date(),
+      fechaVencimiento: new Date(),
       email: '',
       telefono: '',
-      titular: {
-        cuitTitular: 0,
-        nombreTitular: '',
-        telefono: '',
-        email: ''
-      }
+      departamento: '',
+      localidad: '',
+      direccion: '',
+      password: ''
     };
   
     empresas: Empresa[] = [];

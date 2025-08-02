@@ -1,9 +1,13 @@
-import { Titular } from "./titular"
 
 export class Empresa{
     cuitEmpresa!: number
-    nombreEmpresa!: string
+    razonSocial!: string
+    fechaAlta!: Date
+    fechaVencimiento!: Date
     email!: string
     telefono!: string
-    titular!: Titular
+    departamento!: string
+    localidad!:string
+    direccion!:string
+    password!: string
 }

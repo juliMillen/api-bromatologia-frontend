@@ -22,13 +22,13 @@
             </div>
           </div>
           <div class="mb-3" *ngIf="modo === 'crear'">
-            <label class="form-label">Nombre Empresa</label>
-            <input type="text" class="form-control" formControlName="nombreEmpresa" name="nombreEmpresa" [ngClass]="{
-              'is-invalid': empresaForm.get('nombreEmpresa')?.invalid && empresaForm.get('nombreEmpresa')?.touched,
-              'is-valid': empresaForm.get('nombreEmpresa')?.valid && empresaForm.get('nombreEmpresa')?.touched
+            <label class="form-label">Razon Social</label>
+            <input type="text" class="form-control" formControlName="razonSocial" name="razonSocial" [ngClass]="{
+              'is-invalid': empresaForm.get('razonSocial')?.invalid && empresaForm.get('razonSocial')?.touched,
+              'is-valid': empresaForm.get('razonSocial')?.valid && empresaForm.get('razonSocial')?.touched
             }">
-            <div class="invalid-feedback" *ngIf="empresaForm.get('nombreEmpresa')?.errors?.['required']">
-              El nombre de la empresa es obligatorio
+            <div class="invalid-feedback" *ngIf="empresaForm.get('razonSocial')?.errors?.['required']">
+              La razon social es obligatoria
             </div>
 
           </div>
