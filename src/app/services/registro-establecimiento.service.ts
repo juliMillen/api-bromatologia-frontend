@@ -7,6 +7,7 @@ import { Titular } from '../models/titular';
 import { Empresa } from '../models/empresa';
 import { Establecimiento } from '../models/establecimiento';
 import { Mantenimiento } from '../models/mantenimiento';
+import { Categoria } from '../models/categoria';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class RegistroEstablecimientoService {
   }
 
   //obtener registro por id
-  obtenerRegistroEstablecimientoPorId(idRegistro:number):Observable<RegistroEstablecimiento>{
+  obtenerRegistroEstablecimientoPorId(idRegistro:string):Observable<RegistroEstablecimiento>{
     return this.http.get<RegistroEstablecimiento>(`${this.apiUrl}/${idRegistro}`);
   }
 
@@ -34,23 +35,13 @@ export class RegistroEstablecimientoService {
     return this.http.post<RegistroEstablecimiento>(`${this.apiUrl}/`,registroEstablecimiento);
   }
 
-  //asignar titular
 
-  asignarTitular(idRegistro:number, cuitTitular:number):Observable<Titular>{
-    return this.http.post<Titular>(`${this.apiUrl}/${idRegistro}/titular/${cuitTitular}`,null);
+  //asignar Categoria
+
+  asignarCategoria(idRegistro:number, idCategoria:number):Observable<Categoria>{
+    return this.http.post<Categoria>(`${this.apiUrl}/${idRegistro}/cateogoria/${idCategoria}`,null);
   }
 
-  //asignar empresa
-
-  asignarEmpresa(idRegistro:number, cuitEmpresa:number):Observable<Empresa>{
-    return this.http.post<Empresa>(`${this.apiUrl}/${idRegistro}/empresa/${cuitEmpresa}`,null);
-  }
-
-  //asignar establecimiento
-
-  asignarEstablecimiento(idRegistro:number, idEstablecimiento:number):Observable<Establecimiento>{
-    return this.http.post<Establecimiento>(`${this.apiUrl}/${idRegistro}/establecimiento/${idEstablecimiento}`,null);
-  }
 
   //asignar Mantenimiento
 
@@ -60,7 +51,7 @@ export class RegistroEstablecimientoService {
 
   //eliminar registro establecimiento
 
-  eliminarRegistro(id:number):Observable<RegistroEstablecimiento>{
+  eliminarRegistro(id:string):Observable<RegistroEstablecimiento>{
     return this.http.delete<RegistroEstablecimiento>(`${this.apiUrl}/${id}`);
   }
 }

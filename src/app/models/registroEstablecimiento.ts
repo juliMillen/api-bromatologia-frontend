@@ -1,14 +1,17 @@
+import { Categoria } from "./categoria"
+import { Empresa } from "./empresa"
 import { Mantenimiento } from "./mantenimiento"
 
 export class RegistroEstablecimiento{
-    idRegistroEstablecimiento?: number
-    cuitTitular!: number
-    cuitEmpresa!: number
-    idEstablecimiento!: number
-    categoriaAnt!: string
-    arancel!:number
-    fechaEmision!:Date
+    rpe!:string
+    fechaEmision!: Date
     fechaVencimiento!:Date
-    estado!: string
+    empresa!:Empresa
+    departamento!: string
+    localidad!:string
+    direccion!:string
+    expediente!:number
+    enlace!:string
+    categoria?:Categoria[]
     mantenimientos?: Mantenimiento[]
 }

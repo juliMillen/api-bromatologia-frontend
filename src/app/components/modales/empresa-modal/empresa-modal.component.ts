@@ -21,7 +21,6 @@ export class EmpresaModalComponent implements OnInit {
       cuitEmpresa: 0,
       razonSocial: '',
       fechaAlta: new Date(),
-      fechaVencimiento: new Date(),
       email: '',
       telefono: '',
       departamento: '',
