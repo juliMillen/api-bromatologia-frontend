@@ -26,7 +26,7 @@ export class MantenimientoAsociadoModalComponent implements OnInit {
   registrosProductos: RegistroProducto[] = [];
 
   mantenimientoSeleccionado!: number;
-  registroProductoSeleccionado!: number;
+  registroProductoSeleccionado!: string;
   registroEstablecimientoSeleccionado!: number;
 
 

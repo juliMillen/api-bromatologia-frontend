@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Producto } from '../../../models/producto';
 import { RegistroProducto } from '../../../models/registroProducto';
-import { RegistroProductoEstablecimiento } from '../../../models/registroProductoEstablecimiento';
 import { RegistroProductoService } from '../../../services/registro-producto.service';
-import { ProductoService } from '../../../services/producto.service';
+import { RegistroEstablecimiento } from '../../../models/registroEstablecimiento';
+import { RegistroEstablecimientoService } from '../../../services/registro-establecimiento.service';
 
 @Component({
   selector: 'app-registro-producto-modal',
@@ -18,40 +17,52 @@ export class RegistroProductoModalComponent implements OnInit {
 
   @Output() cerrar = new EventEmitter<void>()
   @Output() registroProdCreado = new EventEmitter<RegistroProducto>
-  @Output() registroProdEstablecimiento = new EventEmitter<RegistroProductoEstablecimiento>
 
-  productos: Producto[] = [];
+  registrosEst: RegistroEstablecimiento[] = [];
 
   registroProducto: RegistroProducto = {
-    tipo: '',
-    idProducto:0,
+    rppa: '',
+    fechaEmision: new Date(),
+    fechaVencimiento: new Date(),
+    registroEstablecimiento: {
+      rpe: ''
+    },
+    denominacion: '',
+    marca: '',
+    nombreFantasia: '',
+    categoriaProducto: '',
+    expediente: 0,
+    enlace: '',
     elaborador: ''
   }
 
-  tipos: string[] = [
-    "Inscripcion",
-    "Reinscripcion"
-  ]
 
 
   registroForm!: FormGroup;
 
   private fb = inject(FormBuilder);
 
-  constructor(private registroProductoService:RegistroProductoService, private productoService:ProductoService) {}
+  constructor(private registroProductoService:RegistroProductoService, private registroEstablecimientoService: RegistroEstablecimientoService) {}
 
 
   ngOnInit(): void {
-    this.cargarProductos();
+    this.cargarRegistros();
     this.formularioRegistro();
   }
 
 
   formularioRegistro(){
     this.registroForm = this.fb.group({
-      tipo: ['',Validators.required],
-      idProducto: [null,Validators.required],
-      elaborador: ['',Validators.required]
+      rppa: ['',Validators.required],
+      fechaEmision: ['',Validators.required],
+      fechaVencimiento:['',Validators.required],
+      registroEstablecimiento: ['',Validators.required],
+      denominacion: ['',Validators.required],
+      marca: ['',Validators.required],
+      nombreFantasia: ['',Validators.required],
+      categoriaProducto: ['',Validators.required],
+      expediente:[null, Validators.required],
+      enlace: ['',Validators.required],
     })
   }
 
@@ -59,8 +70,8 @@ export class RegistroProductoModalComponent implements OnInit {
     this.cerrar.emit();
   }
 
-  cargarProductos(){
-    this.productoService.obtenerProductos().subscribe(data => this.productos = data);
+  cargarRegistros(){
+    this.registroEstablecimientoService.obtenerRegistrosEstablecimientos().subscribe(data => this.registrosEst = data);
   }
 
   guardarRegistro(){

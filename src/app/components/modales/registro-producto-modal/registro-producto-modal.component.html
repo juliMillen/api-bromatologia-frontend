@@ -9,33 +9,126 @@
                 <form [formGroup]="registroForm" (ngSubmit)="guardarRegistro()">
 
                     <div class="mb-3">
-                        <label class="form-label">Tipo</label>
-                        <select class="form-control" formControlName="tipo" name="tipo" [ngClass]="{
-                            'is-invalid': registroForm.get('tipo')?.invalid && registroForm.get('tipo')?.touched,
-                            'is-valid': registroForm.get('tipo')?.valid && registroForm.get('tipo')?.touched
+                        <label class="form-label">RPPA (Registro Provincial de Productos Alimenticios)</label>
+                        <input type="text" class="form-control" formControlName="rppa" name="rppa" [ngClass]="{
+                             'is-invalid': registroForm.get('rppa')?.invalid && registroForm.get('rppa')?.touched,
+                             'is-valid': registroForm.get('rppa')?.valid && registroForm.get('rppa')?.touched
                         }">
-                            <option value="" disabled selected>Seleccione un tipo</option>
-                            <option *ngFor="let t of tipos" [value]="t">{{t}}</option>
-                        </select>
-
-                            <div class="invalid-feedback" *ngIf="registroForm.get('tipo')?.errors?.['required']">
-                             El tipo es obligatorio
-                            </div>
+                        <div class="invalid-feedback" *ngIf="registroForm.get('rpe')?.errors?.['required']">
+                            El RPPA es obligatorio
+                        </div>
                     </div>
 
-                    <!-- Producto -->
-                    <label for="empresa">Producto:</label>
-                    <select formControlName="idProducto" name="producto" class="form-control" [ngClass]="{
-                            'is-invalid': registroForm.get('idProducto')?.invalid && registroForm.get('idProducto')?.touched,
-                            'is-valid': registroForm.get('idProducto')?.valid && registroForm.get('idProducto')?.touched
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Emision</label>
+                        <input type="date" class="form-control" formControlName="fechaEmision"
+                            name="fechaEmision" [ngClass]="{
+                                'is-invalid': registroForm.get('fechaEmision')?.invalid && registroForm.get('fechaEmision')?.touched,
+                                'is-valid': registroForm.get('fechaEmision')?.valid && registroForm.get('fechaEmision')?.touched
+                            }">
+                        <div class="invalid-feedback" *ngIf="registroForm.get('fechaEmision')?.errors?.['required']">
+                            La fecha es obligatoria
+                        </div>
+                    </div>
+
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Vencimiento</label>
+                        <input type="date" class="form-control" formControlName="fechaVencimiento"
+                            name="fechaEmision" [ngClass]="{
+                                'is-invalid': registroForm.get('fechaVencimiento')?.invalid && registroForm.get('fechaVencimiento')?.touched,
+                                'is-valid': registroForm.get('fechaVencimiento')?.valid && registroForm.get('fechaVencimiento')?.touched
+                            }">
+                        <div class="invalid-feedback" *ngIf="registroForm.get('fechaVencimiento')?.errors?.['required']">
+                            La fecha es obligatoria
+                        </div>
+                    </div>
+                    <!-- Registro Establecimiento -->
+                    <label for="empresa">Registro Establecimiento:</label>
+                    <select formControlName="registroEstablecimiento" name="registroEstablecimiento" class="form-control" [ngClass]="{
+                            'is-invalid': registroForm.get('registroEstablecimiento')?.invalid && registroForm.get('registroEstablecimiento')?.touched,
+                            'is-valid': registroForm.get('registroEstablecimiento')?.valid && registroForm.get('registroEstablecimiento')?.touched
                     }">
-                        <option value="" disabled selected>Seleccione un producto</option>
-                        <option *ngFor="let producto of productos" [value]="producto.idProducto">{{producto.denominacion}}
+                        <option value="" disabled selected>Seleccione un registro</option>
+                        <option *ngFor="let reg of registrosEst" [value]="reg.rpe">{{reg.rpe}}
                         </option>
                     </select>
-                             <div class="invalid-feedback" *ngIf="registroForm.get('idProducto')?.errors?.['required']">
-                             El producto es obligatorio
+                             <div class="invalid-feedback" *ngIf="registroForm.get('registroEstablecimiento')?.errors?.['required']">
+                             El registro establecimiento es obligatorio
                             </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Denominacion</label>
+                        <input type="string" class="form-control" formControlName="denominacion"
+                            name="denominacion" [ngClass]="{
+                                'is-invalid': registroForm.get('denominacion')?.invalid && registroForm.get('denominacion')?.touched,
+                                'is-valid': registroForm.get('denominacion')?.valid && registroForm.get('denominacion')?.touched
+                            }">
+                        <div class="invalid-feedback" *ngIf="registroForm.get('denominacion')?.errors?.['required']">
+                            La denominacion es obligatoria
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Marca</label>
+                        <input type="string" class="form-control" formControlName="marca"
+                            name="marca" [ngClass]="{
+                                'is-invalid': registroForm.get('marca')?.invalid && registroForm.get('marca')?.touched,
+                                'is-valid': registroForm.get('marca')?.valid && registroForm.get('marca')?.touched
+                            }">
+                        <div class="invalid-feedback" *ngIf="registroForm.get('elaborador')?.errors?.['required']">
+                           La marca es obligatoria
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nombre Fantasia</label>
+                        <input type="string" class="form-control" formControlName="nombreFantasia"
+                            name="nombreFantasia" [ngClass]="{
+                                'is-invalid': registroForm.get('nombreFantasia')?.invalid && registroForm.get('nombreFantasia')?.touched,
+                                'is-valid': registroForm.get('nombreFantasia')?.valid && registroForm.get('nombreFantasia')?.touched
+                            }">
+                        <div class="invalid-feedback" *ngIf="registroForm.get('elaborador')?.errors?.['required']">
+                           El nombre de fantasia es obligatorio
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Categoria Producto</label>
+                        <input type="string" class="form-control" formControlName="categoriaProducto"
+                            name="categoriaProducto" [ngClass]="{
+                                'is-invalid': registroForm.get('categoriaProducto')?.invalid && registroForm.get('categoriaProducto')?.touched,
+                                'is-valid': registroForm.get('categoriaProducto')?.valid && registroForm.get('categoriaProducto')?.touched
+                            }">
+                        <div class="invalid-feedback" *ngIf="registroForm.get('categoriaProducto')?.errors?.['required']">
+                           La categoria del producto es obligatoria
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Expediente</label>
+                        <input type="expediente" class="form-control" formControlName="expediente"
+                            name="elaborador" [ngClass]="{
+                                'is-invalid': registroForm.get('expediente')?.invalid && registroForm.get('expediente')?.touched,
+                                'is-valid': registroForm.get('expediente')?.valid && registroForm.get('expediente')?.touched
+                            }">
+                        <div class="invalid-feedback" *ngIf="registroForm.get('expediente')?.errors?.['required']">
+                           El expediente es obligatorio
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">Enlace</label>
+                        <input type="string" class="form-control" formControlName="enlace"
+                            name="enlace" [ngClass]="{
+                                'is-invalid': registroForm.get('enlace')?.invalid && registroForm.get('enlace')?.touched,
+                                'is-valid': registroForm.get('enlace')?.valid && registroForm.get('enlace')?.touched
+                            }">
+                        <div class="invalid-feedback" *ngIf="registroForm.get('enlace')?.errors?.['required']">
+                           El enlace es obligatorio
+                        </div>
+                    </div>
 
                     <div class="mb-3">
                         <label class="form-label">Elaborador</label>

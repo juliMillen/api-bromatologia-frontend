@@ -3,12 +3,6 @@
     (registroProdCreado)="onRegistroProductoCreado($event)">
 </app-registro-producto-modal>
 
-<!--Modal de Registro Producto Establecimiento-->
-<app-registro-producto-establecimiento-modal *ngIf="mostrarModalRegistroProductoEstablecimiento"
-    [registroProducto]="registroProductoCreado" [registroEstablecimiento]="registroEstablecimientoSeleccionado"
-    (cerrar)="mostrarModalRegistroProductoEstablecimiento = false">
-</app-registro-producto-establecimiento-modal>
-
 <app-mantenimiento-asociado-modal *ngIf="mostrarModalAsociacion" [tipo]="tipoModalAsociacion"
     (cerrar)="cerrarModalAsociacion()">
 </app-mantenimiento-asociado-modal>
@@ -45,47 +39,45 @@
 </button>
 
 <div class="table-responsive mt-3 container">
-    <table class=" table table table-bordered table-striped" *ngIf="registrosProd.length">
+    <table class=" table table table-bordered table-striped" *ngIf="registrosProductos.length">
         <thead class="table dark">
             <tr>
-                <th>ID Registro Producto</th>
-                <th>N° RNPA Actual</th>
+                <th>RPPA (Registro Provincial de Productos Alimenticios)</th>
+                <th>Fecha de Emision</th>
+                <th>Fecha de Vencimiento</th>
+                <th>Registro Establecimiento</th>
+                <th>Denominacion</th>
+                <th>Marca</th>
+                <th>Nombre de Fantasia</th>
+                <th>Categoria del Producto</th>
                 <th>Expediente</th>
-                <th>Fecha Emision</th>
-                <th>Tipo</th>
+                <th>Enlace</th>
                 <th>Elaborador</th>
-                <th>N° Anterior RNPA</th>
-                <th>RNE</th>
-                <th>ID Registro Establecimiento</th>
-                <th>Certificado</th>
             </tr>
         </thead>
 
         <tbody>
-            <ng-container *ngFor="let reg of registrosProd">
+            <ng-container *ngFor="let reg of registrosProductos">
                 <tr>
-                    <td>{{reg.idRegistroProducto}}</td>
-                    <td>{{reg.rnpaActual}}</td>
-                    <td>{{reg.expediente}}</td>
+                    <td>{{reg.rppa}}</td>
                     <td>{{reg.fechaEmision}}</td>
-                    <td>{{reg.tipo}}</td>
-                    <td>{{reg.registroProducto?.elaborador}}</td>
-                    <td>{{reg.rnpaAnterior}}</td>
-                    <td>{{reg.nroRne}}</td>
+                    <td>{{reg.fechaVencimiento}}</td>
                     <td>
                         <button class="btn btn-primary p-0"
-                            [routerLink]="['/registroEstablecimiento',reg.idRegistroEstablecimiento]">
-                            {{reg.idRegistroEstablecimiento}} - Ver Registro
+                            [routerLink]="['/registroEstablecimiento',reg.registroEstablecimiento.rpe]">
+                            {{reg.registroEstablecimiento.rpe}} - Ver Registro
                         </button>
                     </td>
-                    <td>
-                        <a *ngIf="reg.certificado" [href]="reg.certificado" target="_blank" rel="noopener noreferrer">
-                            Ver certificado
-                        </a>
-                    </td>
+                    <td>{{reg.denominacion}}</td>
+                    <td>{{reg.marca}}</td>
+                    <td>{{reg.nombreFantasia}}</td>
+                    <td>{{reg.categoriaProducto}}</td>
+                    <td>{{reg.expediente}}</td>
+                    <td>{{reg.enlace}}</td>
+                    <td>{{reg.elaborador}}</td>
                 </tr>
 
-                <tr *ngFor="let man of reg.registroProducto?.mantenimientos">
+                <tr *ngFor="let man of reg.mantenimientos">
                     <td colspan="2"><strong>Mantenimientos</strong></td>
                     <td colspan="2">{{man.fechaMantenimiento}}</td>
                     <td colspan="4">
@@ -104,6 +96,6 @@
         </tbody>
     </table>
 </div>
-<div *ngIf="registrosProd.length ===0" class="alert alert-info">
+<div *ngIf="registrosProductos.length === 0" class="alert alert-info">
     No hay Registros Productos cargados
 </div>

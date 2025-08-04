@@ -74,7 +74,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Departamento</label>
+            <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'" >Departamento</label>
             <input type="text" class="form-control" formControlName="departamento" name="departamento" [ngClass]="{
 
               'is-invalid': empresaForm.get('departamento')?.invalid && empresaForm.get('departamento')?.touched,
@@ -87,7 +87,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Localidad</label>
+            <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Localidad</label>
             <input type="text" class="form-control" formControlName="localidad" name="localidad"
             [ngClass]="{
               'is-invalid': empresaForm.get('localidad')?.invalid && empresaForm.get('localidad')?.touched,
@@ -100,7 +100,7 @@
           </div>
 
            <div class="mb-3">
-            <label class="form-label">Direccion</label>
+            <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Direccion</label>
             <input type="text" class="form-control" formControlName="direccion" name="direccion" [ngClass]="{
               'is-invalid': empresaForm.get('direccion')?.invalid && empresaForm.get('direccion')?.touched,
               'is-valid': empresaForm.get('direccion')?.valid && empresaForm.get('direccion')?.touched
@@ -112,7 +112,7 @@
           </div>
 
            <div class="mb-3">
-            <label class="form-label">Contraseña</label>
+            <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Contraseña</label>
             <input type="text" class="form-control" formControlName="password" name="password" [ngClass]="{
               'is-invalid': empresaForm.get('password')?.invalid && empresaForm.get('password')?.touched,
               'is-valid': empresaForm.get('password')?.valid && empresaForm.get('password')?.touched

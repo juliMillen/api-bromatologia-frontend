@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { CommonModule } from '@angular/common';
 import { RegistroEstablecimiento } from '../../../models/registroEstablecimiento';
 import { RegistroEstablecimientoService } from '../../../services/registro-establecimiento.service';
-import { forkJoin } from 'rxjs';
 import { Categoria } from '../../../models/categoria';
 import { CategoriaService } from '../../../services/categoria.service';
 
@@ -39,13 +38,6 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
     enlace: ''
   }
 
-  estados: string[] = [
-    "Cancelado",
-    "Habilitado",
-    "Observado",
-    "Suspendido"
-  ]
-
 
   registroForm!: FormGroup;
 
@@ -56,6 +48,7 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarEmpresas();
+    this.cargarCategorias();
     this.formularioRegistroEstablecimiento();
   }
 
@@ -95,6 +88,10 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
     this.empresaService.getEmpresas().subscribe(data => this.empresas = data);
   }
 
+
+  cargarCategorias(){
+    this.categoriaService.obtenerCategorias().subscribe(data => this.categorias = data);
+  }
 
 
   guardarRegistro(): void {

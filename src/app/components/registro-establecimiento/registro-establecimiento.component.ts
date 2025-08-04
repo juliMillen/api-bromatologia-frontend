@@ -18,14 +18,18 @@ import { MantenimientoAsociadoModalComponent } from "../modales/mantenimiento-as
 export class RegistroEstablecimientoComponent implements OnInit {
 
     registroEstablecimiento: RegistroEstablecimiento = {
-    cuitTitular: 0,
-    cuitEmpresa: 0,
-    idEstablecimiento: 0,
-    categoriaAnt: '',
-    arancel: 0,
+    rpe: '',
     fechaEmision: new Date(),
     fechaVencimiento: new Date(),
-    estado: ''
+    empresa:{
+      cuitEmpresa:0,
+      razonSocial:''
+    },
+    departamento: '',
+    localidad: '',
+    direccion: '',
+    expediente: 0,
+    enlace: ''
   };
 
   registrosEstablecimientos: RegistroEstablecimiento[] = [];
@@ -34,7 +38,7 @@ export class RegistroEstablecimientoComponent implements OnInit {
 
   modalAbierto = false;
 
-  idRegistroEstablecimiento: number = 0;
+  idRegistroEstablecimiento: string = '';
 
   mostrarModalAsociacion = false;
   tipoModalAsociacion: 'registroEstablecimiento' | 'registroProducto' = 'registroEstablecimiento';
@@ -44,7 +48,7 @@ export class RegistroEstablecimientoComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarRegistros()
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = String(this.route.snapshot.paramMap.get('id'));
     if(id){
       this.registroEstablecimientoService.obtenerRegistroEstablecimientoPorId(id).subscribe({
         next: (regEst) => {

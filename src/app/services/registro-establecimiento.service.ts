@@ -3,9 +3,6 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RegistroEstablecimiento } from '../models/registroEstablecimiento';
-import { Titular } from '../models/titular';
-import { Empresa } from '../models/empresa';
-import { Establecimiento } from '../models/establecimiento';
 import { Mantenimiento } from '../models/mantenimiento';
 import { Categoria } from '../models/categoria';
 
@@ -54,4 +51,11 @@ export class RegistroEstablecimientoService {
   eliminarRegistro(id:string):Observable<RegistroEstablecimiento>{
     return this.http.delete<RegistroEstablecimiento>(`${this.apiUrl}/${id}`);
   }
+
+
+  
+    //obtener registro con mantenimiento
+    obtenerRegistroConMantenimientos(): Observable<RegistroEstablecimiento[]> {
+      return this.http.get<RegistroEstablecimiento[]>(`${this.apiUrl}/registroEstablecimientoConMantenimientos`);
+    }
 }

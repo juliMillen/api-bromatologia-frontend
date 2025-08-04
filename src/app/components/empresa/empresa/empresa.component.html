@@ -31,22 +31,28 @@
       <thead>
         <tr>
           <th>Cuit Empresa</th>
-          <th>Nombre Empresa</th>
-          <th>Cuit Titular</th>
-          <th>Nombre Titular</th>
+          <th>Razon Social</th>
+          <th>Fecha Alta</th>
           <th>Email</th>
           <th>Telefono</th>
+          <th>Departamento</th>
+          <th>Localidad</th>
+          <th>Direccion</th>
+          <th>Password</th>
           <th *ngIf="isAdmin()">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let em of empresas">
           <td>{{em.cuitEmpresa}}</td>
-          <td>{{em.nombreEmpresa}}</td>
-          <td>{{em.titular.cuitTitular}}</td>
-          <td>{{em.titular.nombreTitular}}</td>
+          <td>{{em.razonSocial}}</td>
+          <td>{{em.fechaAlta}}</td>
           <td>{{em.email}}</td>
           <td>{{em.telefono}}</td>
+          <td>{{em.departamento}}</td>
+          <td>{{em.localidad}}</td>
+          <td>{{em.direccion}}</td>
+          <td>{{em.password}}</td>
 
           <td *ngIf="isAdmin()">
             <button class="btn btn-sm btn-primary me-2" (click)="abrirModalParaEditar(em)">Editar</button>

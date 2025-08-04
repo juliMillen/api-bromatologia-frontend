@@ -1,9 +1,18 @@
 import { Mantenimiento } from "./mantenimiento"
 
 export class RegistroProducto{
-    idRegistroProducto?:number
-    tipo!: string
-    idProducto!:number
+    rppa!: ''
+    fechaEmision!: Date
+    fechaVencimiento!: Date
+    registroEstablecimiento!:{
+        rpe: ''
+    }
+    denominacion!: ''
+    marca!: ''
+    nombreFantasia!: ''
+    categoriaProducto!: ''
+    expediente!: number
+    enlace!: ''
     elaborador!:string
     mantenimientos?: Mantenimiento[] | undefined
 }

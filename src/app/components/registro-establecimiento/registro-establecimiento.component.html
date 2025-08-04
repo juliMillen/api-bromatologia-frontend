@@ -10,7 +10,7 @@
 <div>
     <label for="regEstablecimiento">Ingrese id registro establecimiento:</label>
     <div class="seccionFilter">
-        <input type="number" id="registroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento"
+        <input type="text" id="registroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento"
             class="form-control mt-3 mb-2 w-50" placeholder="Ingrese id de registro establecimiento...">
 
         <button class="btn btn-success" (click)="obtenerRegistroEstablecimientoPorId()">
@@ -38,38 +38,36 @@
         <table class="table table-bordered table-striped" *ngIf="registrosEstablecimientos.length > 0">
             <thead>
                 <tr>
-                    <th>Cuit Titular</th>
-                    <th>Cuit Empresa</th>
-                    <th>Establecimiento</th>
-                    <th>Categoria Anterior</th>
-                    <th>Arancel</th>
-                    <th>Fecha de emision</th>
-                    <th>Fecha de vencimiento</th>
-                    <th>Estado</th>
+                    <th>RPE (Registro Provincial de Establecimientos)</th>
+                    <th>Fecha Emision</th>
+                    <th>Fecha de Vencimiento</th>
+                    <th>Razon Social</th>
+                    <th>Departamento</th>
+                    <th>Localidad</th>
+                    <th>Direccion</th>
+                    <th>Expediente</th>
+                    <th>Enlace</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <ng-container *ngFor="let reg of registrosEstablecimientos">
-                    <tr [ngClass]="{
-                        'estadoHabilitado': reg.estado.trim().toLowerCase() === 'habilitado',
-                        'estadoCancelado': reg.estado.trim().toLowerCase() === 'cancelado',
-                        'estadoObservado': reg.estado.trim().toLowerCase() === 'observado',
-                        'estadoSuspendido': reg.estado.trim().toLowerCase() === 'suspendido'
-                    }">
-                        <td>{{reg.cuitTitular}}</td>
-                        <td>{{reg.cuitEmpresa}}</td>
-                        <td>
-                            <button class="btn btn-primary p-0"
-                                [routerLink]="['/establecimiento',reg.idEstablecimiento]">
-                                {{reg.idEstablecimiento}}-Ver Establecimiento
-                            </button>
-                        </td>
-                        <td>{{reg.categoriaAnt}}</td>
-                        <td>{{reg.arancel}}</td>
+                    <tr>
+                        <td>{{reg.rpe}}</td>
                         <td>{{reg.fechaEmision}}</td>
                         <td>{{reg.fechaVencimiento}}</td>
-                        <td>{{reg.estado}}</td>
+                        <td>{{reg.empresa.razonSocial}}</td>
+                        <td>{{reg.departamento}}</td>
+                        <td>{{reg.localidad}}</td>
+                        <td>{{reg.direccion}}</td>
+                        <td>{{reg.expediente}}</td>
+                        <td>{{reg.enlace}}</td>
+                        <td>
+                            <button class="btn btn-primary p-0"
+                                [routerLink]="['/categoria',reg.categoria]">
+                                {{reg.categoria}}-Ver categoria
+                            </button>
+                        </td>
                     </tr>
 
                     <tr *ngFor="let man of reg.mantenimientos">

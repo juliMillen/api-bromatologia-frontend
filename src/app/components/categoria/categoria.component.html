@@ -1,0 +1,44 @@
+<!--Filtro-->
+<div class="seccionFilter">
+  <h2 class="mt-4">Buscar Categoria:</h2>
+  <input type="text" id="categoria" [(ngModel)]="categoriaBuscada" class="form-control mt-5 mb-2 w-50"
+    placeholder="Ingrese nombre de categoria">
+  <button class="btn btn-primary" (click)="obtenerCategoriaPorNombre(categoriaBuscada)">
+    <i class="bi bi-search"></i>
+    Buscar
+  </button>
+
+  <button class="btn btn-secondary ms-2" (click)="cargarCategorias()">
+    Ver todas
+  </button>
+</div>
+
+<!--TABLA PARA MOSTRAR LOS DATOS-->
+<div class="container mt-5">
+  <h2>Listado de categorias:</h2>
+  <button class="btn btn-success btn-AgregarEmpresa" (click)="abrirModal()">
+    <i class="bi bi-building-add"></i>
+    Agregar Categoria
+  </button>
+
+
+  <div class="table-responsive mt-3">
+    <table class="table table-bordered table-striped" *ngIf="categorias.length > 0">
+      <thead>
+        <tr>
+          <th>Nombre Categoria</th>
+          <th>Rubro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cat of categorias">
+          <td>{{cat.nombreCategoria}}</td>
+          <td>{{cat.rubro?.nombreRubro}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="categorias.length === 0" class="alert alert-info mt-3">
+    No hay categorias cargadas
+  </div>
+</div>

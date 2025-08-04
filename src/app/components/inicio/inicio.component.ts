@@ -20,13 +20,6 @@ export class InicioComponent {
       color: '#007bff'
     },
     {
-      titulo: 'Establecimiento',
-      descripcion: 'Administre los establecimientos asociados',
-      icon: 'bi bi-shop',
-      link: '/establecimiento',
-      color: '#28a745'
-    },
-    {
       titulo: 'Registro Establecimiento',
       descripcion: 'Gestione, cree o edite registros de establecimientos',
       icon: 'bi bi-r-square',
@@ -39,6 +32,13 @@ export class InicioComponent {
       icon: 'bi bi-r-square',
       link: '/registroProducto',
       color: '#ffc107'
+    },
+      {
+      titulo: 'Categoria',
+      descripcion: 'Administre las categorias, rubros y actividades',
+      icon: 'bi bi-bookmark-check-fill',
+      link: '/categoria',
+      color: '#28a745'
     },
     {
       titulo: 'Mantenimiento',

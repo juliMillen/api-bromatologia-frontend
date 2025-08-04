@@ -15,16 +15,15 @@ import { AuthService } from '../../../services/auth.service';
 export class EmpresaComponent implements OnInit{
 
   empresa: Empresa = {
-    cuitEmpresa: 0,
-    nombreEmpresa: '',
+    cuitEmpresa:0,
+    razonSocial:'',
+    fechaAlta:new Date(),
     email: '',
     telefono: '',
-    titular: {
-      cuitTitular: 0,
-      nombreTitular: '',
-      telefono: '',
-      email: ''
-    }
+    departamento: '',
+    localidad: '',
+    direccion: '',
+    password: ''
   };
 
   empresas: Empresa[] = [];

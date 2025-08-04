@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Empresa } from '../models/empresa';
-import { Establecimiento } from '../models/establecimiento';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -27,10 +26,6 @@ export class EmpresaService {
     return this.http.get<Empresa>(`${this.apiUrl}/${cuit}`);
   }
 
-  //Obtener establecimiento de una empresa
-  obtenerEstablecimientos(cuit:number):Observable<Establecimiento[]>{
-    return this.http.get<Establecimiento[]>(`${this.apiUrl}/${cuit}/establecimientos`);
-  }
 
   //Crear una nueva Empresa
 
@@ -38,10 +33,6 @@ export class EmpresaService {
     return this.http.post<Empresa>(`${this.apiUrl}/`,empresa);
   }
 
-  //Agregar un establecimiento a una empresa
-  agregarEstablecimientoAEmpresa(cuitEmpresa:number,idEstablecimiento:number):Observable<Establecimiento>{
-    return this.http.post<Establecimiento>(`${this.apiUrl}/${cuitEmpresa}/establecimiento/${idEstablecimiento}`,null);
-  }
 
   //Modficar empresa
   modificarEmpresa(cuit:number,empresa:Empresa):Observable<Empresa>{

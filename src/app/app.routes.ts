@@ -6,7 +6,8 @@ import { EmpresaComponent } from './components/empresa/empresa/empresa.component
 import { InicioComponent } from './components/inicio/inicio.component';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
 import { MantenimientoComponent } from './components/mantenimiento/mantenimiento.component';
-import { EstablecimientoComponent } from './components/establecimiento/establecimiento.component';
+import { CategoriaComponent } from './components/categoria/categoria.component';
+
 
 export const routes: Routes = [
     {path: '', redirectTo:'/login', pathMatch:'full'},
@@ -15,10 +16,11 @@ export const routes: Routes = [
     {path: 'inicio', component: InicioComponent},
     {path: 'empresa', component:EmpresaComponent},
     {path: 'registroProducto', component: RegistroProductoComponent},
+    {path: 'registroProducto/:id', component: RegistroProductoComponent},
     {path: 'registroEstablecimiento',component: RegistroEstablecimientoComponent},
     {path: 'registroEstablecimiento/:id',component: RegistroEstablecimientoComponent},
-    {path: 'establecimiento',component: EstablecimientoComponent},
-    {path: 'establecimiento/:id',component:EstablecimientoComponent},
+    {path: 'categoria',component: CategoriaComponent},
+    {path: 'categoria/:id',component: CategoriaComponent},
     {path: 'mantenimiento',component: MantenimientoComponent},
     {path: 'mantenimiento/:id',component:MantenimientoComponent}
 ];

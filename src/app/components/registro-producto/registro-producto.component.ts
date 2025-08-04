@@ -3,17 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RegistroProducto } from '../../models/registroProducto';
 import { RegistroProductoModalComponent } from "../modales/registro-producto-modal/registro-producto-modal.component";
-import { RegistroProductoEstablecimientoModalComponent } from "../modales/registro-producto-establecimiento-modal/registro-producto-establecimiento-modal.component";
-import { RegistroEstablecimiento } from '../../models/registroEstablecimiento';
-import { RegistroProductoEstablecimiento } from '../../models/registroProductoEstablecimiento';
-import { RegistroProductoEstablecimientoService } from '../../services/registro-producto-establecimiento.service';
 import { RouterLink } from '@angular/router';
 import { MantenimientoAsociadoModalComponent } from "../modales/mantenimiento-asociado-modal/mantenimiento-asociado-modal.component";
+import { RegistroProductoService } from '../../services/registro-producto.service';
 
 
 @Component({
   selector: 'app-registro-producto',
-  imports: [CommonModule, FormsModule, RegistroProductoModalComponent, RegistroProductoEstablecimientoModalComponent, RouterLink, MantenimientoAsociadoModalComponent],
+  imports: [CommonModule, FormsModule, RegistroProductoModalComponent, RouterLink, MantenimientoAsociadoModalComponent],
   templateUrl: './registro-producto.component.html',
   styleUrl: './registro-producto.component.css'
 })
@@ -25,14 +22,13 @@ export class RegistroProductoComponent implements OnInit {
   tipoModalAsociacion: 'registroProducto' | 'registroEstablecimiento' = 'registroProducto'
 
   registroProductoCreado!: RegistroProducto;
-  registroEstablecimientoSeleccionado!: RegistroEstablecimiento;
+  registrosProductos: RegistroProducto[] = [];
 
-  registrosProd: RegistroProductoEstablecimiento[] = [];
 
-  idRegistroProducto: number = 0;
-  idRegistroEstablecimiento: number = 0;
+  idRegistroProducto: string = '';
+  idRegistroEstablecimiento: string = '';
 
-  constructor( private registroProductoEstablecimientoService: RegistroProductoEstablecimientoService) {}
+  constructor( private registroProductoService:RegistroProductoService) {}
 
   ngOnInit(): void {
     //this.cargarRegistros();
@@ -40,7 +36,7 @@ export class RegistroProductoComponent implements OnInit {
   }
 
   cargarRegistros(){
-    this.registroProductoEstablecimientoService.obtenerRegistros().subscribe(data => this.registrosProd = data);
+    this.registroProductoService.obtenerRegistros().subscribe(data => this.registrosProductos = data);
   }
 
   abrirRegistroProductoModal(){
@@ -63,20 +59,20 @@ export class RegistroProductoComponent implements OnInit {
   }
 
   obtenerRegistroProductoEstablecimientoPorId(){
-    this.registroProductoEstablecimientoService.obtenerRegistroPorId(this.idRegistroProducto,this.idRegistroEstablecimiento).subscribe({
-      next: (registroProdEst:RegistroProductoEstablecimiento) => {
-        this.registrosProd = [registroProdEst];
+    this.registroProductoService.obtenerRegistroPorId(this.idRegistroProducto).subscribe({
+      next: (registroProdEst:RegistroProducto) => {
+        this.registrosProductos = [registroProdEst];
       },
       error: (err) => {
-        console.error('No se ha encontrado ningun registro');
+        console.error('No se ha encontrado ningun registro: ',err);
       }
     })
   }
 
   obtenerRegistrosConMantenimiento(){
-    this.registroProductoEstablecimientoService.obtenerRegistroConMantenimientos().subscribe(data => {
-      this.registrosProd = data;
-      console.log('Registros con mantenimientos: ',this.registrosProd);
+    this.registroProductoService.obtenerRegistroConMantenimientos().subscribe(data => {
+      this.registrosProductos = data;
+      console.log('Registros con mantenimientos: ',this.registrosProductos);
     })
   }
 }

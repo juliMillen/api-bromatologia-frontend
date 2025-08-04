@@ -57,15 +57,16 @@ export class EmpresaModalComponent implements OnInit {
 
       this.empresaForm = this.fb.group({
         cuitEmpresa: [null,[Validators.required, Validators.pattern(/^\d{11}$/)]],
-        nombreEmpresa: ['', Validators.required],
+        razonSocial: ['', Validators.required],
+        fechaAlta: ['',Validators.required],
         email: ['', crear ? [Validators.required,Validators.email] : []],
         telefono: ['', crear ? [Validators.required,Validators.pattern(/^(\+?\d{7,15})$/)] : []],
-        titular: this.fb.group({
-          cuitTitular: [null, [Validators.required,Validators.pattern(/^\d{11}$/)]],
-          nombreTitular: ['', Validators.required],
-          email: ['', crear ? [Validators.required, Validators.email] : []],
-          telefono: ['', crear ? [Validators.required,Validators.pattern(/^(\+?\d{7,15})$/)] : []]
-        })
+        departamento: ['', Validators.required],
+        localidad: ['', Validators.required],
+        direccion: ['',Validators.required],
+        password: ['',Validators.required]
+
+
       });
     }
 
