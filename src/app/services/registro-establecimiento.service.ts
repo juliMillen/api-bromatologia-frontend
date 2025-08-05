@@ -32,6 +32,11 @@ export class RegistroEstablecimientoService {
     return this.http.post<RegistroEstablecimiento>(`${this.apiUrl}/`,registroEstablecimiento);
   }
 
+  //modificar registro
+    modificarEmpresa(rpe:string,RegEstablecimiento:RegistroEstablecimiento):Observable<RegistroEstablecimiento>{
+      return this.http.patch<RegistroEstablecimiento>(`${this.apiUrl}/${rpe}`,RegEstablecimiento);
+    }
+
 
   //asignar Categoria
 

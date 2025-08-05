@@ -24,7 +24,7 @@ export class ActividadService {
 
 
   crearActividad(actividad:Actividad):Observable<Actividad>{
-    return this.http.post<Actividad>(`${this.apiUrl}/`,actividad);
+    return this.http.post<Actividad>(`${this.apiUrl}`,actividad);
   }
 
   eliminarActividad(idActividad:number):Observable<Actividad>{

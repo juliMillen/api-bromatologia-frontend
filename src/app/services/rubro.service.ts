@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Rubro } from '../models/rubro';
+import { Categoria } from '../models/categoria';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,15 @@ export class RubroService {
 
 
   crearRubro(rubro:Rubro):Observable<Rubro>{
-    return this.http.post<Rubro>(`${this.apiUrl}/`,rubro);
+    return this.http.post<Rubro>(`${this.apiUrl}`,rubro);
   }
 
   eliminarRubro(idRubro:number):Observable<Rubro>{
     return this.http.delete<Rubro>(`${this.apiUrl}/${idRubro}`)
+  }
+
+
+  asignarCategoria(idRubro:number,idCategoria:number):Observable<Categoria>{
+    return this.http.post<Categoria>(`${this.apiUrl}/${idRubro}/'categoria/${idCategoria}`,null)
   }
 }

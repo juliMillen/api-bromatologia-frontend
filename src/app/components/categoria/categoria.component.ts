@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { CategoriaModalComponent } from '../modales/categoria-modal/categoria-modal.component';
 import { RubroModalComponent } from '../modales/rubro-modal/rubro-modal.component';
 import { ActividadModalComponent } from '../modales/actividad-modal/actividad-modal.component';
-import { AuthService } from '../../services/auth.service';
 import { RubroService } from '../../services/rubro.service';
 import { Rubro } from '../../models/rubro';
 import { ActividadService } from '../../services/actividad.service';
@@ -28,7 +27,11 @@ export class CategoriaComponent implements OnInit {
 
   categoriaBuscada: string = '';
 
-  modalAbierto= false;
+  modalCategoriaAbierto= false;
+
+  modalRubroAbierto = false;
+
+  modalActividadAbierto = false;
 
   constructor(private categoriaService: CategoriaService, private rubroService:RubroService, private actividadService:ActividadService){}
 
@@ -38,12 +41,28 @@ export class CategoriaComponent implements OnInit {
       this.cargarCategorias();
   }
 
-  abrirModal(){
-    this.modalAbierto= true;
+  abrirModalCategoria(){
+    this.modalCategoriaAbierto= true;
   }
 
-  ocultarModal(){
-    this.modalAbierto= false;
+  ocultarModalCategoria(){
+    this.modalCategoriaAbierto= false;
+  }
+
+  abrirModalRubro(){
+    this.modalRubroAbierto= true;
+  }
+
+  ocultarModalRubro(){
+    this.modalRubroAbierto= false;
+  }
+
+  abrirModalActividad(){
+    this.modalActividadAbierto= true;
+  }
+
+  ocultarModalActividad(){
+    this.modalActividadAbierto= false;
   }
 
   cargarActividades(){

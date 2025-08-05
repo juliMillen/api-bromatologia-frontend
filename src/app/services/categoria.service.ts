@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Categoria } from '../models/categoria';
+import { Actividad } from '../models/actividad';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,11 @@ export class CategoriaService {
 
 
   crearCategoria(categoria:Categoria):Observable<Categoria>{
-    return this.http.post<Categoria>(`${this.apiUrl}/`,categoria);
+    return this.http.post<Categoria>(`${this.apiUrl}`,categoria);
+  }
+
+  asignarActividad(idCategoria:number, idActividad:number):Observable<Actividad>{
+    return this.http.post<Actividad>(`${this.apiUrl}/${idCategoria}/actividad/${idActividad}`,null);
   }
 
   eliminarCategoria(idCategoria:number):Observable<Categoria>{

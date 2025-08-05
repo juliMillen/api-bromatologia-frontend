@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { Empresa } from '../../../models/empresa';
 import { EmpresaService } from '../../../services/empresa.service';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RegistroEstablecimiento } from '../../../models/registroEstablecimiento';
 import { RegistroEstablecimientoService } from '../../../services/registro-establecimiento.service';
@@ -48,8 +48,9 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarEmpresas();
-    this.cargarCategorias();
     this.formularioRegistroEstablecimiento();
+    this.cargarCategorias();
+
   }
 
   formularioRegistroEstablecimiento(){
@@ -63,7 +64,7 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
       direccion: ['',Validators.required],
       expediente: [null,Validators.required],
       enlace: ['',Validators.required],
-      categoria: [null,Validators.required]
+      categorias: this.fb.array([])
     })
   }
 
@@ -90,17 +91,30 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
 
 
   cargarCategorias(){
-    this.categoriaService.obtenerCategorias().subscribe(data => this.categorias = data);
+    this.categoriaService.obtenerCategorias().subscribe(data => {
+      this.categorias = data;
+
+      const categoriaFormArray = this.registroForm.get('categorias') as FormArray;
+      this.categorias.forEach(() => categoriaFormArray.push(new FormControl(false)));
+    });
+  }
+
+  categoriaSeleccionada():boolean{
+    return (this.registroForm.get('categorias') as FormArray).value.some((v:boolean) => v);
   }
 
 
   guardarRegistro(): void {
 
-    if(this.registroForm.invalid){
+    if(this.registroForm.invalid || !this.categoriaSeleccionada()){
       this.registroForm.markAllAsTouched();
       return;
     }
 
+
+    const categoriasSeleccionadas = this.registroForm.value.categorias
+    .map((checked: boolean, i:number) => checked ? this.categorias[i]:null)
+    .filter((v: Categoria | null) => v !== null);
 
     const nuevoRegistro: RegistroEstablecimiento = {
       ...this.registroForm.value,
@@ -109,7 +123,8 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
       empresa: {
         cuitEmpresa:0,
         razonSocial:this.registroForm.value.empresa
-      }
+      },
+      categorias: categoriasSeleccionadas
     }
 
 

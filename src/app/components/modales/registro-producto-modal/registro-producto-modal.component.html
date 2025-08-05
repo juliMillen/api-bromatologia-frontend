@@ -2,13 +2,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Agregar Registro Producto</h5>
+                <h5 class="modal-title">{{modo === 'crear' ? 'Agregar Registro': 'Editar Registro'}}</h5>
                 <button type="button" class="btn-close" (click)="cerrarModal()"></button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="registroForm" (ngSubmit)="guardarRegistro()">
 
-                    <div class="mb-3">
+                    <div class="mb-3" *ngIf="modo === 'crear'">
                         <label class="form-label">RPPA (Registro Provincial de Productos Alimenticios)</label>
                         <input type="text" class="form-control" formControlName="rppa" name="rppa" [ngClass]="{
                              'is-invalid': registroForm.get('rppa')?.invalid && registroForm.get('rppa')?.touched,
@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Fecha Emision</label>
+                        <label class="form-label" *ngIf="modo === 'crear' || modo === 'editar'">Fecha Emision</label>
                         <input type="date" class="form-control" formControlName="fechaEmision"
                             name="fechaEmision" [ngClass]="{
                                 'is-invalid': registroForm.get('fechaEmision')?.invalid && registroForm.get('fechaEmision')?.touched,
@@ -33,7 +33,7 @@
 
                     
                     <div class="mb-3">
-                        <label class="form-label">Fecha Vencimiento</label>
+                        <label class="form-label"*ngIf="modo === 'crear' || modo === 'editar'">Fecha Vencimiento</label>
                         <input type="date" class="form-control" formControlName="fechaVencimiento"
                             name="fechaEmision" [ngClass]="{
                                 'is-invalid': registroForm.get('fechaVencimiento')?.invalid && registroForm.get('fechaVencimiento')?.touched,
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <!-- Registro Establecimiento -->
-                    <label for="empresa">Registro Establecimiento:</label>
+                    <label for="empresa" *ngIf="modo === 'crear'">Registro Establecimiento:</label>
                     <select formControlName="registroEstablecimiento" name="registroEstablecimiento" class="form-control" [ngClass]="{
                             'is-invalid': registroForm.get('registroEstablecimiento')?.invalid && registroForm.get('registroEstablecimiento')?.touched,
                             'is-valid': registroForm.get('registroEstablecimiento')?.valid && registroForm.get('registroEstablecimiento')?.touched
@@ -58,7 +58,7 @@
                             </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Denominacion</label>
+                        <label class="form-label" *ngIf="modo === 'crear' || modo === 'editar'">Denominacion</label>
                         <input type="string" class="form-control" formControlName="denominacion"
                             name="denominacion" [ngClass]="{
                                 'is-invalid': registroForm.get('denominacion')?.invalid && registroForm.get('denominacion')?.touched,
@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Marca</label>
+                        <label class="form-label" *ngIf="modo === 'crear' || modo === 'editar'">Marca</label>
                         <input type="string" class="form-control" formControlName="marca"
                             name="marca" [ngClass]="{
                                 'is-invalid': registroForm.get('marca')?.invalid && registroForm.get('marca')?.touched,
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Nombre Fantasia</label>
+                        <label class="form-label" *ngIf="modo === 'crear' || modo === 'editar'">Nombre Fantasia</label>
                         <input type="string" class="form-control" formControlName="nombreFantasia"
                             name="nombreFantasia" [ngClass]="{
                                 'is-invalid': registroForm.get('nombreFantasia')?.invalid && registroForm.get('nombreFantasia')?.touched,
@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Categoria Producto</label>
+                        <label class="form-label"*ngIf="modo === 'crear' || modo === 'editar'">Categoria Producto</label>
                         <input type="string" class="form-control" formControlName="categoriaProducto"
                             name="categoriaProducto" [ngClass]="{
                                 'is-invalid': registroForm.get('categoriaProducto')?.invalid && registroForm.get('categoriaProducto')?.touched,
@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Expediente</label>
+                        <label class="form-label"*ngIf="modo === 'crear'">Expediente</label>
                         <input type="expediente" class="form-control" formControlName="expediente"
                             name="elaborador" [ngClass]="{
                                 'is-invalid': registroForm.get('expediente')?.invalid && registroForm.get('expediente')?.touched,
@@ -119,7 +119,7 @@
 
 
                     <div class="mb-3">
-                        <label class="form-label">Enlace</label>
+                        <label class="form-label"*ngIf="modo === 'crear' || modo === 'editar'">Enlace</label>
                         <input type="string" class="form-control" formControlName="enlace"
                             name="enlace" [ngClass]="{
                                 'is-invalid': registroForm.get('enlace')?.invalid && registroForm.get('enlace')?.touched,
@@ -131,7 +131,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Elaborador</label>
+                        <label class="form-label"*ngIf="modo === 'crear' || modo === 'editar'">Elaborador</label>
                         <input type="string" class="form-control" formControlName="elaborador"
                             name="elaborador" [ngClass]="{
                                 'is-invalid': registroForm.get('elaborador')?.invalid && registroForm.get('elaborador')?.touched,

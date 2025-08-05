@@ -1,1 +1,41 @@
-<p>categoria-modal works!</p>
+<!-- MODAL -->
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="categoriaForm" novalidate (ngSubmit)="crearCategoria()">
+
+          <div class="mb-3">
+            <label class="form-label">Nombre Categoria</label>
+            <input type="text" class="form-control" formControlName="nombreCategoria" name="nombreCategoria" [ngClass]="{
+              'is-invalid': categoriaForm.get('nombreCategoria')?.invalid && categoriaForm.get('nombreCategoria')?.touched,
+              'is-valid': categoriaForm.get('nombreCategoria')?.valid && categoriaForm.get('nombreCategoria')?.touched
+            }">
+
+            <div class="invalid-feedback" *ngIf="categoriaForm.get('nombreCategoria')?.errors?.['required']">
+              El nombre de la categoria es obligatorio
+            </div>
+          </div>
+
+          <!-- Rubros -->
+          <label for="rubro">Rubro</label>
+          <select formControlName="rubro" class="form-control">
+            <option [ngValue]="null">Seleccione un rubro</option>
+            <option *ngFor="let rub of rubros" [ngValue]="rub">
+              {{rub.nombreRubro}}
+            </option>
+          </select>
+
+          <div class="modal-footer">
+            <button class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+            <button type="submit" class="btn btn-success">Guardar</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

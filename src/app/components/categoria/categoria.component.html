@@ -13,12 +13,31 @@
   </button>
 </div>
 
+<!--Modal Categoria-->
+<app-categoria-modal *ngIf="modalCategoriaAbierto" [rubros]="rubros" (cerrar)="ocultarModalCategoria()"></app-categoria-modal>
+
+<!--MODAL RUBRO-->
+<app-rubro-modal *ngIf="modalRubroAbierto" (cerrar)="ocultarModalRubro()"></app-rubro-modal>
+
+<!--MODAL ACTIVIDAD-->
+<app-actividad-modal *ngIf="modalActividadAbierto" (cerrar)="ocultarModalActividad()"></app-actividad-modal>
+
 <!--TABLA PARA MOSTRAR LOS DATOS-->
 <div class="container mt-5">
   <h2>Listado de categorias:</h2>
-  <button class="btn btn-success btn-AgregarEmpresa" (click)="abrirModal()">
+  <button class="btn btn-success btn-Categoria" (click)="abrirModalCategoria()">
     <i class="bi bi-building-add"></i>
-    Agregar Categoria
+    Crear Categoria
+  </button>
+
+    <button class="btn btn-success btn-AgregarRubro" (click)="abrirModalRubro()">
+    <i class="bi bi-building-add"></i>
+    Crear Rubro
+  </button>
+
+    <button class="btn btn-success btn-AgregarActividad" (click)="abrirModalActividad()">
+    <i class="bi bi-building-add"></i>
+    Crear Actividad
   </button>
 
 
@@ -28,12 +47,24 @@
         <tr>
           <th>Nombre Categoria</th>
           <th>Rubro</th>
+          <th>Actividades</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let cat of categorias">
           <td>{{cat.nombreCategoria}}</td>
-          <td>{{cat.rubro?.nombreRubro}}</td>
+          <td>{{cat.rubro?.nombreRubro || 'Sin rubro'}}</td>
+          <td>
+            <ul *ngIf="cat.actividades && cat.actividades.length > 0; else sinActividades">
+              <li *ngFor="let act of cat.actividades">
+                {{act.nombreActividad}}
+              </li>
+            </ul>
+            <ng-template #sinActividades>
+              <span class="text-muted">Sin actividades</span>
+            </ng-template>
+          </td>
+
         </tr>
       </tbody>
     </table>

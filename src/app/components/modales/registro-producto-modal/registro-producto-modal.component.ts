@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegistroProducto } from '../../../models/registroProducto';
 import { RegistroProductoService } from '../../../services/registro-producto.service';
@@ -14,7 +14,8 @@ import { RegistroEstablecimientoService } from '../../../services/registro-estab
 })
 export class RegistroProductoModalComponent implements OnInit {
 
-
+  @Input() registroParaEditar: RegistroProducto | null = null;
+  @Input() modo: 'crear' | 'editar' = 'crear';
   @Output() cerrar = new EventEmitter<void>()
   @Output() registroProdCreado = new EventEmitter<RegistroProducto>
 
@@ -40,6 +41,8 @@ export class RegistroProductoModalComponent implements OnInit {
 
   registroForm!: FormGroup;
 
+  modoEdicion: boolean = false;
+
   private fb = inject(FormBuilder);
 
   constructor(private registroProductoService:RegistroProductoService, private registroEstablecimientoService: RegistroEstablecimientoService) {}
@@ -48,10 +51,17 @@ export class RegistroProductoModalComponent implements OnInit {
   ngOnInit(): void {
     this.cargarRegistros();
     this.formularioRegistro();
+    if(this.registroParaEditar){
+      this.registroProducto = structuredClone(this.registroParaEditar);
+      this.registroForm.patchValue(this.registroProducto);
+    }
   }
 
 
   formularioRegistro(){
+
+    const crear = this.modo === 'crear';
+    const editar = this.modo === 'editar';
     this.registroForm = this.fb.group({
       rppa: ['',Validators.required],
       fechaEmision: ['',Validators.required],

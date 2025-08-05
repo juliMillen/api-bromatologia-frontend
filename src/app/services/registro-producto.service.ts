@@ -30,6 +30,12 @@ export class RegistroProductoService {
     return this.http.post<RegistroProducto>(`${this.apiUrl}`, registroProducto);
   }
 
+  //modificar registro
+
+  modificarRegistroProducto(rppa: string, regProducto: RegistroProducto): Observable<RegistroProducto> {
+    return this.http.patch<RegistroProducto>(`${this.apiUrl}/${rppa}`, regProducto);
+  }
+
 
   //agregar mantenimiento
 
