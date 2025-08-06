@@ -1,6 +1,6 @@
 <!--Modal-->
 <app-registro-establecimiento-modal *ngIf="modalAbierto" (cerrar)="ocultarModal()"
-    (registroEstCreado)="registroCreado($event)">
+    (registroEstCreado)="registroCreado($event)" [registroEstParaEditar]="registroEstEditando" [modo]="modo">
 </app-registro-establecimiento-modal>
 
 <app-mantenimiento-asociado-modal *ngIf="mostrarModalAsociacion" [tipo]="tipoModalAsociacion"
@@ -21,18 +21,21 @@
         <button class="btn btn-success ms-2" (click)="cargarRegistros()">
             Mostrar Todos
         </button>
+    </div>
 
-        <button class="btn btn-success ms-2" (click)="abrirModalAsociacion('registroEstablecimiento')">
+    <h2>Listado de Registros Establecimiento</h2>
+    <div class="mb-3" *ngIf="isAdmin()">
+        <button class="btn btn-success btn-AgregarRegistro" (click)="abrirModal()">
+            <i class="bi bi-plus-circle-fill"></i>
+            Agregar Registro
+        </button>
+
+        <button class="btn btn-success btn-AgregarMantenimiento ms-2"
+            (click)="abrirModalAsociacion('registroEstablecimiento')">
             <i class="bi bi-plus-circle-fill"></i>
             Agregar Mantenimiento
         </button>
     </div>
-
-    <h2>Listado de Registros Establecimiento</h2>
-    <button class="btn btn-success btn-AgregarRegistro" (click)="abrirModal()">
-        <i class="bi bi-plus-circle-fill"></i>
-        Agregar Registro
-    </button>
 
     <div class="table-responsive mt-3 container">
         <table class="table table-bordered table-striped" *ngIf="registrosEstablecimientos.length > 0">
@@ -46,7 +49,7 @@
                     <th>Localidad</th>
                     <th>Direccion</th>
                     <th>Expediente</th>
-                    <th>Enlace</th>
+                    <th> Enlace</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -61,19 +64,28 @@
                         <td>{{reg.localidad}}</td>
                         <td>{{reg.direccion}}</td>
                         <td>{{reg.expediente}}</td>
-                        <td>{{reg.enlace}}</td>
                         <td>
-                            <button class="btn btn-primary p-0" [routerLink]="['/categoria',reg.categoria]">
-                                {{reg.categoria}}-Ver categoria
-                            </button>
+                            <a *ngIf="reg.enlace" [href]="reg.enlace" target="_blank" rel="noopener noreferrer">
+                                {{reg.enlace}}
+                            </a>
                         </td>
-
                         <td *ngIf="isAdmin()">
                             <button class="btn btn-sm btn-primary me-2"
                                 (click)="abrirModalParaEditar(reg)">Editar</button>
                             <button class="btn btn-sm btn-danger">
                                 <i class="bi bi-trash3"></i>
                             </button>
+                        </td>
+
+                    <tr *ngFor="let cat of reg.categorias">
+                        <td colspan="2">
+                            <strong>Categoria</strong>
+                        </td>
+                        <td colspan="2">{{cat.nombreCategoria}}</td>
+                        <td colspan="2">
+                            <a class="btn btn-primary btn-info" [routerLink]="['/categoria',cat.idCategoria]">
+                                Ver detalles
+                            </a>
                         </td>
                     </tr>
 

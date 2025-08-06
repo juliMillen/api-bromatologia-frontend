@@ -8,11 +8,11 @@ import { CategoriaService } from '../../../services/categoria.service';
 
 @Component({
   selector: 'app-actividad-modal',
-  imports: [FormsModule,ReactiveFormsModule,CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './actividad-modal.component.html',
   styleUrl: './actividad-modal.component.css'
 })
-export class ActividadModalComponent implements OnInit{
+export class ActividadModalComponent implements OnInit {
 
   @Output() cerrar = new EventEmitter<void>()
   @Output() actividadCreada = new EventEmitter<Actividad>()
@@ -27,43 +27,43 @@ export class ActividadModalComponent implements OnInit{
 
   categoriaSeleccionada: number = 0;
 
-  actividadForm!:FormGroup;
+  actividadForm!: FormGroup;
 
   private fb = inject(FormBuilder);
 
-  constructor(private actividadService: ActividadService, private categoriaService: CategoriaService){}
+  constructor(private actividadService: ActividadService, private categoriaService: CategoriaService) { }
 
   ngOnInit(): void {
-      this.cargarCategorias();
-      this.formularioActividad();
+    this.cargarCategorias();
+    this.formularioActividad();
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.cerrar.emit();
   }
 
-  cargarCategorias(){
+  cargarCategorias() {
     return this.categoriaService.obtenerCategorias().subscribe({
-      next:(response:Categoria[]) =>{
+      next: (response: Categoria[]) => {
         this.categorias = response;
-        console.log("Categorias cargadas: ",response);
+        console.log("Categorias cargadas: ", response);
       },
-      error: (err) =>{
-        console.log("Error al cargar categorias: ",err);
+      error: (err) => {
+        console.log("Error al cargar categorias: ", err);
       }
     })
   }
 
 
-  formularioActividad(){
+  formularioActividad() {
     this.actividadForm = this.fb.group({
-      nombreActividad: ['',Validators.required],
-      categoria: ['',Validators.required]
+      nombreActividad: ['', Validators.required],
+      categoria: ['', Validators.required]
     })
   }
 
-  crearActividad():void{
-    if(this.actividadForm.invalid){
+  crearActividad(): void {
+    if (this.actividadForm.invalid) {
       this.actividadForm.markAllAsTouched();
       return;
     }
@@ -72,32 +72,36 @@ export class ActividadModalComponent implements OnInit{
     const categoriaSeleccionada = this.actividadForm.get('categoria')?.value;
 
     this.actividadService.crearActividad(nuevaActividad).subscribe({
-      next: (response:Actividad) => {
+      next: (response: Actividad) => {
         console.log('Actividad creada correctamente');
         this.actividades.push(response);
 
 
-        const idActividad = nuevaActividad.idActividad;
+        const idActividad = response.idActividad;
         const idCategoria = categoriaSeleccionada.idCategoria;
 
-        this.categoriaService.asignarActividad(idCategoria,idActividad!).subscribe({
-          next:()=>{
-            console.log('Actividad asignada correctamente');
-          },
-          error: (err) => {
-            console.error('Error al asignar actividad: ',err);
-          }
-        })
+        if (idActividad && idCategoria) {
+          this.categoriaService.asignarActividad(idCategoria, idActividad!).subscribe({
+            next: () => {
+              console.log('Actividad asignada correctamente');
+            },
+            error: (err) => {
+              console.error('Error al asignar actividad: ', err);
+            }
+          })
+        } else{
+          console.error("ID categoria invalido o nulo")
+        }
 
         this.actividadForm.reset();
         this.cerrar.emit();
       },
       error: (err) => {
-        console.error('Error al crear la actividad: ',err);
+        console.error('Error al crear la actividad: ', err);
       }
     })
   }
 
-  
+
 
 }

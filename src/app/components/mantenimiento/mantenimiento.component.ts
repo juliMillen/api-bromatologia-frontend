@@ -36,7 +36,7 @@ export class MantenimientoComponent implements OnInit {
   ngOnInit(): void {
     this.esAdmin = this.authService.obtenerRolDesdeToken() === 'ROLE_ADMIN';
 
-        const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = Number(this.route.snapshot.paramMap.get('id'));
     if(id){
       this.mantenimientoService.obtenerMantenimientoPorId(id).subscribe({
         next: (man) => {

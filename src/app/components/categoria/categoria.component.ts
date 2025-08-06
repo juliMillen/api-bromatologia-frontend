@@ -10,6 +10,8 @@ import { RubroService } from '../../services/rubro.service';
 import { Rubro } from '../../models/rubro';
 import { ActividadService } from '../../services/actividad.service';
 import { Actividad } from '../../models/actividad';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-categoria',
@@ -33,13 +35,33 @@ export class CategoriaComponent implements OnInit {
 
   modalActividadAbierto = false;
 
-  constructor(private categoriaService: CategoriaService, private rubroService:RubroService, private actividadService:ActividadService){}
+  constructor(private categoriaService: CategoriaService, private rubroService:RubroService, private actividadService:ActividadService, private route:ActivatedRoute, private authService:AuthService){}
 
   ngOnInit(): void {
       this.cargarActividades();
       this.cargarRubros();
+
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if(id){
+      this.categoriaService.obtenerCategoriaPorId(id).subscribe({
+        next: (cat) => {
+          this.categorias = [cat];
+        },
+        error: (err) => {
+          console.error('Error al cargar categoria por ID: ',err);
+          this.categorias = [];
+        }
+      })
+    }else{
       this.cargarCategorias();
+    }
+
   }
+
+  isAdmin(): boolean {
+    return this.authService.obtenerRolDesdeToken() === 'ROLE_ADMIN'
+  }
+
 
   abrirModalCategoria(){
     this.modalCategoriaAbierto= true;

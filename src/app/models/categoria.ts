@@ -5,5 +5,5 @@ export class Categoria {
     idCategoria?: number
     nombreCategoria!: string
     rubro?: Rubro
-    actividades?: Actividad[] = [];
+    listaActividades?: Actividad[] = [];
 }

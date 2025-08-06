@@ -42,7 +42,11 @@
         <tr *ngFor="let em of mantenimientos">
           <td>{{em.idMantenimiento}}</td>
           <td>{{em.fechaMantenimiento | date: 'dd/MM/yyyy'}}</td>
-          <td>{{em.enlaceRecibido}}</td>
+          <td>
+            <a *ngIf="em.enlaceRecibido" [href]="em.enlaceRecibido" target="_blank" rel="noopener noreferrer">
+              {{em.enlaceRecibido}}
+            </a>
+          </td>
 
           <!--Tramites-->
 

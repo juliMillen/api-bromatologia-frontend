@@ -8,118 +8,117 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="empresaForm" novalidate>
-          <div class="mb-3" *ngIf="modo === 'crear'">
-            <label class="form-label">CUIT Empresa</label>
-            <input type="number" class="form-control" formControlName="cuitEmpresa" name="cuitEmpresa" [ngClass]="{
+          <div class="form-grid">
+            <div class="mb-3" *ngIf="modo === 'crear'">
+              <label class="form-label">CUIT Empresa</label>
+              <input type="number" class="form-control" formControlName="cuitEmpresa" name="cuitEmpresa" [ngClass]="{
               'is-invalid': empresaForm.get('cuitEmpresa')?.invalid && empresaForm.get('cuitEmpresa')?.touched,
               'is-valid': empresaForm.get('cuitEmpresa')?.valid && empresaForm.get('cuitEmpresa')?.touched
             }" maxlength="11">
-            <div class="invalid-feedback" *ngIf="empresaForm.get('cuitEmpresa')?.errors?.['required']">
-              El cuit es obligatorio
+              <div class="invalid-feedback" *ngIf="empresaForm.get('cuitEmpresa')?.errors?.['required']">
+                El cuit es obligatorio
+              </div>
+              <div class="invalid-feedback" *ngIf="empresaForm.get('cuitEmpresa')?.errors?.['pattern']">
+                El cuit debe tener exactamente 11 digitos numericos
+              </div>
             </div>
-            <div class="invalid-feedback" *ngIf="empresaForm.get('cuitEmpresa')?.errors?.['pattern']">
-              El cuit debe tener exactamente 11 digitos numericos
-            </div>
-          </div>
-          <div class="mb-3" *ngIf="modo === 'crear'">
-            <label class="form-label">Razon Social</label>
-            <input type="text" class="form-control" formControlName="razonSocial" name="razonSocial" [ngClass]="{
+            <div class="mb-3" *ngIf="modo === 'crear'">
+              <label class="form-label">Razon Social</label>
+              <input type="text" class="form-control" formControlName="razonSocial" name="razonSocial" [ngClass]="{
               'is-invalid': empresaForm.get('razonSocial')?.invalid && empresaForm.get('razonSocial')?.touched,
               'is-valid': empresaForm.get('razonSocial')?.valid && empresaForm.get('razonSocial')?.touched
             }">
-            <div class="invalid-feedback" *ngIf="empresaForm.get('razonSocial')?.errors?.['required']">
-              La razon social es obligatoria
-            </div>
+              <div class="invalid-feedback" *ngIf="empresaForm.get('razonSocial')?.errors?.['required']">
+                La razon social es obligatoria
+              </div>
 
-            <div class="mb-3">
-              <label class="form-label">Fecha Alta: </label>
-              <input type="date" class="form-control" formControlName="fechaAlta" name="fechaAlta"
-                [ngClass]="{
+              <div class="mb-3">
+                <label class="form-label">Fecha Alta: </label>
+                <input type="date" class="form-control" formControlName="fechaAlta" name="fechaAlta" [ngClass]="{
                             'is-invalid': empresaForm.get('fechaAlta')?.invalid && empresaForm.get('fechaAlta')?.touched,
                             'is-valid': empresaForm.get('fechaAlta')?.valid && empresaForm.get('fechaAlta')?.touched
                             }">
-              <div class="invalid-feedback" *ngIf="empresaForm.get('fechaAlta')?.errors?.['required']">
-                La fecha de alta de la empresa es obligatoria
+                <div class="invalid-feedback" *ngIf="empresaForm.get('fechaAlta')?.errors?.['required']">
+                  La fecha de alta de la empresa es obligatoria
+                </div>
               </div>
-            </div>
 
-          </div>
-          <div class="mb-3">
-            <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Email Empresa</label>
-            <input type="email" class="form-control" formControlName="email" name="emailEmpresa" [ngClass]="{
+            </div>
+            <div class="mb-3">
+              <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Email Empresa</label>
+              <input type="email" class="form-control" formControlName="email" name="emailEmpresa" [ngClass]="{
               'is-invalid': empresaForm.get('email')?.invalid && empresaForm.get('email')?.touched,
               'is-valid': empresaForm.get('email')?.valid && empresaForm.get('email')?.touched
             }">
-            <div class="invalid-feedback" *ngIf="empresaForm.get('email')?.errors?.['required']">
-              El email es obligatorio
-            </div>
-            <div class="invalid-feedback" *ngIf="empresaForm.get('email')?.errors?.['email']">
-              Debe ingresar un email valido
-            </div>
+              <div class="invalid-feedback" *ngIf="empresaForm.get('email')?.errors?.['required']">
+                El email es obligatorio
+              </div>
+              <div class="invalid-feedback" *ngIf="empresaForm.get('email')?.errors?.['email']">
+                Debe ingresar un email valido
+              </div>
 
 
-          </div>
-          <div class="mb-3">
-            <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Teléfono Empresa</label>
-            <input type="text" class="form-control" formControlName="telefono" name="telefonoEmpresa" [ngClass]="{
+            </div>
+            <div class="mb-3">
+              <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Teléfono Empresa</label>
+              <input type="text" class="form-control" formControlName="telefono" name="telefonoEmpresa" [ngClass]="{
               'is-invalid': empresaForm.get('telefono')?.invalid && empresaForm.get('telefono')?.touched,
               'is-valid': empresaForm.get('telefono')?.valid && empresaForm.get('telefono')?.touched
             }">
-            <div class="invalid-feedback" *ngIf="empresaForm.get('telefono')?.errors?.['required']">
-              El telefono de la empresa es obligatorio
+              <div class="invalid-feedback" *ngIf="empresaForm.get('telefono')?.errors?.['required']">
+                El telefono de la empresa es obligatorio
+              </div>
+              <div class="invalid-feedback" *ngIf="empresaForm.get('telefono')?.errors?.['pattern']">
+                Debe ingresar un telefono valido
+              </div>
             </div>
-            <div class="invalid-feedback" *ngIf="empresaForm.get('telefono')?.errors?.['pattern']">
-              Debe ingresar un telefono valido
-            </div>
-          </div>
 
-          <div class="mb-3">
-            <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'" >Departamento</label>
-            <input type="text" class="form-control" formControlName="departamento" name="departamento" [ngClass]="{
+            <div class="mb-3">
+              <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Departamento</label>
+              <input type="text" class="form-control" formControlName="departamento" name="departamento" [ngClass]="{
 
               'is-invalid': empresaForm.get('departamento')?.invalid && empresaForm.get('departamento')?.touched,
               'is-valid': empresaForm.get('departamento')?.valid && empresaForm.get('departamento')?.touched
             }">
 
               <div class="invalid-feedback" *ngIf="empresaForm.get('departamento')?.errors?.['required']">
-              El departamento de la empresa es obligatorio
+                El departamento de la empresa es obligatorio
+              </div>
             </div>
-          </div>
 
-          <div class="mb-3">
-            <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Localidad</label>
-            <input type="text" class="form-control" formControlName="localidad" name="localidad"
-            [ngClass]="{
+            <div class="mb-3">
+              <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Localidad</label>
+              <input type="text" class="form-control" formControlName="localidad" name="localidad" [ngClass]="{
               'is-invalid': empresaForm.get('localidad')?.invalid && empresaForm.get('localidad')?.touched,
               'is-valid': empresaForm.get('localidad')?.valid && empresaForm.get('localidad')?.touched
-            }"
-            >
-            <div class="invalid-feedback" *ngIf="empresaForm.get('localidad')?.errors?.['required']">
-              La localidad de la empresa es obligatoria
+            }">
+              <div class="invalid-feedback" *ngIf="empresaForm.get('localidad')?.errors?.['required']">
+                La localidad de la empresa es obligatoria
+              </div>
             </div>
-          </div>
 
-           <div class="mb-3">
-            <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Direccion</label>
-            <input type="text" class="form-control" formControlName="direccion" name="direccion" [ngClass]="{
+            <div class="mb-3">
+              <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Direccion</label>
+              <input type="text" class="form-control" formControlName="direccion" name="direccion" [ngClass]="{
               'is-invalid': empresaForm.get('direccion')?.invalid && empresaForm.get('direccion')?.touched,
               'is-valid': empresaForm.get('direccion')?.valid && empresaForm.get('direccion')?.touched
             }">
 
               <div class="invalid-feedback" *ngIf="empresaForm.get('direccion')?.errors?.['required']">
-              La direccion de la empresa es obligatoria
+                La direccion de la empresa es obligatoria
+              </div>
             </div>
-          </div>
 
-           <div class="mb-3">
-            <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Contraseña</label>
-            <input type="text" class="form-control" formControlName="password" name="password" [ngClass]="{
+            <div class="mb-3">
+              <label class="form-label" *ngIf=" modo === 'crear' || modo === 'editar'">Contraseña</label>
+              <input type="text" class="form-control" formControlName="password" name="password" [ngClass]="{
               'is-invalid': empresaForm.get('password')?.invalid && empresaForm.get('password')?.touched,
               'is-valid': empresaForm.get('password')?.valid && empresaForm.get('password')?.touched
             }">
 
               <div class="invalid-feedback" *ngIf="empresaForm.get('password')?.errors?.['required']">
-              La contraseña es obligatoria
+                La contraseña es obligatoria
+              </div>
             </div>
           </div>
         </form>

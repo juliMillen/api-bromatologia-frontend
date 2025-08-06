@@ -8,6 +8,11 @@
     color: white;
 }
 
+.btn-AgregarMantenimiento{
+    background-color: #6B8E23;
+    color: white;
+}
+
 
 thead {
     background-color: #6B8E23 !important;

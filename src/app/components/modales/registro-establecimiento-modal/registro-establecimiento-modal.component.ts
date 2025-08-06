@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { Empresa } from '../../../models/empresa';
 import { EmpresaService } from '../../../services/empresa.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -16,6 +16,8 @@ import { CategoriaService } from '../../../services/categoria.service';
 })
 export class RegistroEstablecimientoModalComponent implements OnInit {
 
+  @Input() registroEstParaEditar: RegistroEstablecimiento | null = null;
+  @Input() modo: 'crear' | 'editar' = 'crear';
   @Output() cerrar = new EventEmitter<void>()
   @Output() registroEstCreado = new EventEmitter<RegistroEstablecimiento>()
 
@@ -38,6 +40,9 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
     enlace: ''
   }
 
+  registrosEst: RegistroEstablecimiento[] = [];
+
+  modoEdicion: boolean = false;
 
   registroForm!: FormGroup;
 
@@ -50,6 +55,11 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
     this.cargarEmpresas();
     this.formularioRegistroEstablecimiento();
     this.cargarCategorias();
+
+    if(this.registroEstParaEditar){
+      this.registroEstablecimiento = structuredClone(this.registroEstParaEditar);
+      this.registroForm.patchValue(this.registroEstablecimiento);
+    }
 
   }
 
@@ -91,6 +101,9 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
 
 
   cargarCategorias(){
+
+    if(!this.registroForm) return;
+
     this.categoriaService.obtenerCategorias().subscribe(data => {
       this.categorias = data;
 
@@ -120,10 +133,7 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
       ...this.registroForm.value,
       fechaEmision: new Date(this.registroForm.value.fechaEmision),
       fechaVencimiento: new Date(this.registroForm.value.fechaVencimiento),
-      empresa: {
-        cuitEmpresa:0,
-        razonSocial:this.registroForm.value.empresa
-      },
+      empresa: this.registroForm.value.empresa,
       categorias: categoriasSeleccionadas
     }
 

@@ -12,6 +12,6 @@ export class RegistroEstablecimiento{
     direccion!:string
     expediente!:number
     enlace!:string
-    categoria?:Categoria[]
+    categorias?:Categoria[]
     mantenimientos?: Mantenimiento[]
 }

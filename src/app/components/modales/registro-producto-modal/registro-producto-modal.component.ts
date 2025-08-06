@@ -91,7 +91,13 @@ export class RegistroProductoModalComponent implements OnInit {
       return;
     }
 
-    const nuevoRegistro: RegistroProducto = this.registroForm.value;
+    const formValue = this.registroForm.value;
+    const nuevoRegistro: RegistroProducto = {
+      ...formValue,
+      registroEstablecimiento: {
+        rpe: formValue.registroEstablecimiento
+      }
+    }
 
 
     this.registroProductoService.guardarRegistroProducto(nuevoRegistro).subscribe({

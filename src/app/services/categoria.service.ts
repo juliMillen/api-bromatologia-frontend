@@ -24,7 +24,7 @@ export class CategoriaService {
   }
 
   obtenerCategoriaPorNombre(nombreCategoria:string):Observable<Categoria>{
-    return this.http.get<Categoria>(`${this.apiUrl}/${nombreCategoria}`);
+    return this.http.get<Categoria>(`${this.apiUrl}/nombre/${nombreCategoria}`);
   }
 
 

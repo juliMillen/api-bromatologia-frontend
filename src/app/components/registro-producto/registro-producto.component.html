@@ -11,13 +11,9 @@
 
 
 <div class="seccionFilter">
-    <label for="registroProducto">Ingrese ID registro producto:</label>
+    <label for="registroProducto">Ingrese RPPA( Registro Provincial de Productos Alimenticios)</label>
     <input type="number" id="RegistroProducto" [(ngModel)]="idRegistroProducto" class="form-control mt-3 mb-2 w-50"
-        placeholder="Ingrese id de registro producto...">
-
-    <label for="registroEstablecimiento">Ingrese ID registro establecimiento:</label>
-    <input type="number" id="RegistroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento"
-        class="form-control mt-3 mb-2 w-50" placeholder="Ingrese id de registro establecimiento...">
+        placeholder="rppa...">
 
     <button class="btn btn-success" (click)="obtenerRegistroProductoEstablecimientoPorId()">
         <i class="bi bi-search"></i>
@@ -90,12 +86,6 @@
                 <tr *ngFor="let man of reg.mantenimientos">
                     <td colspan="2"><strong>Mantenimientos</strong></td>
                     <td colspan="2">{{man.fechaMantenimiento}}</td>
-                    <td colspan="4">
-                        <a *ngIf="man.enlaceRecibido" [href]="man.enlaceRecibido" target="_blank"
-                            rel="noopener noreferrer">
-                            Ver enlace recibido
-                        </a>
-                    </td>
                     <td colspan="2">
                         <a class="btn btn-primary btn-info" [routerLink]="['/mantenimiento',man.idMantenimiento]">
                             Ver detalles

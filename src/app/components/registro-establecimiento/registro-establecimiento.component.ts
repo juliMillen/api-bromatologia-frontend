@@ -9,6 +9,8 @@ import { MantenimientoService } from '../../services/mantenimiento.service';
 import { Mantenimiento } from '../../models/mantenimiento';
 import { MantenimientoAsociadoModalComponent } from "../modales/mantenimiento-asociado-modal/mantenimiento-asociado-modal.component";
 import { AuthService } from '../../services/auth.service';
+import { CategoriaService } from '../../services/categoria.service';
+import { Categoria } from '../../models/categoria';
 
 @Component({
   selector: 'app-registro-establecimiento',
@@ -37,6 +39,8 @@ export class RegistroEstablecimientoComponent implements OnInit {
 
   mantenimientos: Mantenimiento[] = [];
 
+  categorias: Categoria[] = [];
+
   modalAbierto = false;
 
   idRegistroEstablecimiento: string = '';
@@ -49,7 +53,7 @@ export class RegistroEstablecimientoComponent implements OnInit {
   registroEstEditando: RegistroEstablecimiento | null = null;
 
 
-  constructor(private registroEstablecimientoService: RegistroEstablecimientoService, private route: ActivatedRoute, private mantenimientoService: MantenimientoService, private authService:AuthService) { }
+  constructor(private registroEstablecimientoService: RegistroEstablecimientoService, private route: ActivatedRoute, private mantenimientoService: MantenimientoService, private authService:AuthService, private categoriaService:CategoriaService) { }
 
   ngOnInit(): void {
     this.cargarRegistros()
@@ -68,6 +72,10 @@ export class RegistroEstablecimientoComponent implements OnInit {
       //cargo todos los registros
       this.cargarRegistros();
 
+
+      //Cargo categorias
+      this.cargarCategorias()
+      
       //cargo mantenimientos
       this.cargarMantenimientos();
     }
@@ -122,6 +130,18 @@ export class RegistroEstablecimientoComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al cargar mantenimientos: ', err);
+      }
+    })
+  }
+
+  cargarCategorias(): void{
+    this.categoriaService.obtenerCategorias().subscribe({
+      next: (data: Categoria[]) => {
+        console.log('Categorias cargadas: ',data);
+        this.categorias = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar categorias')
       }
     })
   }

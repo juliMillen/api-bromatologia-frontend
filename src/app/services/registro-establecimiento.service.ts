@@ -63,4 +63,10 @@ export class RegistroEstablecimientoService {
     obtenerRegistroConMantenimientos(): Observable<RegistroEstablecimiento[]> {
       return this.http.get<RegistroEstablecimiento[]>(`${this.apiUrl}/registroEstablecimientoConMantenimientos`);
     }
+
+    //obtener registro con categoria
+
+    obtenerRegistroConCategoria(): Observable<RegistroEstablecimiento[]>{
+      return this.http.get<RegistroEstablecimiento[]>(`${this.apiUrl}/registroEstablecimientoConCategorias`);
+    }
 }

@@ -1,6 +1,6 @@
 <!--Filtro-->
 <div class="seccionFilter">
-  <h2 class="mt-4">Buscar Empresa:</h2>
+  <h2 class="mt-4">Buscar Empresa</h2>
   <input type="number" id="empresa" [(ngModel)]="cuitBuscado" class="form-control mt-5 mb-2 w-50"
     placeholder="Ingrese cuit de empresa">
   <button class="btn btn-primary" (click)="obtenerEmpresaPorCuit()">
@@ -18,8 +18,8 @@
   [empresaParaEditar]="empresaEditando" [modo]="modo">
 </app-empresa-modal>
 <!--TABLA PARA MOSTRAR LOS DATOS-->
-<div class="container mt-5">
-  <h2>Listado de empresas:</h2>
+<h2>Listado de empresas:</h2>
+<div class="container mt-5" *ngIf="isAdmin()">
   <button class="btn btn-success btn-AgregarEmpresa" (click)="abrirModal()">
     <i class="bi bi-building-add"></i>
     Agregar Empresa

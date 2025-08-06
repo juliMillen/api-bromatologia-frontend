@@ -19,10 +19,10 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" *ngIf="modo === 'crear' || modo === 'editar'">Fecha Emision</label>
-                        <input type="date" class="form-control" formControlName="fechaEmision"
-                            name="fechaEmision" [ngClass]="{
+                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                        <label class="form-label">Fecha Emision</label>
+                        <input type="date" class="form-control" formControlName="fechaEmision" name="fechaEmision"
+                            [ngClass]="{
                                 'is-invalid': registroForm.get('fechaEmision')?.invalid && registroForm.get('fechaEmision')?.touched,
                                 'is-valid': registroForm.get('fechaEmision')?.valid && registroForm.get('fechaEmision')?.touched
                             }">
@@ -31,36 +31,42 @@
                         </div>
                     </div>
 
-                    
-                    <div class="mb-3">
-                        <label class="form-label"*ngIf="modo === 'crear' || modo === 'editar'">Fecha Vencimiento</label>
-                        <input type="date" class="form-control" formControlName="fechaVencimiento"
-                            name="fechaEmision" [ngClass]="{
+
+                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                        <label class="form-label">Fecha
+                            Vencimiento</label>
+                        <input type="date" class="form-control" formControlName="fechaVencimiento" name="fechaEmision"
+                            [ngClass]="{
                                 'is-invalid': registroForm.get('fechaVencimiento')?.invalid && registroForm.get('fechaVencimiento')?.touched,
                                 'is-valid': registroForm.get('fechaVencimiento')?.valid && registroForm.get('fechaVencimiento')?.touched
                             }">
-                        <div class="invalid-feedback" *ngIf="registroForm.get('fechaVencimiento')?.errors?.['required']">
+                        <div class="invalid-feedback"
+                            *ngIf="registroForm.get('fechaVencimiento')?.errors?.['required']">
                             La fecha es obligatoria
                         </div>
                     </div>
                     <!-- Registro Establecimiento -->
-                    <label for="empresa" *ngIf="modo === 'crear'">Registro Establecimiento:</label>
-                    <select formControlName="registroEstablecimiento" name="registroEstablecimiento" class="form-control" [ngClass]="{
+                    <div class="mb-3" *ngIf="modo === 'crear'">
+                        <label for="empresa" *ngIf="modo === 'crear'">Registro Establecimiento:</label>
+                        <select formControlName="registroEstablecimiento" name="registroEstablecimiento"
+                            class="form-control" [ngClass]="{
                             'is-invalid': registroForm.get('registroEstablecimiento')?.invalid && registroForm.get('registroEstablecimiento')?.touched,
                             'is-valid': registroForm.get('registroEstablecimiento')?.valid && registroForm.get('registroEstablecimiento')?.touched
                     }">
-                        <option value="" disabled selected>Seleccione un registro</option>
-                        <option *ngFor="let reg of registrosEst" [value]="reg.rpe">{{reg.rpe}}
-                        </option>
-                    </select>
-                             <div class="invalid-feedback" *ngIf="registroForm.get('registroEstablecimiento')?.errors?.['required']">
-                             El registro establecimiento es obligatorio
-                            </div>
+                            <option value="" disabled selected>Seleccione un registro</option>
+                            <option *ngFor="let reg of registrosEst" [ngValue]="reg">{{reg.rpe}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="invalid-feedback"
+                        *ngIf="registroForm.get('registroEstablecimiento')?.errors?.['required']">
+                        El registro establecimiento es obligatorio
+                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" *ngIf="modo === 'crear' || modo === 'editar'">Denominacion</label>
-                        <input type="string" class="form-control" formControlName="denominacion"
-                            name="denominacion" [ngClass]="{
+                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                        <label class="form-label">Denominacion</label>
+                        <input type="string" class="form-control" formControlName="denominacion" name="denominacion"
+                            [ngClass]="{
                                 'is-invalid': registroForm.get('denominacion')?.invalid && registroForm.get('denominacion')?.touched,
                                 'is-valid': registroForm.get('denominacion')?.valid && registroForm.get('denominacion')?.touched
                             }">
@@ -69,82 +75,81 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" *ngIf="modo === 'crear' || modo === 'editar'">Marca</label>
-                        <input type="string" class="form-control" formControlName="marca"
-                            name="marca" [ngClass]="{
+                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                        <label class="form-label">Marca</label>
+                        <input type="string" class="form-control" formControlName="marca" name="marca" [ngClass]="{
                                 'is-invalid': registroForm.get('marca')?.invalid && registroForm.get('marca')?.touched,
                                 'is-valid': registroForm.get('marca')?.valid && registroForm.get('marca')?.touched
                             }">
                         <div class="invalid-feedback" *ngIf="registroForm.get('elaborador')?.errors?.['required']">
-                           La marca es obligatoria
+                            La marca es obligatoria
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" *ngIf="modo === 'crear' || modo === 'editar'">Nombre Fantasia</label>
-                        <input type="string" class="form-control" formControlName="nombreFantasia"
-                            name="nombreFantasia" [ngClass]="{
+                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                        <label class="form-label">Nombre Fantasia</label>
+                        <input type="string" class="form-control" formControlName="nombreFantasia" name="nombreFantasia"
+                            [ngClass]="{
                                 'is-invalid': registroForm.get('nombreFantasia')?.invalid && registroForm.get('nombreFantasia')?.touched,
                                 'is-valid': registroForm.get('nombreFantasia')?.valid && registroForm.get('nombreFantasia')?.touched
                             }">
                         <div class="invalid-feedback" *ngIf="registroForm.get('elaborador')?.errors?.['required']">
-                           El nombre de fantasia es obligatorio
+                            El nombre de fantasia es obligatorio
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label"*ngIf="modo === 'crear' || modo === 'editar'">Categoria Producto</label>
+                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                        <label class="form-label">Categoria Producto</label>
                         <input type="string" class="form-control" formControlName="categoriaProducto"
                             name="categoriaProducto" [ngClass]="{
                                 'is-invalid': registroForm.get('categoriaProducto')?.invalid && registroForm.get('categoriaProducto')?.touched,
                                 'is-valid': registroForm.get('categoriaProducto')?.valid && registroForm.get('categoriaProducto')?.touched
                             }">
-                        <div class="invalid-feedback" *ngIf="registroForm.get('categoriaProducto')?.errors?.['required']">
-                           La categoria del producto es obligatoria
+                        <div class="invalid-feedback"
+                            *ngIf="registroForm.get('categoriaProducto')?.errors?.['required']">
+                            La categoria del producto es obligatoria
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label"*ngIf="modo === 'crear'">Expediente</label>
-                        <input type="expediente" class="form-control" formControlName="expediente"
-                            name="elaborador" [ngClass]="{
+                    <div class="mb-3" *ngIf="modo === 'crear'">
+                        <label class="form-label">Expediente</label>
+                        <input type="expediente" class="form-control" formControlName="expediente" name="elaborador"
+                            [ngClass]="{
                                 'is-invalid': registroForm.get('expediente')?.invalid && registroForm.get('expediente')?.touched,
                                 'is-valid': registroForm.get('expediente')?.valid && registroForm.get('expediente')?.touched
                             }">
                         <div class="invalid-feedback" *ngIf="registroForm.get('expediente')?.errors?.['required']">
-                           El expediente es obligatorio
+                            El expediente es obligatorio
                         </div>
                     </div>
 
 
-                    <div class="mb-3">
-                        <label class="form-label"*ngIf="modo === 'crear' || modo === 'editar'">Enlace</label>
-                        <input type="string" class="form-control" formControlName="enlace"
-                            name="enlace" [ngClass]="{
+                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                        <label class="form-label">Enlace</label>
+                        <input type="string" class="form-control" formControlName="enlace" name="enlace" [ngClass]="{
                                 'is-invalid': registroForm.get('enlace')?.invalid && registroForm.get('enlace')?.touched,
                                 'is-valid': registroForm.get('enlace')?.valid && registroForm.get('enlace')?.touched
                             }">
                         <div class="invalid-feedback" *ngIf="registroForm.get('enlace')?.errors?.['required']">
-                           El enlace es obligatorio
+                            El enlace es obligatorio
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label"*ngIf="modo === 'crear' || modo === 'editar'">Elaborador</label>
-                        <input type="string" class="form-control" formControlName="elaborador"
-                            name="elaborador" [ngClass]="{
+                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                        <label class="form-label">Elaborador</label>
+                        <input type="string" class="form-control" formControlName="elaborador" name="elaborador"
+                            [ngClass]="{
                                 'is-invalid': registroForm.get('elaborador')?.invalid && registroForm.get('elaborador')?.touched,
                                 'is-valid': registroForm.get('elaborador')?.valid && registroForm.get('elaborador')?.touched
                             }">
                         <div class="invalid-feedback" *ngIf="registroForm.get('elaborador')?.errors?.['required']">
-                           El elaborador es obligatorio
+                            El elaborador es obligatorio
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <button class="btn btn-danger" (click)="cerrarModal()"> Cancelar</button>
-                        <button  type="submit" class="btn btn-success">Siguiente</button>
+                        <button type="submit" class="btn btn-success">Siguiente</button>
                     </div>
                 </form>
             </div>

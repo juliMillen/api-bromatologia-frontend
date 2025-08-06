@@ -1,15 +1,28 @@
 .sidebar {
-    width: 250px; /*ancho navbar */
-    position:fixed;
-    top:0;
-    left:0;
-    background-color: rgba(210,180,140,0.85);
+    width: 280px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #8B7355 0%, #A0956B 50%, #B8AC7E 100%);
     height: 100vh;
-    color: black;
+    color: white;
     padding-top: 1rem;
     z-index: 1000;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     overflow-y: auto;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+}
+
+.sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    pointer-events: none;
 }
 
 .collapsed {
@@ -19,89 +32,242 @@
 .collapsed ul {
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0.3s ease, opacity 0.3s ease;
+    transition: visibility 0.4s ease, opacity 0.4s ease;
 }
 
-.sidebar ul{
+.sidebar ul {
     padding: 0;
-    margin:0;
+    margin: 0;
     list-style: none;
-    transition: visibility 0.3s ease, opacity 0.3s ease;
+    transition: visibility 0.4s ease, opacity 0.4s ease;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    padding-top: 60px;
+    height: calc(100vh - 2rem); /* Ajustado para tu estructura sin header */
+    padding: 60px 10px 20px 10px; /* Más padding-top para bajar las secciones */
+}
+
+.nav-item {
+    margin-bottom: 8px;
+    position: relative;
+    animation: slideIn 0.6s ease forwards;
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 0;
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    border-radius: 2px;
+    transition: height 0.3s ease;
+}
+
+.nav-item:hover::before {
+    height: 80%;
 }
 
 .sidebar .nav-link {
-    padding: 10px;
-    display: block;
-    color: black;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    color: white;
     text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar .nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.sidebar .nav-link:hover::before {
+    left: 100%;
 }
 
 .sidebar .nav-link:hover {
-    background-color: #f1f1ca;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(8px);
+    color: #FFD700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-
-.main-content {
-    /*margin-left: 250px;*/ /* solo si tenés una sidebar fija a la izquierda */
-    padding: 1rem;
-    transition: margin-left 0.3s ease;
+.sidebar .nav-link.active {
+    background: rgba(255, 215, 0, 0.2);
+    color: #FFD700;
+    font-weight: 600;
 }
 
-.main-content.collapsed{
-    margin-left: 0;
+.sidebar .nav-link i {
+    margin-right: 12px;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
 }
 
-.btn {
-    background-color: antiquewhite;
-}
-
-.nav-item a{
-    color: black;
-}
-
+/* CLAVE: Esta es la parte importante para el logout */
 .logout {
-  margin-top: auto; /* esto empuja el botón hacia abajo */
+    margin-top: auto; /* Esto empuja el botón hacia abajo */
+    padding: 10px;
+    align-self: stretch; /* Para que ocupe todo el ancho disponible */
 }
 
 .logout button {
-  width: 100%;
-  padding: 10px;
-  background-color: #c0392b;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.logout button:hover::before {
+    left: 100%;
 }
 
 .logout button:hover {
-  background-color: #e74c3c;
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+}
+
+.logout button i {
+    margin-right: 8px;
 }
 
 .collapsed .logout button {
-    opacity:0;
+    opacity: 0;
 }
 
 .toggle-btn {
     position: fixed;
-    top: 1rem;
-    left: 1rem;
+    top: 1.5rem;
+    left: 1.5rem;
     z-index: 1100;
-    background-color: antiquewhite;
+    background: linear-gradient(135deg, #8B7355, #A0956B);
     border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    color: white;
 }
 
 .toggle-btn:hover {
-    background-color: #ccc;
+    background: linear-gradient(135deg, #A0956B, #B8AC7E);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-btn i {
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+
+.toggle-btn:hover i {
+    transform: rotate(180deg);
+}
+
+.main-content {
+    margin-left: 280px;
+    padding: 2rem;
+    transition: margin-left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.main-content.collapsed {
+    margin-left: 0;
+}
+
+/* Scrollbar personalizada */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Animaciones */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.nav-item:nth-child(1) { animation-delay: 0.1s; }
+.nav-item:nth-child(2) { animation-delay: 0.2s; }
+.nav-item:nth-child(3) { animation-delay: 0.3s; }
+.nav-item:nth-child(4) { animation-delay: 0.4s; }
+.nav-item:nth-child(5) { animation-delay: 0.5s; }
+.nav-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        transform: translateX(-100%);
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .toggle-btn {
+        left: 1rem;
+        top: 1rem;
+    }
 }
