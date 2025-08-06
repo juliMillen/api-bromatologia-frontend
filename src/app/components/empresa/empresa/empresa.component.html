@@ -19,8 +19,8 @@
 </app-empresa-modal>
 <!--TABLA PARA MOSTRAR LOS DATOS-->
 <h2>Listado de empresas:</h2>
-<div class="container mt-5" *ngIf="isAdmin()">
-  <button class="btn btn-success btn-AgregarEmpresa" (click)="abrirModal()">
+<div class="container mt-5">
+  <button class="btn btn-success btn-AgregarEmpresa" (click)="abrirModal()" *ngIf="isAdmin()">
     <i class="bi bi-building-add"></i>
     Agregar Empresa
   </button>

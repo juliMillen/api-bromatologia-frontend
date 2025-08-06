@@ -24,16 +24,17 @@
         Mostrar Todos
     </button>
 
-    <button class="btn btn-success ms-2" (click)="abrirModalAsociacion('registroProducto')">
-        <i class="bi bi-plus-circle-fill"></i>
-        Agregar Mantenimiento
-    </button>
 </div>
 
 <h2>Listado de Registros Productos</h2>
-<button class="btn btn-success btn-AgregarRegistro" (click)="abrirRegistroProductoModal()">
+<button class="btn btn-success btn-AgregarRegistro" (click)="abrirRegistroProductoModal()" *ngIf="isAdmin()">
     <i class="bi bi-plus-circle-fill"></i>
     Agregar Registro
+</button>
+
+<button class="btn btn-success ms-2" (click)="abrirModalAsociacion('registroProducto')" *ngIf="isAdmin()">
+    <i class="bi bi-plus-circle-fill"></i>
+     Agregar Mantenimiento
 </button>
 
 <div class="table-responsive mt-3 container">

@@ -8,10 +8,10 @@
 </app-mantenimiento-asociado-modal>
 
 <div>
-    <label for="regEstablecimiento">Ingrese id registro establecimiento:</label>
+    <h1>Registro de Establecimientos</h1>
     <div class="seccionFilter">
         <input type="text" id="registroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento"
-            class="form-control mt-3 mb-2 w-50" placeholder="Ingrese id de registro establecimiento...">
+            class="form-control mt-3 mb-2 w-50" placeholder="rpe de registro establecimiento...">
 
         <button class="btn btn-success" (click)="obtenerRegistroEstablecimientoPorId()">
             <i class="bi bi-search"></i>
@@ -50,7 +50,7 @@
                     <th>Direccion</th>
                     <th>Expediente</th>
                     <th> Enlace</th>
-                    <th>Acciones</th>
+                    <th *ngIf="isAdmin()">Acciones</th>
                 </tr>
             </thead>
             <tbody>

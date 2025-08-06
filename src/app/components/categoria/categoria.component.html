@@ -25,18 +25,18 @@
 
 <!--TABLA PARA MOSTRAR LOS DATOS-->
 <h2>Listado de categorias:</h2>
-<div class="container mt-5" *ngIf="isAdmin()">
-  <button class="btn btn-success btn-Categoria" (click)="abrirModalCategoria()">
+<div class="container mt-5">
+  <button class="btn btn-success btn-Categoria" (click)="abrirModalCategoria()" *ngIf="isAdmin()">
     <i class="bi bi-building-add"></i>
     Crear Categoria
   </button>
 
-  <button class="btn btn-success btn-AgregarRubro ms-2" (click)="abrirModalRubro()">
+  <button class="btn btn-success btn-AgregarRubro ms-2" (click)="abrirModalRubro()" *ngIf="isAdmin()">
     <i class="bi bi-building-add"></i>
     Crear Rubro
   </button>
 
-  <button class="btn btn-success btn-AgregarActividad ms-2" (click)="abrirModalActividad()">
+  <button class="btn btn-success btn-AgregarActividad ms-2" (click)="abrirModalActividad()" *ngIf="isAdmin()">
     <i class="bi bi-building-add"></i>
     Crear Actividad
   </button>
