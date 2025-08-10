@@ -1,24 +1,103 @@
-.body{
-    overflow-x: hidden;
+div {
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #4a5d23;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.seccionFilter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.seccionFilter input.form-control{
+    max-width: 300px;
+    flex-grow: 1;
+    font-size: 1.1rem;
+    border-radius: 0.3rem;
+    border: 1.5px solid #6B8E23;
+    padding: 0.4rem 0.75rem;
+    transition: border-color 0.3s;
+}
+
+.seccionFilter input.form-control:focus {
+    border-color: #4a5d23;
+    outline: none;
+    box-shadow: 0 0 5px #6B8E23;
 }
 
 
-.seccionFilter button{
-    background-color: #6B8E23;
-    color: white;
+.seccionFilter button, .btn-AgregarEmpresa{
+    font-weight: 600;
+    padding: 0.45rem 1.2rem;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    box-shadow: 0 3px 6px rgba(107,142,35,0.5);
 }
 
-.seccionFilter button:hover{
-    background-color: #6B8E23;
-}
 
 .btn-AgregarEmpresa {
     background-color: #6B8E23;
+    color: white;
 }
 
-thead {
-    background-color: #6B8E23 !important;
-    color: white;
+h2{
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #565627;
+}
+
+/*Tabla */
+
+.table-responsive.container{
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.13);
+    background-color: white;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+table.table{
+    width: 100%;
+    font-size: 0.95rem;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    table-layout: auto;
+}
+
+thead th {
+    border-top: none !important;
+    border-bottom: 3px solid #6B8E23 !important;
+    text-align: center;
+    vertical-align: bottom;
+    padding: 0.75rem 0.5rem;
+    white-space: normal;
+}
+
+tbody td{
+    vertical-align: middle;
+    padding: 0.6rem 0.75rem;
+    text-align: center;
+    word-break: normal;
+    min-width: 120px;
 }
 
 .table-striped tbody tr:nth-of-type(odd){

@@ -1,18 +1,3 @@
-<!--Filtro-->
-<div class="seccionFilter">
-  <h2 class="mt-4">Buscar Categoria:</h2>
-  <input type="text" id="categoria" [(ngModel)]="categoriaBuscada" class="form-control mt-5 mb-2 w-50"
-    placeholder="Ingrese nombre de categoria">
-  <button class="btn btn-primary btn-Buscar" (click)="obtenerCategoriaPorNombre(categoriaBuscada)">
-    <i class="bi bi-search"></i>
-    Buscar
-  </button>
-
-  <button class="btn btn-secondary btn-FiltrarTodas ms-2" (click)="cargarCategorias()">
-    Ver todas
-  </button>
-</div>
-
 <!--Modal Categoria-->
 <app-categoria-modal *ngIf="modalCategoriaAbierto" [rubros]="rubros"
   (cerrar)="ocultarModalCategoria()"></app-categoria-modal>
@@ -23,53 +8,70 @@
 <!--MODAL ACTIVIDAD-->
 <app-actividad-modal *ngIf="modalActividadAbierto" (cerrar)="ocultarModalActividad()"></app-actividad-modal>
 
-<!--TABLA PARA MOSTRAR LOS DATOS-->
-<h2>Listado de categorias:</h2>
-<div class="container mt-5">
-  <button class="btn btn-success btn-Categoria" (click)="abrirModalCategoria()" *ngIf="isAdmin()">
-    <i class="bi bi-building-add"></i>
-    Crear Categoria
-  </button>
 
-  <button class="btn btn-success btn-AgregarRubro ms-2" (click)="abrirModalRubro()" *ngIf="isAdmin()">
-    <i class="bi bi-building-add"></i>
-    Crear Rubro
-  </button>
+<div>
+  <h1>Categorias</h1>
+  <!--Filtro-->
+  <div class="seccionFilter">
+    <h2 class="mt-4">Buscar Categoria:</h2>
+    <input type="text" id="categoria" [(ngModel)]="categoriaBuscada" class="form-control mt-3 mb-2 w-50"
+      placeholder="Ingrese nombre de categoria">
+    <button class="btn btn-success btn-Buscar" (click)="obtenerCategoriaPorNombre(categoriaBuscada)">
+      <i class="bi bi-search"></i>
+      Buscar
+    </button>
 
-  <button class="btn btn-success btn-AgregarActividad ms-2" (click)="abrirModalActividad()" *ngIf="isAdmin()">
-    <i class="bi bi-building-add"></i>
-    Crear Actividad
-  </button>
-
-
-  <div class="table-responsive mt-3">
-    <table class="table table-bordered table-striped" *ngIf="categorias.length > 0">
-      <thead>
-        <tr>
-          <th>Nombre Categoria</th>
-          <th>Rubro</th>
-          <th>Actividades</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngFor="let cat of categorias">
-          <tr>
-            <td>{{cat.nombreCategoria}}</td>
-            <td>{{cat.rubro?.nombreRubro}}</td>
-          </tr>
-
-          <tr *ngFor="let act of cat.listaActividades">
-            <td colspan="2">
-              <strong>Actividades</strong>
-            </td>
-            <td colspan="2">{{act.nombreActividad}}</td>
-          </tr>
-        </ng-container>
-
-      </tbody>
-    </table>
+    <button class="btn btn-success btn-FiltrarTodas ms-2" (click)="cargarCategorias()">
+      Ver todas
+    </button>
   </div>
-  <div *ngIf="categorias.length === 0" class="alert alert-info mt-3">
-    No hay categorias cargadas
+  <!--TABLA PARA MOSTRAR LOS DATOS-->
+  <div class="container mt-5">
+    <h2>Listado de categorias:</h2>
+    <button class="btn btn-success btn-Categoria" (click)="abrirModalCategoria()" *ngIf="isAdmin()">
+      <i class="bi bi-building-add"></i>
+      Crear Categoria
+    </button>
+
+    <button class="btn btn-success btn-AgregarRubro ms-2" (click)="abrirModalRubro()" *ngIf="isAdmin()">
+      <i class="bi bi-building-add"></i>
+      Crear Rubro
+    </button>
+
+    <button class="btn btn-success btn-AgregarActividad ms-2" (click)="abrirModalActividad()" *ngIf="isAdmin()">
+      <i class="bi bi-building-add"></i>
+      Crear Actividad
+    </button>
+
+
+    <div class="table-responsive mt-3 container">
+      <table class="table table-bordered table-striped" *ngIf="categorias.length > 0">
+        <thead>
+          <tr>
+            <th>Nombre Categoria</th>
+            <th>Rubro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let cat of categorias">
+            <tr>
+              <td>{{cat.nombreCategoria}}</td>
+              <td>{{cat.rubro?.nombreRubro}}</td>
+            </tr>
+
+            <tr *ngFor="let act of cat.listaActividades">
+              <td colspan="2">
+                <strong>Actividades</strong>
+              </td>
+              <td colspan="2">{{act.nombreActividad}}</td>
+            </tr>
+          </ng-container>
+
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="categorias.length === 0" class="alert alert-info mt-3">
+      No hay categorias cargadas
+    </div>
   </div>
 </div>

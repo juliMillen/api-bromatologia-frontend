@@ -1,70 +1,73 @@
-<!--Filtro-->
-<div class="seccionFilter">
-  <h2 class="mt-4">Buscar Empresa</h2>
-  <input type="number" id="empresa" [(ngModel)]="cuitBuscado" class="form-control mt-5 mb-2 w-50"
-    placeholder="Ingrese cuit de empresa">
-  <button class="btn btn-primary" (click)="obtenerEmpresaPorCuit()">
-    <i class="bi bi-search"></i>
-    Buscar
-  </button>
-
-  <button class="btn btn-secondary ms-2" (click)="cargarEmpresas()">
-    Ver todas
-  </button>
-</div>
-
 <!--Modal-->
 <app-empresa-modal *ngIf="modalAbierto" (cerrar)="ocultarModal()" (empresaCreada)="guardarEmpresa($event)"
   [empresaParaEditar]="empresaEditando" [modo]="modo">
 </app-empresa-modal>
-<!--TABLA PARA MOSTRAR LOS DATOS-->
-<h2>Listado de empresas:</h2>
-<div class="container mt-5">
-  <button class="btn btn-success btn-AgregarEmpresa" (click)="abrirModal()" *ngIf="isAdmin()">
-    <i class="bi bi-building-add"></i>
-    Agregar Empresa
-  </button>
 
+<div>
+  <h1>Empresa</h1>
+  <!--Filtro-->
+  <div class="seccionFilter">
+    <h2 class="mt-4">Cuit Empresa:</h2>
+    <input type="number" id="empresa" [(ngModel)]="cuitBuscado" class="form-control mt-3 mb-2 w-50"
+      placeholder="Ingrese cuit de empresa">
+    <button class="btn btn-success" (click)="obtenerEmpresaPorCuit()">
+      <i class="bi bi-search"></i>
+      Buscar
+    </button>
 
-  <div class="table-responsive mt-3">
-    <table class="table table-bordered table-striped" *ngIf="empresas.length > 0">
-      <thead>
-        <tr>
-          <th>Cuit Empresa</th>
-          <th>Razon Social</th>
-          <th>Fecha Alta</th>
-          <th>Email</th>
-          <th>Telefono</th>
-          <th>Departamento</th>
-          <th>Localidad</th>
-          <th>Direccion</th>
-          <th>Password</th>
-          <th *ngIf="isAdmin()">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let em of empresas">
-          <td>{{em.cuitEmpresa}}</td>
-          <td>{{em.razonSocial}}</td>
-          <td>{{em.fechaAlta}}</td>
-          <td>{{em.email}}</td>
-          <td>{{em.telefono}}</td>
-          <td>{{em.departamento}}</td>
-          <td>{{em.localidad}}</td>
-          <td>{{em.direccion}}</td>
-          <td>{{em.password}}</td>
-
-          <td *ngIf="isAdmin()">
-            <button class="btn btn-sm btn-primary me-2" (click)="abrirModalParaEditar(em)">Editar</button>
-            <button class="btn btn-sm btn-danger" (click)="eliminarEmpresa(em.cuitEmpresa)">
-              <i class="bi bi-trash3"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <button class="btn btn-success ms-2" (click)="cargarEmpresas()">
+      Ver todas
+    </button>
   </div>
-  <div *ngIf="empresas.length === 0" class="alert alert-info mt-3">
-    No hay empresas cargadas
+  <!--TABLA PARA MOSTRAR LOS DATOS-->
+  <div class="container mt-5">
+    <h2>Listado de empresas:</h2>
+    <button class="btn btn-success btn-AgregarEmpresa" (click)="abrirModal()" *ngIf="isAdmin()">
+      <i class="bi bi-building-add"></i>
+      Agregar Empresa
+    </button>
+
+
+    <div class="table-responsive mt-3 container">
+      <table class="table table-bordered table-striped" *ngIf="empresas.length > 0">
+        <thead>
+          <tr>
+            <th>Cuit Empresa</th>
+            <th>Razon Social</th>
+            <th>Fecha Alta</th>
+            <th>Email</th>
+            <th>Telefono</th>
+            <th>Departamento</th>
+            <th>Localidad</th>
+            <th>Direccion</th>
+            <th>Password</th>
+            <th *ngIf="isAdmin()">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let em of empresas">
+            <td>{{em.cuitEmpresa}}</td>
+            <td>{{em.razonSocial}}</td>
+            <td>{{em.fechaAlta}}</td>
+            <td>{{em.email}}</td>
+            <td>{{em.telefono}}</td>
+            <td>{{em.departamento}}</td>
+            <td>{{em.localidad}}</td>
+            <td>{{em.direccion}}</td>
+            <td>{{em.password}}</td>
+
+            <td *ngIf="isAdmin()">
+              <button class="btn btn-sm btn-primary me-2" (click)="abrirModalParaEditar(em)">Editar</button>
+              <button class="btn btn-sm btn-danger" (click)="eliminarEmpresa(em.cuitEmpresa)">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="empresas.length === 0" class="alert alert-info mt-3">
+      No hay empresas cargadas
+    </div>
   </div>
 </div>

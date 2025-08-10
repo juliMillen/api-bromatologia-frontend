@@ -1,5 +1,5 @@
 <div class="modal fade show d-block " tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{modo === 'crear' ? 'Agregar Registro': 'Editar Registro'}}</h5>
@@ -8,26 +8,25 @@
             <div class="modal-body">
                 <form [formGroup]="registroForm" (ngSubmit)="guardarRegistro()" novalidate>
 
+                    <!-- Campos que ocupan toda la fila -->
                     <div class="mb-3" *ngIf="modo === 'crear'">
                         <label class="form-label">RPE (Registro Provincial de Establecimientos)</label>
                         <input type="text" class="form-control" formControlName="rpe" name="rpe" [ngClass]="{
-                             'is-invalid': registroForm.get('rpe')?.invalid && registroForm.get('rpe')?.touched,
-                             'is-valid': registroForm.get('rpe')?.valid && registroForm.get('rpe')?.touched
-                        }">
+           'is-invalid': registroForm.get('rpe')?.invalid && registroForm.get('rpe')?.touched,
+           'is-valid': registroForm.get('rpe')?.valid && registroForm.get('rpe')?.touched
+      }">
                         <div class="invalid-feedback" *ngIf="registroForm.get('rpe')?.errors?.['required']">
                             El RPE es obligatorio
                         </div>
                     </div>
 
-
                     <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
                         <label class="form-label">Fecha Emision</label>
                         <input type="date" class="form-control" formControlName="fechaEmision" name="fechaEmision"
                             [ngClass]="{
-                                'is-invalid': registroForm.get('fechaEmision')?.invalid && registroForm.get('fechaEmision')?.touched,
-                                'is-valid': registroForm.get('fechaEmision')?.valid && registroForm.get('fechaEmision')?.touched
-                            }">
-
+          'is-invalid': registroForm.get('fechaEmision')?.invalid && registroForm.get('fechaEmision')?.touched,
+          'is-valid': registroForm.get('fechaEmision')?.valid && registroForm.get('fechaEmision')?.touched
+      }">
                         <div class="invalid-feedback" *ngIf="registroForm.get('fechaEmision')?.errors?.['required']">
                             La fecha es obligatoria
                         </div>
@@ -37,17 +36,16 @@
                         <label class="form-label">Fecha Vencimiento</label>
                         <input type="date" class="form-control" formControlName="fechaVencimiento"
                             name="fechaVencimiento" [ngClass]="{
-                                'is-invalid': registroForm.get('fechaVencimiento')?.invalid && registroForm.get('fechaVencimiento')?.touched,
-                                'is-valid': registroForm.get('fechaVencimiento')?.valid && registroForm.get('fechaVencimiento')?.touched
-                            }">
-
+          'is-invalid': registroForm.get('fechaVencimiento')?.invalid && registroForm.get('fechaVencimiento')?.touched,
+          'is-valid': registroForm.get('fechaVencimiento')?.valid && registroForm.get('fechaVencimiento')?.touched
+      }">
                         <div class="invalid-feedback"
                             *ngIf="registroForm.get('fechaVencimiento')?.errors?.['required']">
                             La fecha es obligatoria
                         </div>
                     </div>
 
-                    <!-- Empresa -->
+                    <!-- Select empresa -->
                     <div class="mb-3" *ngIf="modo === 'crear'">
                         <label for="empresa">Razon Social</label>
                         <select formControlName="empresa" name="empresa" class="form-control">
@@ -57,92 +55,92 @@
                         </select>
                     </div>
 
-
-                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
-                        <label class="form-label">Departamento</label>
-                        <input type="text" class="form-control" formControlName="departamento" name="departamento"
-                            [ngClass]="{
-
-                                'is-invalid': registroForm.get('departamento')?.invalid && registroForm.get('departamento')?.touched,
-                                'is-valid': registroForm.get('departamento')?.valid && registroForm.get('departamento')?.touched
-                                }">
-
-                        <div class="invalid-feedback" *ngIf="registroForm.get('departamento')?.errors?.['required']">
-                            El departamento del establecimiento es obligatorio
-                        </div>
-                    </div>
-
-                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
-                        <label class="form-label">Localidad</label>
-                        <input type="text" class="form-control" formControlName="localidad" name="localidad" [ngClass]="{
-                                'is-invalid': registroForm.get('localidad')?.invalid && registroForm.get('localidad')?.touched,
-                                'is-valid': registroForm.get('localidad')?.valid && registroForm.get('localidad')?.touched
-                                }">
-                        <div class="invalid-feedback" *ngIf="registroForm.get('localidad')?.errors?.['required']">
-                            La localidad del establecimiento es obligatoria
-                        </div>
-                    </div>
-
-                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
-                        <label class="form-label">Direccion</label>
-                        <input type="text" class="form-control" formControlName="direccion" name="direccion" [ngClass]="{
-                                'is-invalid': registroForm.get('direccion')?.invalid && registroForm.get('direccion')?.touched,
-                                'is-valid': registroForm.get('direccion')?.valid && registroForm.get('direccion')?.touched
-                                }">
-
-                        <div class="invalid-feedback" *ngIf="registroForm.get('direccion')?.errors?.['required']">
-                            La direccion del establecimiento es obligatoria
-                        </div>
-                    </div>
-
-                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
-                        <label class="form-label">Expediente</label>
-                        <input type="text" class="form-control" formControlName="expediente" name="expediente"
-                            [ngClass]="{
-                                'is-invalid': registroForm.get('expediente')?.invalid && registroForm.get('expediente')?.touched,
-                                'is-valid': registroForm.get('expediente')?.valid && registroForm.get('expediente')?.touched
-                                }">
-
-                        <div class="invalid-feedback" *ngIf="registroForm.get('expediente')?.errors?.['required']">
-                            El numero de expediente es obligatorio
-                        </div>
-                    </div>
-
-                    <div class="mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
-                        <label class="form-label">Enlace</label>
-                        <input type="text" class="form-control" formControlName="enlace" name="enlace"
-                            [ngClass]="{
-                                'is-invalid': registroForm.get('enlace')?.invalid && registroForm.get('enlace')?.touched,
-                                'is-valid': registroForm.get('enlace')?.valid && registroForm.get('enlace')?.touched
-                                }">
-
-                        <div class="invalid-feedback" *ngIf="registroForm.get('expediente')?.errors?.['required']">
-                            El numero de expediente es obligatorio
-                        </div>
-                    </div>
-
-
-                    <!--Categoria-->
-                    <div class="mb-3"  *ngIf="modo === 'crear'">
-                        <label class="form-label">Categorias</label>
-                        <div formArrayName="categorias">
-                            <div *ngFor="let cat of categorias; let i = index">
-                                <input type="checkbox" [formControlName]="i" [id]="'cat-'+i">
-                                <label [for]="'cat-'+i">{{cat.nombreCategoria}}</label>
+                    <!-- Primera fila con 3 columnas -->
+                    <div class="row">
+                        <div class="col-md-4 mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                            <label class="form-label">Departamento</label>
+                            <input type="text" class="form-control" formControlName="departamento" name="departamento"
+                                [ngClass]="{
+          'is-invalid': registroForm.get('departamento')?.invalid && registroForm.get('departamento')?.touched,
+          'is-valid': registroForm.get('departamento')?.valid && registroForm.get('departamento')?.touched
+        }">
+                            <div class="invalid-feedback"
+                                *ngIf="registroForm.get('departamento')?.errors?.['required']">
+                                El departamento del establecimiento es obligatorio
                             </div>
                         </div>
-                        <div class="text-danger"
-                            *ngIf="registroForm.get('categorias')?.touched && !categoriaSeleccionada()">
-                            Debe seleccionar al menos una categoria
+
+                        <div class="col-md-4 mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                            <label class="form-label">Localidad</label>
+                            <input type="text" class="form-control" formControlName="localidad" name="localidad"
+                                [ngClass]="{
+          'is-invalid': registroForm.get('localidad')?.invalid && registroForm.get('localidad')?.touched,
+          'is-valid': registroForm.get('localidad')?.valid && registroForm.get('localidad')?.touched
+        }">
+                            <div class="invalid-feedback" *ngIf="registroForm.get('localidad')?.errors?.['required']">
+                                La localidad del establecimiento es obligatoria
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                            <label class="form-label">Direccion</label>
+                            <input type="text" class="form-control" formControlName="direccion" name="direccion"
+                                [ngClass]="{
+          'is-invalid': registroForm.get('direccion')?.invalid && registroForm.get('direccion')?.touched,
+          'is-valid': registroForm.get('direccion')?.valid && registroForm.get('direccion')?.touched
+        }">
+                            <div class="invalid-feedback" *ngIf="registroForm.get('direccion')?.errors?.['required']">
+                                La direccion del establecimiento es obligatoria
+                            </div>
                         </div>
                     </div>
 
+                    <!-- Segunda fila con 3 columnas -->
+                    <div class="row">
+                        <div class="col-md-4 mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                            <label class="form-label">Expediente</label>
+                            <input type="text" class="form-control" formControlName="expediente" name="expediente"
+                                [ngClass]="{
+          'is-invalid': registroForm.get('expediente')?.invalid && registroForm.get('expediente')?.touched,
+          'is-valid': registroForm.get('expediente')?.valid && registroForm.get('expediente')?.touched
+        }">
+                            <div class="invalid-feedback" *ngIf="registroForm.get('expediente')?.errors?.['required']">
+                                El numero de expediente es obligatorio
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
+                            <label class="form-label">Enlace</label>
+                            <input type="text" class="form-control" formControlName="enlace" name="enlace" [ngClass]="{
+          'is-invalid': registroForm.get('enlace')?.invalid && registroForm.get('enlace')?.touched,
+          'is-valid': registroForm.get('enlace')?.valid && registroForm.get('enlace')?.touched
+        }">
+                            <div class="invalid-feedback" *ngIf="registroForm.get('enlace')?.errors?.['required']">
+                                El enlace es obligatorio
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3" *ngIf="modo === 'crear'">
+                            <label class="form-label">Categorias</label>
+                            <div formArrayName="categorias">
+                                <div *ngFor="let cat of categorias; let i = index">
+                                    <input type="checkbox" [formControlName]="i" [id]="'cat-'+i">
+                                    <label [for]="'cat-'+i">{{cat.nombreCategoria}}</label>
+                                </div>
+                            </div>
+                            <div class="text-danger"
+                                *ngIf="registroForm.get('categorias')?.touched && !categoriaSeleccionada()">
+                                Debe seleccionar al menos una categoria
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="modal-footer">
-                        <button class="btn btn-danger" (click)="cerrarModal()"> Cancelar</button>
+                        <button class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
                         <button type="submit" class="btn btn-success">Guardar Registro</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

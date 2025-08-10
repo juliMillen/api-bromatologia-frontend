@@ -1,102 +1,106 @@
 <!--Modal de Registro Producto-->
 <app-registro-producto-modal *ngIf="mostrarModalRegistroProducto" (cerrar)="mostrarModalRegistroProducto=false"
-    (registroProdCreado)="onRegistroProductoCreado($event)"
-    [registroParaEditar]="registroProdEditando" [modo]="modo"
-    >
+    (registroProdCreado)="onRegistroProductoCreado($event)" [registroParaEditar]="registroProdEditando" [modo]="modo">
 </app-registro-producto-modal>
 
 <app-mantenimiento-asociado-modal *ngIf="mostrarModalAsociacion" [tipo]="tipoModalAsociacion"
     (cerrar)="cerrarModalAsociacion()">
 </app-mantenimiento-asociado-modal>
 
+<div>
+    <h1>Registro de Productos</h1>
+    <div class="seccionFilter">
+        <label for="registroProducto">RPPA(Registro Provincial de Productos Alimenticios)</label>
+        <input type="number" id="RegistroProducto" [(ngModel)]="idRegistroProducto" class="form-control mt-3 mb-2 w-50"
+            placeholder="08000020">
 
-<div class="seccionFilter">
-    <label for="registroProducto">Ingrese RPPA( Registro Provincial de Productos Alimenticios)</label>
-    <input type="number" id="RegistroProducto" [(ngModel)]="idRegistroProducto" class="form-control mt-3 mb-2 w-50"
-        placeholder="rppa...">
+        <button class="btn btn-success" (click)="obtenerRegistroProductoEstablecimientoPorId()">
+            <i class="bi bi-search"></i>
+            Buscar
+        </button>
 
-    <button class="btn btn-success" (click)="obtenerRegistroProductoEstablecimientoPorId()">
-        <i class="bi bi-search"></i>
-        Buscar
+        <button class="btn btn-success ms-2" (click)="cargarRegistros()">
+            Mostrar Todos
+        </button>
+    </div>
+
+    <h2>Listado de Registros Productos</h2>
+    <button class="btn btn-success btn-AgregarRegistro" (click)="abrirRegistroProductoModal()" *ngIf="isAdmin()">
+        <i class="bi bi-plus-circle-fill"></i>
+        Agregar Registro
     </button>
 
-    <button class="btn btn-success ms-2" (click)="cargarRegistros()">
-        Mostrar Todos
+    <button class="btn btn-success btn-AgregarMantenimiento ms-2" (click)="abrirModalAsociacion('registroProducto')" *ngIf="isAdmin()">
+        <i class="bi bi-plus-circle-fill"></i>
+        Agregar Mantenimiento
     </button>
 
-</div>
-
-<h2>Listado de Registros Productos</h2>
-<button class="btn btn-success btn-AgregarRegistro" (click)="abrirRegistroProductoModal()" *ngIf="isAdmin()">
-    <i class="bi bi-plus-circle-fill"></i>
-    Agregar Registro
-</button>
-
-<button class="btn btn-success ms-2" (click)="abrirModalAsociacion('registroProducto')" *ngIf="isAdmin()">
-    <i class="bi bi-plus-circle-fill"></i>
-     Agregar Mantenimiento
-</button>
-
-<div class="table-responsive mt-3 container">
-    <table class=" table table table-bordered table-striped" *ngIf="registrosProductos.length">
-        <thead class="table dark">
-            <tr>
-                <th>RPPA (Registro Provincial de Productos Alimenticios)</th>
-                <th>Fecha de Emision</th>
-                <th>Fecha de Vencimiento</th>
-                <th>Registro Establecimiento</th>
-                <th>Denominacion</th>
-                <th>Marca</th>
-                <th>Nombre de Fantasia</th>
-                <th>Categoria del Producto</th>
-                <th>Expediente</th>
-                <th>Enlace</th>
-                <th>Elaborador</th>
-                <th *ngIf="isAdmin()">Acciones</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <ng-container *ngFor="let reg of registrosProductos">
+    <div class="table-responsive mt-3 container">
+        <table class=" table table table-bordered table-striped" *ngIf="registrosProductos.length">
+            <thead class="table dark">
                 <tr>
-                    <td>{{reg.rppa}}</td>
-                    <td>{{reg.fechaEmision}}</td>
-                    <td>{{reg.fechaVencimiento}}</td>
-                    <td>
-                        <button class="btn btn-primary p-0"
-                            [routerLink]="['/registroEstablecimiento',reg.registroEstablecimiento.rpe]">
-                            {{reg.registroEstablecimiento.rpe}} - Ver Registro
-                        </button>
-                    </td>
-                    <td>{{reg.denominacion}}</td>
-                    <td>{{reg.marca}}</td>
-                    <td>{{reg.nombreFantasia}}</td>
-                    <td>{{reg.categoriaProducto}}</td>
-                    <td>{{reg.expediente}}</td>
-                    <td>{{reg.enlace}}</td>
-                    <td>{{reg.elaborador}}</td>
-
-                    <td *ngIf="isAdmin()">
-                        <button class="btn btn-sm btn-primary me-2" (click)="abrirModalParaEditar(reg)">Editar</button>
-                        <button class="btn btn-sm btn-danger" (click)="eliminarRegistroProducto(reg.rppa)">
-                            <i class="bi bi-trash3"></i>
-                        </button>
-                    </td>
+                    <th>RPPA (Registro Provincial de Productos Alimenticios)</th>
+                    <th>Fecha de Emision</th>
+                    <th>Fecha de Vencimiento</th>
+                    <th>Registro Establecimiento</th>
+                    <th>Denominacion</th>
+                    <th>Marca</th>
+                    <th>Nombre de Fantasia</th>
+                    <th>Categoria del Producto</th>
+                    <th>Expediente</th>
+                    <th>Enlace</th>
+                    <th>Elaborador</th>
+                    <th *ngIf="isAdmin()">Acciones</th>
                 </tr>
+            </thead>
 
-                <tr *ngFor="let man of reg.mantenimientos">
-                    <td colspan="2"><strong>Mantenimientos</strong></td>
-                    <td colspan="2">{{man.fechaMantenimiento}}</td>
-                    <td colspan="2">
-                        <a class="btn btn-primary btn-info" [routerLink]="['/mantenimiento',man.idMantenimiento]">
-                            Ver detalles
-                        </a>
-                    </td>
-                </tr>
-            </ng-container>
-        </tbody>
-    </table>
-</div>
-<div *ngIf="registrosProductos.length === 0" class="alert alert-info">
-    No hay Registros Productos cargados
+            <tbody>
+                <ng-container *ngFor="let reg of registrosProductos">
+                    <tr>
+                        <td>{{reg.rppa}}</td>
+                        <td>{{reg.fechaEmision}}</td>
+                        <td>{{reg.fechaVencimiento}}</td>
+                        <td>
+                            <button class="btn btn-primary p-0"
+                                [routerLink]="['/registroEstablecimiento',reg.registroEstablecimiento.rpe]">
+                                {{reg.registroEstablecimiento.rpe}} - Ver Registro
+                            </button>
+                        </td>
+                        <td>{{reg.denominacion}}</td>
+                        <td>{{reg.marca}}</td>
+                        <td>{{reg.nombreFantasia}}</td>
+                        <td>{{reg.categoriaProducto}}</td>
+                        <td>{{reg.expediente}}</td>
+                        <td>
+                            <a *ngIf="reg.enlace" [href]="reg.enlace" target="_blank" rel="noopener noreferrer">
+                                {{reg.enlace}}
+                            </a>
+                        </td>
+                        <td>{{reg.elaborador}}</td>
+
+                        <td *ngIf="isAdmin()">
+                            <button class="btn btn-sm btn-primary me-2"
+                                (click)="abrirModalParaEditar(reg)">Editar</button>
+                            <button class="btn btn-sm btn-danger" (click)="eliminarRegistroProducto(reg.rppa)">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr *ngFor="let man of reg.mantenimientos">
+                        <td colspan="2"><strong>Mantenimientos</strong></td>
+                        <td colspan="2">{{man.fechaMantenimiento}}</td>
+                        <td colspan="2">
+                            <a class="btn btn-primary btn-info" [routerLink]="['/mantenimiento',man.idMantenimiento]">
+                                Ver detalles
+                            </a>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="registrosProductos.length === 0" class="alert alert-info">
+        No hay Registros Productos cargados
+    </div>
 </div>
