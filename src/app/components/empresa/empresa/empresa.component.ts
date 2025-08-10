@@ -34,6 +34,10 @@ export class EmpresaComponent implements OnInit{
 
   cuitBuscado: number = 0;
 
+  razonSocialBuscada: string = '';
+
+  departamentoBuscado: string = '';
+
   rolUsuario: string= '';
 
   modo: 'crear' | 'editar' = 'crear';
@@ -65,6 +69,39 @@ export class EmpresaComponent implements OnInit{
   }
 
 
+  buscarEmpresa():void{
+    if(this.cuitBuscado && this.razonSocialBuscada && this.departamentoBuscado){
+      this.empresaService.obtenerEmpresaPorPropiedades(this.cuitBuscado,this.razonSocialBuscada,this.departamentoBuscado).subscribe({
+        next: (empresa:Empresa) =>{
+          this.empresas = [empresa];
+        },
+        error: (err) => {
+          console.error('Error al obtener empresa: ',err);
+          this.empresas = [];
+        }
+      })
+      return;
+    }
+
+    if(this.cuitBuscado){
+      this.obtenerEmpresaPorCuit();
+      return;
+    }
+
+    if(this.razonSocialBuscada){
+      this.obtenerEmpresaPorRazonSocial();
+      return;
+    }
+
+    if(this.departamentoBuscado){
+      this.obtenerEmpresaPorDepartamento();
+      return;
+    }
+
+    this.cargarEmpresas()
+  }
+
+
   obtenerEmpresaPorCuit(): void{
     if(!this.cuitBuscado) return;
     this.empresaService.obtenerEmpresa(this.cuitBuscado).subscribe({
@@ -74,6 +111,33 @@ export class EmpresaComponent implements OnInit{
       error: (err) => {
         console.error('Error al obtener la empresa: ', err);
         this.empresas = []
+      }
+    })
+  }
+
+
+  obtenerEmpresaPorRazonSocial(): void{
+    if(!this.razonSocialBuscada) return;
+    this.empresaService.obtenerEmpresaPorRazonSocial(this.razonSocialBuscada).subscribe({
+      next: (empresa:Empresa) => {
+        this.empresas = [empresa];
+      },
+      error: (err) =>{
+        console.error('Error al obtener la empresa: ',err);
+        this.empresas = [];
+      }
+    })
+  }
+
+
+  obtenerEmpresaPorDepartamento(): void{
+    if(this.departamentoBuscado) return;
+    this.empresaService.obtenerEmpresaPorDepartamento(this.departamentoBuscado).subscribe({
+      next: (empresa:Empresa) => {
+        this.empresas = [empresa];
+      },
+      error: (err) =>{
+        console.error('Error al obtener la empresa: ',err);
       }
     })
   }

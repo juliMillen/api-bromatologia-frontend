@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-inicio',
@@ -10,6 +11,8 @@ import { RouterModule } from '@angular/router';
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
+
+  constructor(private authService:AuthService) {}
 
   items = [
     {
@@ -46,6 +49,25 @@ export class InicioComponent {
       icon: 'bi bi-tools',
       link: '/mantenimiento',
       color: '#dc3545'
+    },
+    {
+      titulo: 'Usuario',
+      descripcion: 'Gestione los distintos tipos de usuarios',
+      icon: 'bi bi-person-fill',
+      link: '/usuario',
+      color: '#da43fa'
     }
   ];
+
+
+  isAdmin(): boolean {
+    return this.authService.obtenerRolDesdeToken() === 'ROLE_ADMIN'
+  }
+
+  get itemsVisibles() {
+    if(this.isAdmin()){
+      return this.items;
+    }
+    return this.items.filter(item => item.titulo !== 'Usuario');
+  }
 }

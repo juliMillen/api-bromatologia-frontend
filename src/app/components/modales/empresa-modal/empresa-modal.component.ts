@@ -14,8 +14,8 @@ export class EmpresaModalComponent implements OnInit {
 
   @Input() empresaParaEditar: Empresa | null = null;
   @Input() modo: 'crear' | 'editar' = 'crear';
-  @Output() cerrar = new EventEmitter<void>()
-  @Output() empresaCreada = new EventEmitter<Empresa>()
+  @Output() cerrar = new EventEmitter<void>();
+  @Output() empresaCreada = new EventEmitter<Empresa>();
 
     empresa: Empresa = {
       cuitEmpresa: 0,

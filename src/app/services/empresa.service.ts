@@ -26,6 +26,23 @@ export class EmpresaService {
     return this.http.get<Empresa>(`${this.apiUrl}/${cuit}`);
   }
 
+  //obtener empresa por razonSocial
+  obtenerEmpresaPorRazonSocial(razonSocial:String): Observable<Empresa>{
+    return this.http.get<Empresa>(`${this.apiUrl}/razonSocial/${razonSocial}`);
+  }
+
+  //obtener empresa por departamento
+
+  obtenerEmpresaPorDepartamento(departamento:string): Observable<Empresa>{
+    return this.http.get<Empresa>(`${this.apiUrl}/departamento/${departamento}`);
+  }
+
+  //Obtener empresa por sus 3 propiedades
+
+  obtenerEmpresaPorPropiedades(cuit:number,razonSocial:string,departamento:string): Observable<Empresa>{
+   return this.http.get<Empresa>(`${this.apiUrl}/propiedades/${cuit}/${razonSocial}/${departamento}`);
+  }
+
 
   //Crear una nueva Empresa
 

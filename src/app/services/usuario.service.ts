@@ -17,7 +17,7 @@ export class UsuarioService {
 
   //obtener usuarios
   obtenerUsuarios():Observable<Usuario[]>{
-    return this.http.get<Usuario[]>(`${this.apiUrl}/`);
+    return this.http.get<Usuario[]>(`${this.apiUrl}`);
   }
 
   //obtener usuario por id
@@ -26,9 +26,21 @@ export class UsuarioService {
   }
 
 
-  //crear usuario
+  //crear usuario fuera del sistema
   crearUsuario(usuario:Usuario): Observable<Usuario>{
     return this.http.post<Usuario>(`${this.urlCreate}`,usuario);
+  }
+
+  //crear usuario admin en el sistema
+
+  crearUsuarioAdmin(usuario:Usuario): Observable<Usuario>{
+    return this.http.post<Usuario>(`${this.apiUrl}/admin`,usuario);
+  }
+
+  // crear usuario empleado desde el sistema
+
+  crearUsuarioEmpleado(usuario:Usuario): Observable<Usuario>{
+    return this.http.post<Usuario>(`${this.apiUrl}`,usuario);
   }
 
   //eliminar usuario

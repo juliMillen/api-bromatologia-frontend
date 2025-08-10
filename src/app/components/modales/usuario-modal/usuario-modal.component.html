@@ -1,0 +1,71 @@
+<!-- MODAL -->
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">{{modo === 'crear' ? 'Agregar Empresa' : 'Editar Empresa'}}</h5>
+                <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+            </div>
+
+            <div class="modal-body">
+                <form [formGroup]="usuarioForm" novalidate>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-4" *ngIf="modo === 'crear' || modo === 'editar'">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" formControlName="username" [ngClass]="{
+                  'is-invalid': usuarioForm.get('username')?.invalid && usuarioForm.get('username')?.touched,
+                  'is-valid': usuarioForm.get('username')?.valid && usuarioForm.get('username')?.touched
+                }">
+                            <div class="invalid-feedback" *ngIf="usuarioForm.get('username')?.errors?.['required']">
+                                El nombre de usuario es obligatorio
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" *ngIf="modo === 'crear' || modo === 'editar'">
+                            <label class="form-label">Contraseña</label>
+                            <input type="text" class="form-control" formControlName="password" [ngClass]="{
+                  'is-invalid': usuarioForm.get('password')?.invalid && usuarioForm.get('password')?.touched,
+                  'is-valid': usuarioForm.get('password')?.valid && usuarioForm.get('password')?.touched
+                }">
+                            <div class="invalid-feedback" *ngIf="usuarioForm.get('password')?.errors?.['required']">
+                                La contraseña es obligatoria
+                            </div>
+
+                            <div class="invalid-feedback"
+                                *ngIf="usuarioForm.get('password')?.errors?.['pattern']">
+                                Debe ingresar una contraseña valida
+                            </div>
+                        </div>
+
+                        <div *ngIf="modo === 'crear' || modo === 'editar'">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="usuario" id="rbAdmin" value="admin"
+                                    [(ngModel)]="tipoUsuario">
+                                <label class="form-check-label" for="usuario">
+                                    Admin
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="usuario" id="rbEmpleado"
+                                    value="empleado" [(ngModel)]="tipoUsuario" checked>
+                                <label class="form-check-label" for="usuario">
+                                    Empleado
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+                <button class="btn btn-success" (click)="crearUsuario()">Guardar</button>
+            </div>
+
+        </div>
+    </div>
+</div>

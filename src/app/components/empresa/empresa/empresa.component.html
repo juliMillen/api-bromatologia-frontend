@@ -7,10 +7,26 @@
   <h1>Empresa</h1>
   <!--Filtro-->
   <div class="seccionFilter">
-    <h2 class="mt-4">Cuit Empresa:</h2>
-    <input type="number" id="empresa" [(ngModel)]="cuitBuscado" class="form-control mt-3 mb-2 w-50"
-      placeholder="Ingrese cuit de empresa">
-    <button class="btn btn-success" (click)="obtenerEmpresaPorCuit()">
+
+    <div class="filtroItem">
+      <h2 class="mt-4">Cuit Empresa:</h2>
+      <input type="number" id="empresa" [(ngModel)]="cuitBuscado" class="form-control mt-3 mb-2"
+        placeholder="Ingrese cuit de empresa">
+    </div>
+
+    <div class="filtroItem">
+      <h2 class="mt-4">Razon Social</h2>
+      <input type="text" id="razonSocial" [(ngModel)]="razonSocialBuscada" class="form-control mt-3 mb-2"
+        placeholder="Ingrese razon social">
+    </div>
+
+    <div class="filtroItem">
+      <h2 class="mt-4">Departamento:</h2>
+      <input type="text" id="departamento" [(ngModel)]="departamentoBuscado" class="form-control mt-3 mb-2"
+        placeholder="Ingrese departamento">
+    </div>
+
+    <button class="btn btn-success" (click)="buscarEmpresa()">
       <i class="bi bi-search"></i>
       Buscar
     </button>

@@ -1,0 +1,63 @@
+<!--Modal-->
+<app-usuario-modal *ngIf="modalAbierto" (cerrar)="ocultarModal()" (usuarioCreado)="guardarUsuario($event)"
+  [usuarioParaEditar]="usuarioEditando" [modo]="modo">
+</app-usuario-modal>
+
+<div>
+  <h1>Gestion de Usuarios</h1>
+  <!--Filtro-->
+  <div class="seccionFilter">
+
+    <div class="filtroItem">
+      <h2 class="mt-4">ID Usuario a buscar:</h2>
+      <input type="number" id="usuario" [(ngModel)]="idBuscado" class="form-control mt-3 mb-2"
+        placeholder="Ingrese ID usuario">
+    </div>
+
+    <button class="btn btn-success" (click)="obtenerUsuarioPorId()">
+      <i class="bi bi-search"></i>
+      Buscar
+    </button>
+
+    <button class="btn btn-success ms-2" (click)="cargarUsuarios()">
+      Ver todos
+    </button>
+  </div>
+  <!--TABLA PARA MOSTRAR LOS DATOS-->
+  <div class="container mt-5">
+    <h2>Listado de Usuarios:</h2>
+    <button class="btn btn-success btn-AgregarEmpresa" (click)="abrirModal()" *ngIf="isAdmin()">
+      <i class="bi bi-building-add"></i>
+      Agregar Usuario
+    </button>
+
+
+    <div class="table-responsive mt-3 container">
+      <table class="table table-bordered table-striped" *ngIf="usuarios.length > 0">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Rol</th>
+            <th *ngIf="isAdmin()">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of usuarios">
+            <td>{{user.username}}</td>
+            <td>{{user.rol}}</td>
+
+            <td *ngIf="isAdmin()">
+              <button class="btn btn-sm btn-primary me-2" (click)="abrirModalParaEditar(user)">Editar</button>
+              <button class="btn btn-sm btn-danger" (click)="eliminarUsuario(user.idUsuario!)">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="usuarios.length === 0" class="alert alert-info mt-3">
+      No hay usuarios cargados
+    </div>
+  </div>
+</div>

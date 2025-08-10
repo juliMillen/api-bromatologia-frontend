@@ -7,6 +7,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
 import { MantenimientoComponent } from './components/mantenimiento/mantenimiento.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
 
 
 export const routes: Routes = [
@@ -22,5 +23,7 @@ export const routes: Routes = [
     {path: 'categoria',component: CategoriaComponent},
     {path: 'categoria/:id',component: CategoriaComponent},
     {path: 'mantenimiento',component: MantenimientoComponent},
-    {path: 'mantenimiento/:id',component:MantenimientoComponent}
+    {path: 'mantenimiento/:id',component:MantenimientoComponent},
+    {path: 'usuario',component: UsuarioComponent},
+    {path: 'usuario/:id',component: UsuarioComponent}
 ];
