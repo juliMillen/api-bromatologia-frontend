@@ -1,6 +1,6 @@
 <!--Modal de Registro Producto-->
-<app-registro-producto-modal *ngIf="mostrarModalRegistroProducto" (cerrar)="mostrarModalRegistroProducto=false"
-    (registroProdCreado)="onRegistroProductoCreado($event)" [registroParaEditar]="registroProdEditando" [modo]="modo">
+<app-registro-producto-modal *ngIf="mostrarModalRegistroProducto" (cerrar)="ocultarModal()"
+    (registroProdCreado)="guardarRegistro($event)" [registroParaEditar]="registroProdEditando" [modo]="modo">
 </app-registro-producto-modal>
 
 <app-mantenimiento-asociado-modal *ngIf="mostrarModalAsociacion" [tipo]="tipoModalAsociacion"

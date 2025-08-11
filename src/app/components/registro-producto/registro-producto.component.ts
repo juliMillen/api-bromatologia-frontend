@@ -17,13 +17,30 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegistroProductoComponent implements OnInit {
 
+    registroProducto: RegistroProducto = {
+    rppa: '',
+    fechaEmision: new Date(),
+    fechaVencimiento: new Date(),
+    registroEstablecimiento: {
+      rpe: ''
+    },
+    denominacion: '',
+    marca: '',
+    nombreFantasia: '',
+    categoriaProducto: '',
+    expediente: 0,
+    enlace: '',
+    elaborador: ''
+  }
+
+  registrosProductos: RegistroProducto[] = [];
+
   mostrarModalRegistroProducto = false;
   mostrarModalRegistroProductoEstablecimiento = false;
   mostrarModalAsociacion = false;
   tipoModalAsociacion: 'registroProducto' | 'registroEstablecimiento' = 'registroProducto'
 
   registroProductoCreado!: RegistroProducto;
-  registrosProductos: RegistroProducto[] = [];
 
   modo: 'crear' | 'editar' = 'crear';
 
@@ -59,6 +76,10 @@ export class RegistroProductoComponent implements OnInit {
     this.mostrarModalAsociacion = false;
   }
 
+  ocultarModal(){
+    this.mostrarModalRegistroProducto = false;
+  }
+
   abrirModalParaEditar(registroProd: RegistroProducto): void {
     this.registroProdEditando = registroProd;
     this.modo = 'editar'
@@ -92,6 +113,24 @@ export class RegistroProductoComponent implements OnInit {
       this.registrosProductos = data;
       console.log('Registros con mantenimientos: ', this.registrosProductos);
     })
+  }
+
+
+  guardarRegistro(nuevoRegistro:RegistroProducto):void{
+    if(this.registroProdEditando){
+      this.modificarRegistroProducto(nuevoRegistro);
+      this.registroProdEditando = null;
+    }else{
+      this.registroProductoService.guardarRegistroProducto(nuevoRegistro).subscribe({
+        next:(nuevo) => {
+          this.registrosProductos.push(nuevo);
+        },
+        error:(err) => {
+          console.error('Error al guardar registro: ',err);
+        }
+      })
+    }
+    this.ocultarModal();
   }
 
 

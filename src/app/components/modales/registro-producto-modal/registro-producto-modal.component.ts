@@ -38,6 +38,8 @@ export class RegistroProductoModalComponent implements OnInit {
     elaborador: ''
   }
 
+  registrosProductos: RegistroProducto[] = [];
+
 
 
   registroForm!: FormGroup;
@@ -78,6 +80,10 @@ export class RegistroProductoModalComponent implements OnInit {
     })
   }
 
+  guardarRegistroProducto():void{
+    this.registroProdCreado.emit(this.registroProducto);
+  }
+
   cerrarModal(){
     this.cerrar.emit();
   }
@@ -86,24 +92,21 @@ export class RegistroProductoModalComponent implements OnInit {
     this.registroEstablecimientoService.obtenerRegistrosEstablecimientos().subscribe(data => this.registrosEst = data);
   }
 
-  guardarRegistro(){
+  crearRegistro(){
 
     if(this.registroForm.invalid){
       this.registroForm.markAllAsTouched();
       return;
     }
-
     const nuevoRegistro: RegistroProducto = this.registroForm.value;
-
-
 
     this.registroProductoService.guardarRegistroProducto(nuevoRegistro).subscribe({
 
-      next:(registroProdCreado:RegistroProducto) => {
-        console.log('Registro Producto creado correctamente');
+      next:(response:RegistroProducto) => {
+        console.log('Registro Producto creado correctamente: ',response);
 
-        this.registroProdCreado.emit(registroProdCreado);
-
+        this.registrosProductos.push(response);
+        this.registroForm.reset();
         //cierro el modal
         this.cerrar.emit();
       },

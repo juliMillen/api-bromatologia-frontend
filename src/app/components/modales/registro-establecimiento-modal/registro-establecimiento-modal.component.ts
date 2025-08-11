@@ -7,11 +7,10 @@ import { RegistroEstablecimiento } from '../../../models/registroEstablecimiento
 import { RegistroEstablecimientoService } from '../../../services/registro-establecimiento.service';
 import { Categoria } from '../../../models/categoria';
 import { CategoriaService } from '../../../services/categoria.service';
-import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-registro-establecimiento-modal',
-  imports: [FormsModule, CommonModule,ReactiveFormsModule, NgxMaskDirective],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './registro-establecimiento-modal.component.html',
   styleUrl: './registro-establecimiento-modal.component.css'
 })
@@ -19,19 +18,15 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
 
   @Input() registroEstParaEditar: RegistroEstablecimiento | null = null;
   @Input() modo: 'crear' | 'editar' = 'crear';
-  @Output() cerrar = new EventEmitter<void>()
-  @Output() registroEstCreado = new EventEmitter<RegistroEstablecimiento>()
-
-  empresas: Empresa[] = [];
-  categorias: Categoria[] = []
-
+  @Output() cerrar = new EventEmitter<void>();
+  @Output() registroEstCreado = new EventEmitter<RegistroEstablecimiento>();
 
   registroEstablecimiento: RegistroEstablecimiento = {
     rpe: '',
     fechaEmision: new Date(),
     fechaVencimiento: new Date(),
     empresa: {
-      cuitEmpresa:0,
+      cuitEmpresa: 0,
       razonSocial: ''
     },
     departamento: '',
@@ -43,6 +38,10 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
 
   registrosEst: RegistroEstablecimiento[] = [];
 
+  empresas: Empresa[] = [];
+
+  categorias: Categoria[] = []
+
   modoEdicion: boolean = false;
 
   registroForm!: FormGroup;
@@ -50,47 +49,38 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
   private fb = inject(FormBuilder);
 
 
-  constructor(private empresaService: EmpresaService, private categoriaService:CategoriaService, private registroEstablecimientoService: RegistroEstablecimientoService) { }
+  constructor(private empresaService: EmpresaService, private categoriaService: CategoriaService, private registroEstablecimientoService: RegistroEstablecimientoService) { }
 
   ngOnInit(): void {
     this.cargarEmpresas();
     this.formularioRegistroEstablecimiento();
     this.cargarCategorias();
 
-    if(this.registroEstParaEditar){
+    if (this.registroEstParaEditar) {
       this.registroEstablecimiento = structuredClone(this.registroEstParaEditar);
       this.registroForm.patchValue(this.registroEstablecimiento);
     }
 
   }
 
-  formularioRegistroEstablecimiento(){
+  formularioRegistroEstablecimiento() {
     this.registroForm = this.fb.group({
-      rpe: ['',Validators.required, Validators.pattern(/^08[-\/]\d{6}$/)],
-      fechaEmision: ['',Validators.required],
-      fechaVencimiento: ['',Validators.required],
-      empresa: ['',Validators.required],
-      departamento:['',Validators.required],
-      localidad: ['',Validators.required],
-      direccion: ['',Validators.required],
-      expediente: [null,Validators.required],
-      enlace: ['',Validators.required],
+      rpe: ['', [Validators.required, Validators.pattern(/^08[-\/]\d{6}$/)]],
+      fechaEmision: ['', Validators.required],
+      fechaVencimiento: ['', Validators.required],
+      empresa: [null, Validators.required],
+      departamento: ['', Validators.required],
+      localidad: ['', Validators.required],
+      direccion: ['', Validators.required],
+      expediente: [null, Validators.required],
+      enlace: ['', Validators.required],
       categorias: this.fb.array([])
     })
   }
 
-  /*formularioRegistroEstablecimiento(){
-    this.registroForm = this.fb.group({
-      cuitTitular: [null, [Validators.required, Validators.pattern(/^\d{11}$/)]],
-      cuitEmpresa: [null, [Validators.required, Validators.pattern(/^\d{11}$/)]],
-      idEstablecimiento: [null,[Validators.required]],
-      categoriaAnt: ['',Validators.required],
-      arancel: ['',[Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
-      fechaEmision: ['',Validators.required],
-      fechaVencimiento: ['',Validators.required],
-      estado: ['', Validators.required]
-    })
-  }*/
+  guardarRegistro(): void {
+    this.registroEstCreado.emit(this.registroEstablecimiento);
+  }
 
   cerrarModal() {
     this.cerrar.emit();
@@ -101,9 +91,9 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
   }
 
 
-  cargarCategorias(){
+  cargarCategorias() {
 
-    if(!this.registroForm) return;
+    if (!this.registroForm) return;
 
     this.categoriaService.obtenerCategorias().subscribe(data => {
       this.categorias = data;
@@ -113,22 +103,21 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
     });
   }
 
-  categoriaSeleccionada():boolean{
-    return (this.registroForm.get('categorias') as FormArray).value.some((v:boolean) => v);
+  categoriaSeleccionada(): boolean {
+    return (this.registroForm.get('categorias') as FormArray).value.some((v: boolean) => v);
   }
 
 
-  guardarRegistro(): void {
-
-    if(this.registroForm.invalid || !this.categoriaSeleccionada()){
+  crearRegistro(): void {
+    if (this.registroForm.invalid || !this.categoriaSeleccionada()) {
       this.registroForm.markAllAsTouched();
       return;
     }
 
-
     const categoriasSeleccionadas = this.registroForm.value.categorias
-    .map((checked: boolean, i:number) => checked ? this.categorias[i]:null)
-    .filter((v: Categoria | null) => v !== null);
+      .map((checked: boolean, i: number) => checked ? this.categorias[i] : null)
+      .filter((v: Categoria | null) => v !== null);
+
 
     const nuevoRegistro: RegistroEstablecimiento = {
       ...this.registroForm.value,
@@ -136,10 +125,11 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
       fechaVencimiento: new Date(this.registroForm.value.fechaVencimiento),
       empresa: this.registroForm.value.empresa,
       categorias: categoriasSeleccionadas
-    }
+    };
 
+    console.log('Enviando nuevo registro: ',nuevoRegistro);
 
-    this.registroEstablecimientoService.guardarRegistro(nuevoRegistro).subscribe({
+     this.registroEstablecimientoService.guardarRegistro(nuevoRegistro).subscribe({
       next: (registroEstCreado: RegistroEstablecimiento) => {
         console.log('Registro establecimiento creado correctamente', registroEstCreado);
           this.registroEstablecimientoService.obtenerRegistroEstablecimientoPorId(registroEstCreado.rpe).subscribe({

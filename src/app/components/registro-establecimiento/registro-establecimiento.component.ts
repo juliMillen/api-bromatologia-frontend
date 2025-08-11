@@ -142,7 +142,7 @@ export class RegistroEstablecimientoComponent implements OnInit {
         this.categorias = data;
       },
       error: (err) => {
-        console.error('Error al cargar categorias')
+        console.error('Error al cargar categorias: ',err)
       }
     })
   }
@@ -165,8 +165,26 @@ export class RegistroEstablecimientoComponent implements OnInit {
     this.registroEstablecimiento = registro;
   }
 
+
+  guardarRegistro(nuevoRegistro:RegistroEstablecimiento):void{
+      if(this.registroEstEditando){
+        this.modificarRegistroEstablecimiento(nuevoRegistro)
+        this.registroEstEditando = null;
+      }else{
+        this.registroEstablecimientoService.guardarRegistro(nuevoRegistro).subscribe({
+          next:(nuevo) =>{
+            this.registrosEstablecimientos.push(nuevo);
+          },
+          error: (err) => {
+            console.error('Error al guardar el registro de establecimiento: ',err);
+          }
+        })
+      }
+      this.ocultarModal();
+    }
+
     modificarRegistroEstablecimiento(reg:RegistroEstablecimiento): void{
-      this.registroEstablecimientoService.modificarEmpresa(reg.rpe,reg).subscribe({
+      this.registroEstablecimientoService.modificarRegistroEst(reg.rpe,reg).subscribe({
         next: (response) => {
           console.log('Registro Establecimiento modificado correctamente: ',response);
           this.cargarRegistros();
@@ -175,6 +193,20 @@ export class RegistroEstablecimientoComponent implements OnInit {
           console.error('Error al modificar el registro: ',err);
         }
       });
+    }
+
+
+    eliminarRegistroEst(rpe:string):void{
+      this.registroEstablecimientoService.eliminarRegistro(rpe).subscribe({
+        next: () => {
+          console.log('Registor Eliminado correctamente');
+          this.registrosEstablecimientos = this.registrosEstablecimientos.filter(e => e.rpe !== rpe)
+        },
+        error: (err) =>{
+          console.error('Error al eliminar registro: ',err);
+        }
+      })
+
     }
 
 

@@ -1,6 +1,7 @@
 <!--Modal-->
 <app-registro-establecimiento-modal *ngIf="modalAbierto" (cerrar)="ocultarModal()"
-    (registroEstCreado)="registroCreado($event)" [registroEstParaEditar]="registroEstEditando" [modo]="modo">
+    (registroEstCreado)="guardarRegistro($event)" [registroEstParaEditar]="registroEstEditando"
+    [modo]="modo">
 </app-registro-establecimiento-modal>
 
 <app-mantenimiento-asociado-modal *ngIf="mostrarModalAsociacion" [tipo]="tipoModalAsociacion"
@@ -11,7 +12,7 @@
     <h1>Registro de Establecimientos</h1>
     <div class="seccionFilter">
         <label for="registroEstablecimiento">RPE(Registro Provincial de Establecimientos)</label>
-        <input type="text" id="registroEstablecimiento"  [(ngModel)]="idRegistroEstablecimiento"
+        <input type="text" id="registroEstablecimiento" [(ngModel)]="idRegistroEstablecimiento"
             class="form-control mt-3 mb-2 w-50" placeholder="08-000000">
 
         <button class="btn btn-success" (click)="obtenerRegistroEstablecimientoPorId()">
@@ -73,7 +74,7 @@
                         <td *ngIf="isAdmin()">
                             <button class="btn btn-sm btn-primary me-2"
                                 (click)="abrirModalParaEditar(reg)">Editar</button>
-                            <button class="btn btn-sm btn-danger">
+                            <button class="btn btn-sm btn-danger" (click)="eliminarRegistroEst(reg.rpe)">
                                 <i class="bi bi-trash3"></i>
                             </button>
                         </td>

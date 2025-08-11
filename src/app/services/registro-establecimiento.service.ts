@@ -29,11 +29,11 @@ export class RegistroEstablecimientoService {
   //guardar registro
 
   guardarRegistro(registroEstablecimiento:RegistroEstablecimiento):Observable<RegistroEstablecimiento>{
-    return this.http.post<RegistroEstablecimiento>(`${this.apiUrl}/`,registroEstablecimiento);
+    return this.http.post<RegistroEstablecimiento>(`${this.apiUrl}`,registroEstablecimiento);
   }
 
   //modificar registro
-    modificarEmpresa(rpe:string,RegEstablecimiento:RegistroEstablecimiento):Observable<RegistroEstablecimiento>{
+    modificarRegistroEst(rpe:string,RegEstablecimiento:RegistroEstablecimiento):Observable<RegistroEstablecimiento>{
       return this.http.patch<RegistroEstablecimiento>(`${this.apiUrl}/${rpe}`,RegEstablecimiento);
     }
 
@@ -41,7 +41,7 @@ export class RegistroEstablecimientoService {
   //asignar Categoria
 
   asignarCategoria(idRegistro:number, idCategoria:number):Observable<Categoria>{
-    return this.http.post<Categoria>(`${this.apiUrl}/${idRegistro}/cateogoria/${idCategoria}`,null);
+    return this.http.post<Categoria>(`${this.apiUrl}/${idRegistro}/categoria/${idCategoria}`,null);
   }
 
 

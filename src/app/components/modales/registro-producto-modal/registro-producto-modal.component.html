@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" (click)="cerrarModal()"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="registroForm" (ngSubmit)="guardarRegistro()" novalidate>
+                <form [formGroup]="registroForm" (ngSubmit)="crearRegistro()" novalidate>
 
                     <div class="mb-3" *ngIf="modo === 'crear'">
                         <label class="form-label">RPPA (Registro Provincial de Productos Alimenticios)</label>
@@ -115,7 +115,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4 mb-3" *ngIf="modo === 'crear'">
+                        <div class="col-md-4 mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
                             <label class="form-label">Expediente</label>
                             <input type="text" class="form-control" formControlName="expediente" name="expediente"
                                 [ngClass]="{
