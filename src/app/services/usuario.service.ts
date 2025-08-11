@@ -25,6 +25,12 @@ export class UsuarioService {
     return this.http.get<Usuario>(`${this.apiUrl}/${idUsuario}`);
   }
 
+  //obtener usuario por username
+
+  obtenerUsuarioPorUsername(username:string):Observable<Usuario>{
+    return this.http.get<Usuario>(`${this.apiUrl}/buscar/${username}`);
+  }
+
 
   //crear usuario fuera del sistema
   crearUsuario(usuario:Usuario): Observable<Usuario>{

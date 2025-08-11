@@ -42,15 +42,15 @@
 
                         <div *ngIf="modo === 'crear' || modo === 'editar'">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="usuario" id="rbAdmin" value="admin"
-                                    [(ngModel)]="tipoUsuario">
+                                <input class="form-check-input" type="radio"  formControlName="tipoUsuario" id="rbAdmin" value="admin"
+                                    >
                                 <label class="form-check-label" for="usuario">
                                     Admin
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="usuario" id="rbEmpleado"
-                                    value="empleado" [(ngModel)]="tipoUsuario" checked>
+                                <input class="form-check-input" type="radio" formControlName="tipoUsuario" id="rbEmpleado"
+                                    value="empleado" checked>
                                 <label class="form-check-label" for="usuario">
                                     Empleado
                                 </label>

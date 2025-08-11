@@ -10,7 +10,7 @@
 
                     <div class="mb-3" *ngIf="modo === 'crear'">
                         <label class="form-label">RPPA (Registro Provincial de Productos Alimenticios)</label>
-                        <input type="text" class="form-control" formControlName="rppa" name="rppa" [ngClass]="{
+                        <input type="text" class="form-control" formControlName="rppa" name="rppa" placeholder="08-000000" [ngClass]="{
               'is-invalid': registroForm.get('rppa')?.invalid && registroForm.get('rppa')?.touched,
               'is-valid': registroForm.get('rppa')?.valid && registroForm.get('rppa')?.touched
             }">
@@ -153,7 +153,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Siguiente</button>
+                        <button type="submit" class="btn btn-success">Agregar Registro</button>
                     </div>
                 </form>
             </div>

@@ -11,7 +11,7 @@
                     <!-- Campos que ocupan toda la fila -->
                     <div class="mb-3" *ngIf="modo === 'crear'">
                         <label class="form-label">RPE (Registro Provincial de Establecimientos)</label>
-                        <input type="text" class="form-control" formControlName="rpe" name="rpe" [ngClass]="{
+                        <input type="text" class="form-control" formControlName="rpe" name="rpe" mask="00-000000" placeholder="08-000000" [ngClass]="{
            'is-invalid': registroForm.get('rpe')?.invalid && registroForm.get('rpe')?.touched,
            'is-valid': registroForm.get('rpe')?.valid && registroForm.get('rpe')?.touched
       }">

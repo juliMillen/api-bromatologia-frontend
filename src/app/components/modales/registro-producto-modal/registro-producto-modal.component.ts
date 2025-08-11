@@ -6,6 +6,7 @@ import { RegistroProductoService } from '../../../services/registro-producto.ser
 import { RegistroEstablecimiento } from '../../../models/registroEstablecimiento';
 import { RegistroEstablecimientoService } from '../../../services/registro-establecimiento.service';
 
+
 @Component({
   selector: 'app-registro-producto-modal',
   imports: [FormsModule,CommonModule, ReactiveFormsModule],
@@ -63,16 +64,17 @@ export class RegistroProductoModalComponent implements OnInit {
     const crear = this.modo === 'crear';
     const editar = this.modo === 'editar';
     this.registroForm = this.fb.group({
-      rppa: ['',Validators.required],
+      rppa: ['', [Validators.required, Validators.pattern(/^08[-\/]\d{6}$/)]],
       fechaEmision: ['',Validators.required],
       fechaVencimiento:['',Validators.required],
-      registroEstablecimiento: ['',Validators.required],
+      registroEstablecimiento: [null,Validators.required],
       denominacion: ['',Validators.required],
       marca: ['',Validators.required],
       nombreFantasia: ['',Validators.required],
       categoriaProducto: ['',Validators.required],
       expediente:[null, Validators.required],
       enlace: ['',Validators.required],
+      elaborador: ['',Validators.required]
     })
   }
 
@@ -91,13 +93,8 @@ export class RegistroProductoModalComponent implements OnInit {
       return;
     }
 
-    const formValue = this.registroForm.value;
-    const nuevoRegistro: RegistroProducto = {
-      ...formValue,
-      registroEstablecimiento: {
-        rpe: formValue.registroEstablecimiento
-      }
-    }
+    const nuevoRegistro: RegistroProducto = this.registroForm.value;
+
 
 
     this.registroProductoService.guardarRegistroProducto(nuevoRegistro).subscribe({

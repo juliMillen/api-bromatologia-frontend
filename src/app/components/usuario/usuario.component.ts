@@ -27,6 +27,8 @@ export class UsuarioComponent implements OnInit {
 
   idBuscado: number = 0;
 
+  usernameBuscado: string = '';
+
   modo: 'crear' | 'editar' = 'crear'
 
   constructor(private usuarioService: UsuarioService, private authService: AuthService) { }
@@ -81,6 +83,18 @@ export class UsuarioComponent implements OnInit {
     })
   }
 
+  obtenerUsuarioPorUsername():void{
+    if(!this.usernameBuscado) return;
+    this.usuarioService.obtenerUsuarioPorUsername(this.usernameBuscado).subscribe({
+      next: (usuario: Usuario) => {
+        this.usuarios = [usuario];
+      },
+      error: (err) => {
+        console.error('Error al obtener el usuario: ',err);
+      }
+    })
+  }
+
 
   guardarUsuario(nuevoUsuario: Usuario): void {
     if (this.usuarioEditando) {
@@ -112,7 +126,7 @@ export class UsuarioComponent implements OnInit {
 
 
   modificarUsuario(usuario: Usuario): void {
-    this.usuarioService.actualizarUsuario(usuario.idUsuario!, usuario).subscribe({
+    this.usuarioService.actualizarUsuario(usuario.id!, usuario).subscribe({
       next: (response) => {
         console.log('Usuario modificado correctamente: ', response);
         this.cargarUsuarios();
@@ -128,7 +142,7 @@ export class UsuarioComponent implements OnInit {
     this.usuarioService.eliminarUsuario(idUsuario).subscribe({
       next: () => {
         console.log('Usuario eliminado correctamente');
-        this.usuarios = this.usuarios.filter(e => e.idUsuario = idUsuario);
+        this.usuarios = this.usuarios.filter(e => e.id !== idUsuario);
       },
       error: (err) => {
         console.error('Error al eliminar usuario: ', err);

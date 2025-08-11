@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria';
 
+
 @Component({
   selector: 'app-registro-establecimiento',
   imports: [CommonModule, FormsModule, RegistroEstablecimientoModalComponent, MantenimientoAsociadoModalComponent, RouterLink],

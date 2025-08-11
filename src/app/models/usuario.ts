@@ -1,5 +1,5 @@
 export class Usuario {
-    idUsuario?:number
+    id?:number
     username!: string
     password!: string
     rol?: string

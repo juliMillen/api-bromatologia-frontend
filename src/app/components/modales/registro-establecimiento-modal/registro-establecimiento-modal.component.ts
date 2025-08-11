@@ -7,10 +7,11 @@ import { RegistroEstablecimiento } from '../../../models/registroEstablecimiento
 import { RegistroEstablecimientoService } from '../../../services/registro-establecimiento.service';
 import { Categoria } from '../../../models/categoria';
 import { CategoriaService } from '../../../services/categoria.service';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-registro-establecimiento-modal',
-  imports: [FormsModule, CommonModule,ReactiveFormsModule],
+  imports: [FormsModule, CommonModule,ReactiveFormsModule, NgxMaskDirective],
   templateUrl: './registro-establecimiento-modal.component.html',
   styleUrl: './registro-establecimiento-modal.component.css'
 })
@@ -65,7 +66,7 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
 
   formularioRegistroEstablecimiento(){
     this.registroForm = this.fb.group({
-      rpe: ['',Validators.required],
+      rpe: ['',Validators.required, Validators.pattern(/^08[-\/]\d{6}$/)],
       fechaEmision: ['',Validators.required],
       fechaVencimiento: ['',Validators.required],
       empresa: ['',Validators.required],

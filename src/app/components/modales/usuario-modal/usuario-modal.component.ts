@@ -51,7 +51,8 @@ export class UsuarioModalComponent implements OnInit {
 
     this.usuarioForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['',[Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z]).{8,}$/)]]
+      password: ['',[Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z]).{8,}$/)]],
+      tipoUsuario: ['empleado', Validators.required]
     })
   }
 
@@ -72,9 +73,9 @@ export class UsuarioModalComponent implements OnInit {
       return;
     }
 
-    const nuevoUsuario: Usuario = this.usuarioForm.value;
-
-    if(this.tipoUsuario === 'admin'){
+    const {tipoUsuario, ...nuevoUsuario} = this.usuarioForm.value;
+    
+    if(tipoUsuario === 'admin'){
       this.usuarioService.crearUsuarioAdmin(nuevoUsuario).subscribe({
         next: (response) => {
           console.log('Admin creado correctamente');
