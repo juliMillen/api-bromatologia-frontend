@@ -69,28 +69,33 @@ export class CategoriaModalComponent implements OnInit {
       return;
     }
 
-    const nuevaCategoria: Categoria = this.categoriaForm.value;
-    const rubroSeleccionado = this.categoriaForm.get('rubro')?.value;
-    this.categoriaService.crearCategoria(nuevaCategoria).subscribe({
+    const nuevaCategoria = this.categoriaForm.get('nombreCategoria')?.value;
+    const idRubro = this.categoriaForm.get('rubro')?.value;
+
+    const categoriaSinRubro: Categoria = {
+      nombreCategoria: nuevaCategoria
+    }
+
+    this.categoriaService.crearCategoria(categoriaSinRubro).subscribe({
       next: (response:Categoria) => {
         console.log("Categoria creada correctamente: ",response);
-        console.log(this.categoriaForm.value)
-        this.categorias.push(response);
 
         const idCategoria = response.idCategoria;
-        const idRubro = rubroSeleccionado.idRubro;
 
+        //ahora asignamos rubro
         this.rubroService.asignarCategoria(idRubro,idCategoria!).subscribe({
           next: () => {
-            console.log("Categoria asignada a rubro correctamente");
+            console.log('Categoria asignada al rubro correctamente');
+            //emitimos evento creado para el padre
+            this.categoriaCreada.emit(response);
+            this.categoriaForm.reset();
+            this.cerrar.emit();
           },
           error: (err) => {
-            console.log('Error al asociar rubro y categoria: ',err);
+            console.error('Error al asociar rubro y categoria: ',err);
           }
         })
-
-        this.categoriaForm.reset();
-        this.cerrar.emit();
+        
       },
       error: (err) => {
         console.error('Error al crear la categoria: ',err);

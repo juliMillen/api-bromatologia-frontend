@@ -33,6 +33,6 @@ export class RubroService {
 
 
   asignarCategoria(idRubro:number,idCategoria:number):Observable<Categoria>{
-    return this.http.post<Categoria>(`${this.apiUrl}/${idRubro}/'categoria/${idCategoria}`,null)
+    return this.http.post<Categoria>(`${this.apiUrl}/${idRubro}/categoria/${idCategoria}`,null)
   }
 }

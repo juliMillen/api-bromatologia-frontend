@@ -79,7 +79,72 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
   }
 
   guardarRegistro(): void {
-    this.registroEstCreado.emit(this.registroEstablecimiento);
+
+    if (this.registroForm.invalid || !this.categoriaSeleccionada()) {
+      this.registroForm.markAllAsTouched();
+      return;
+    }
+
+    // Obtenemos los IDs de las categorías seleccionadas
+    const categoriasIds = this.registroForm.value.categorias
+      .map((checked: boolean, i: number) => checked ? this.categorias[i].idCategoria : null)
+      .filter((id: number | null) => id !== null) as number[];
+
+    // Construimos el objeto de registro a guardar, obteniendo el valor del formulario
+    // con getRawValue() para incluir el RPE si está deshabilitado en edición
+    const registroGuardar: RegistroEstablecimiento = {
+      ...this.registroForm.getRawValue(),
+      fechaEmision: new Date(this.registroForm.value.fechaEmision),
+      fechaVencimiento: new Date(this.registroForm.value.fechaVencimiento),
+      empresa: this.registroForm.value.empresa,
+      categorias: []
+    };
+
+    // Condicional para decidir entre crear y editar
+    if (this.modo === 'editar') {
+      const rpeActual = this.registroEstParaEditar?.rpe;
+      if (!rpeActual) {
+        console.error('Error: No se encontró el RPE para editar.');
+        return;
+      }
+
+      this.registroEstablecimientoService.modificarRegistroEst(rpeActual, registroGuardar).subscribe({
+        next: (registroActualizado) => {
+          console.log('Registro actualizado correctamente');
+          // Asignar las categorías actualizadas
+          this.registroEstablecimientoService.asignarCategoria(rpeActual, categoriasIds).subscribe({
+            next: (categoriasActualizadas) => {
+              console.log("Categorías asignadas en la edición:", categoriasActualizadas);
+              this.registroEstCreado.emit({ ...registroActualizado, categorias: categoriasActualizadas });
+              this.cerrarModal();
+            },
+            error: (err) => console.error("Error al asignar categorías en la edición", err)
+          });
+        },
+        error: (err) => {
+          console.error('Error al modificar registro: ', err);
+        }
+      });
+    } else {
+      this.registroEstablecimientoService.guardarRegistro(registroGuardar).subscribe({
+        next: (registroEstCreado: RegistroEstablecimiento) => {
+          console.log('Registro establecimiento creado correctamente', registroEstCreado);
+
+          // Asignar las categorías
+          this.registroEstablecimientoService.asignarCategoria(registroEstCreado.rpe, categoriasIds).subscribe({
+            next: (categoriasAsignadas) => {
+              console.log("Categorías asignadas:", categoriasAsignadas);
+              this.registroEstCreado.emit({ ...registroEstCreado, categorias: categoriasAsignadas });
+              this.cerrarModal();
+            },
+            error: (err) => console.error("Error al asignar categorías", err)
+          });
+        },
+        error: (error) => {
+          console.error('Error al guardar registro establecimiento: ', error);
+        }
+      });
+    }
   }
 
   cerrarModal() {
@@ -108,15 +173,15 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
   }
 
 
-  crearRegistro(): void {
+  /*crearRegistro(): void {
     if (this.registroForm.invalid || !this.categoriaSeleccionada()) {
       this.registroForm.markAllAsTouched();
       return;
     }
 
-    const categoriasSeleccionadas = this.registroForm.value.categorias
-      .map((checked: boolean, i: number) => checked ? this.categorias[i] : null)
-      .filter((v: Categoria | null) => v !== null);
+    const categoriasIds = this.registroForm.value.categorias
+      .map((checked: boolean, i: number) => checked ? this.categorias[i].idCategoria : null)
+      .filter((id: number | null) => id != null) as number[];
 
 
     const nuevoRegistro: RegistroEstablecimiento = {
@@ -124,24 +189,31 @@ export class RegistroEstablecimientoModalComponent implements OnInit {
       fechaEmision: new Date(this.registroForm.value.fechaEmision),
       fechaVencimiento: new Date(this.registroForm.value.fechaVencimiento),
       empresa: this.registroForm.value.empresa,
-      categorias: categoriasSeleccionadas
+      categorias: []
     };
 
-    console.log('Enviando nuevo registro: ',nuevoRegistro);
+    console.log('Enviando nuevo registro: ', nuevoRegistro);
 
-     this.registroEstablecimientoService.guardarRegistro(nuevoRegistro).subscribe({
+    this.registroEstablecimientoService.guardarRegistro(nuevoRegistro).subscribe({
       next: (registroEstCreado: RegistroEstablecimiento) => {
         console.log('Registro establecimiento creado correctamente', registroEstCreado);
-          this.registroEstablecimientoService.obtenerRegistroEstablecimientoPorId(registroEstCreado.rpe).subscribe({
-              next: (registroFinal) => {
-                this.registroEstCreado.emit(registroFinal);
-                this.cerrar.emit();
-              }
-            })
+
+        //asigno categorias
+        this.registroEstablecimientoService.asignarCategoria(registroEstCreado.rpe, categoriasIds).subscribe({
+          next: (categoriasAsignadas) => {
+            console.log("Categorias asignadas: ", categoriasAsignadas);
+            this.registroEstCreado.emit({
+              ...registroEstCreado,
+              categorias: categoriasAsignadas
+            });
+            this.cerrar.emit();
+          },
+          error: (err) => console.error("Error al asignar categorias", err)
+        })
       },
       error: (error) => {
         console.error('Error al guardar registro establecimiento: ', error);
       }
     });
-  }
+  }*/
 }

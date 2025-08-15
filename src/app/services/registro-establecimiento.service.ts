@@ -40,8 +40,8 @@ export class RegistroEstablecimientoService {
 
   //asignar Categoria
 
-  asignarCategoria(idRegistro:number, idCategoria:number):Observable<Categoria>{
-    return this.http.post<Categoria>(`${this.apiUrl}/${idRegistro}/categoria/${idCategoria}`,null);
+  asignarCategoria(idRegistro:string, idCategoria:number[]):Observable<Categoria[]>{
+    return this.http.post<Categoria[]>(`${this.apiUrl}/${idRegistro}/categorias/${idCategoria.join(',')}`,null);
   }
 
 

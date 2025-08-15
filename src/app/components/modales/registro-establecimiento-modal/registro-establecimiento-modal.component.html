@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" (click)="cerrarModal()"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="registroForm" (ngSubmit)="crearRegistro()" novalidate>
+                <form [formGroup]="registroForm" (ngSubmit)="guardarRegistro()" novalidate>
 
                     <!-- Campos que ocupan toda la fila -->
                     <div class="mb-3" *ngIf="modo === 'crear'">
@@ -120,7 +120,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4 mb-3" *ngIf="modo === 'crear'">
+                        <div class="col-md-4 mb-3" *ngIf="modo === 'crear' || modo === 'editar'">
                             <label class="form-label">Categorias</label>
                             <div formArrayName="categorias">
                                 <div *ngFor="let cat of categorias; let i = index">

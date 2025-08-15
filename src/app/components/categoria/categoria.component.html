@@ -50,13 +50,19 @@
           <tr>
             <th>Nombre Categoria</th>
             <th>Rubro</th>
+            <th *ngIf="isAdmin()">Acciones</th>
           </tr>
         </thead>
-        <tbody>
-          <ng-container *ngFor="let cat of categorias">
+        <tbody *ngFor="let cat of categorias">
+          <ng-container>
             <tr>
               <td>{{cat.nombreCategoria}}</td>
               <td>{{cat.rubro?.nombreRubro}}</td>
+              <td>
+                <button class="btn btn-sm btn-danger" (click)="eliminarCategoria(cat.idCategoria!)">
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </td>
             </tr>
 
             <tr *ngFor="let act of cat.listaActividades">
@@ -66,7 +72,6 @@
               <td colspan="2">{{act.nombreActividad}}</td>
             </tr>
           </ng-container>
-
         </tbody>
       </table>
     </div>

@@ -25,7 +25,7 @@
           <label for="rubro">Rubro</label>
           <select formControlName="rubro" class="form-control">
             <option [ngValue]="null">Seleccione un rubro</option>
-            <option *ngFor="let rub of rubros" [ngValue]="rub">
+            <option *ngFor="let rub of rubros" [ngValue]="rub.idRubro">
               {{rub.nombreRubro}}
             </option>
           </select>
