@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -30,5 +30,20 @@ export class NavbarComponent {
 
     isAdmin(): boolean {
     return this.authService.obtenerRolDesdeToken() === 'ROLE_ADMIN'
+  }
+
+
+  @HostListener('document:click',['$event'])onDocumentClick($event:MouseEvent){
+    const sidebar = document.querySelector('.sidebar');
+    const togleButton = document.querySelector('.toggle-btn');
+
+    if(sidebar && togleButton){
+      const clickedInsideSidebar = sidebar.contains(event?.target as Node);
+      const clickedToggleButton = togleButton.contains(event?.target as Node);
+
+      if(!this.isCollapsed && !clickedInsideSidebar && !clickedToggleButton){
+        this.isCollapsed = true;
+      }
+    }
   }
 }

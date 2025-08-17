@@ -21,7 +21,7 @@
                         <label class="form-label">Registro Establecimiento</label>
                         <select name="registroEstablecimiento" id="registroEstablecimiento" [(ngModel)]="registroEstablecimientoSeleccionado">
                             <option value="undefined">Seleccione un registro...</option>
-                            <option *ngFor="let re of registrosEstablecimientos" [value]="re.rpe">{{re.rpe}} - {{re.categorias}}</option>
+                            <option *ngFor="let re of registrosEstablecimientos" [value]="re.rpe">{{re.rpe}}</option>
                         </select>
                     </div>
 
