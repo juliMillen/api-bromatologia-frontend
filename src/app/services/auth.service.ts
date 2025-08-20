@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment.prod';
 export class AuthService {
 
   //private apiUrl = environment.apiUrl + '/login';
-  private apiUrl = environment.apiUrl + 'login';
+  private apiUrl = environment.apiUrl + '/login';
 
   constructor(private http:HttpClient) { }
 
