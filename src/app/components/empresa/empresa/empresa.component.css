@@ -1,6 +1,7 @@
 div {
+    width: 95%;
     max-width: 1100px;
-    margin: 3rem auto;
+    margin: 2rem auto;
     padding: 0 1rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
@@ -11,7 +12,7 @@ h1{
     margin-bottom: 1rem;
     font-weight: 700;
     color: #4a5d23;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -19,7 +20,7 @@ h1{
 .seccionFilter{
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
     margin-bottom: 2rem;
     flex-wrap: wrap;
@@ -89,7 +90,7 @@ h2{
     margin-top: 0;
     margin-bottom: 1rem;
     font-weight: 700;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: #565627;
 }
 
@@ -151,11 +152,39 @@ tbody td{
         padding: 1rem
     }
 
+    h1{
+        font-size: 1.8rem;
+    }
+
     .btn-AgregarEmpresa{
         width: 100%;
     }
 
     h2 {
-        font-size: 1.25rem;
+        font-size: 1.3rem;
+    }
+
+    .seccionFilter {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+    }
+
+    .filtroItem input.form-contro, .seccionFilter button, .btn-AgregarEmpresa{
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    table.table{
+        font-size: 0.8rem;
+    }
+
+    thead th, tbody td {
+        white-space: nowrap;
+        padding: 0.3rem 0.4rem;
+    }
+
+    th:nth-child(9), td:nth-child(9) {
+        display:none;
     }
 }
