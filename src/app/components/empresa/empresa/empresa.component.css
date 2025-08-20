@@ -103,6 +103,7 @@ h2{
     background-color: white;
     max-height: 600px;
     overflow-y: auto;
+    overflow-x: auto;
 }
 
 table.table{
@@ -170,7 +171,7 @@ tbody td{
         gap: 0.8rem;
     }
 
-    .filtroItem input.form-contro, .seccionFilter button, .btn-AgregarEmpresa{
+    .filtroItem input.form-control, .seccionFilter button, .btn-AgregarEmpresa{
         width: 100%;
         margin-bottom: 0.5rem;
     }
@@ -184,7 +185,7 @@ tbody td{
         padding: 0.3rem 0.4rem;
     }
 
-    th:nth-child(9), td:nth-child(9) {
+    th:last-child, td:last-child {
         display:none;
     }
 }
