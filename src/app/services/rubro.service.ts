@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Rubro } from '../models/rubro';
 import { Categoria } from '../models/categoria';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RubroService {
+  //private apiUrl = environment.apiUrl + '/rubro';
   private apiUrl = environment.apiUrl + '/rubro';
+
   constructor(private http:HttpClient) { }
 
 

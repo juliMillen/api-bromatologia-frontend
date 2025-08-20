@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { RegistroProducto } from '../models/registroProducto';
 import { Observable } from 'rxjs';
 import { Mantenimiento } from '../models/mantenimiento';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistroProductoService {
+  //private apiUrl = environment.apiUrl + '/registroProducto';
   private apiUrl = environment.apiUrl + '/registroProducto';
 
   constructor(private http: HttpClient) { }

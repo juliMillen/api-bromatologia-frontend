@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Mantenimiento } from '../models/mantenimiento';
 import { Tramite } from '../models/tramite';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MantenimientoService {
 
+  //private apiUrl = environment.apiUrl + '/mantenimiento';
   private apiUrl = environment.apiUrl + '/mantenimiento';
 
   constructor(private http:HttpClient) { }

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Recibo } from '../models/recibo';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReciboService {
 
+  //private apiUrl = environment.apiUrl + '/recibo';
   private apiUrl = environment.apiUrl + '/recibo';
 
   constructor(private http:HttpClient) { }

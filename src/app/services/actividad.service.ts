@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Actividad } from '../models/actividad';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActividadService {
 
+  //private apiUrl = environment.apiUrl + '/actividad';
   private apiUrl = environment.apiUrl + '/actividad';
+
   constructor(private http:HttpClient) { }
 
 
