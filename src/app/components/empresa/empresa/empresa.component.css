@@ -147,10 +147,9 @@ tbody td{
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-
-@media (max-width:768px){
+@media (max-width: 768px){
     .container {
-        padding: 1rem
+        padding: 1rem;
     }
 
     h1{
@@ -176,16 +175,19 @@ tbody td{
         margin-bottom: 0.5rem;
     }
 
-    table.table{
+    .table-responsive.container {
+        overflow-x: auto; 
+    }
+
+    table.table {
         font-size: 0.8rem;
+        table-layout: fixed; 
+        width: 100%;
     }
 
     thead th, tbody td {
-        white-space: nowrap;
+        white-space: normal; 
+        word-wrap: break-word; 
         padding: 0.3rem 0.4rem;
-    }
-
-    th:last-child, td:last-child {
-        display:none;
     }
 }

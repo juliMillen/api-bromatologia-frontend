@@ -179,3 +179,29 @@ a:hover {
     padding: 2rem;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
+
+@media (max-width: 768px) {
+    div {
+        width: 95%;
+    }
+
+    .seccionFilter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .seccionFilter button,
+    .btn-AgregarRegistro,
+    .btn-AgregarMantenimiento {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .table-responsive.container {
+        overflow-x: auto;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+}
